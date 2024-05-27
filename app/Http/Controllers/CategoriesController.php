@@ -16,13 +16,9 @@ class CategoriesController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return datatables()->of(Categories::select('id','name','slug','image','status'))
+            return datatables()->of(Categories::select('*'))
                 ->addColumn('action', 'admin.categories.action')
                 ->rawColumns(['action'])
-                ->addIndexColumn()
-                ->setRowId(function ($row) {
-                    return $row->id;
-                })
                 ->make(true);
         }
         return view('admin.categories.index');
