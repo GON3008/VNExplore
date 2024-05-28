@@ -29,7 +29,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
     })->name('dashboard');
 
     Route::resource('categories', CategoriesController::class);
-    Route::get('datatable_categories', [CategoriesController::class, 'index'])->name('datatable_categories');
+    Route::get('categories', [CategoriesController::class, 'index'])->name('categories.index');
 });
 
 Route::middleware('auth')->group(function () {
