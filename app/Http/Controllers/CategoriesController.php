@@ -14,12 +14,16 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        if(request()->ajax()) {
+        if (request()->ajax()) {
             return datatables()->of(Categories::select('id', 'name', 'slug', 'image', 'status'))
                 ->addColumn('action', function ($categories) {
-                    $button = '<button type="button" name="edit" id="'.$categories->id.'" class="edit btn btn-primary btn-sm">Edit</button>';
+                    $button = '<button type="button" name="edit" id="' . $categories->id . '" class="edit btn btn-primary btn-sm">
+<i class="uil-edit"></i>
+</button>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" id="'.$categories->id.'" class="delete btn btn-danger btn-sm">Delete</button>';
+                    $button .= '<button type="button" name="delete" id="' . $categories->id . '" class="delete btn btn-danger btn-sm">
+<i class=" uil-trash-alt"></i>
+</button>';
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -42,7 +46,7 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-       //
+        //
     }
 
     /**
