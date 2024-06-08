@@ -28,6 +28,16 @@
                             <input type="file" class="form-control" id="image" name="image">
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Status</label>
+                        <div class="col-sm-12">
+                            <select class="form-control" name="status" id="status">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-sm-offset-2 col-sm-10 pt-3">
                         <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes</button>
                     </div>
