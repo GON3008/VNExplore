@@ -46,7 +46,16 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+           'name' => ['required', 'max:100','unique:categories'],
+        ]);
+
+        Categories::UpdateOrCreate([
+            'id' => $request->categories_id
+            ],
+           [
+               'name' => $request->name
+        ]);
     }
 
     /**

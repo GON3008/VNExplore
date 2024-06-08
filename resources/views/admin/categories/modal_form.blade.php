@@ -3,9 +3,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modelHeading"></h4>
-                    <span type="button" class="close" data-bs-dismiss="modal" aria-label="Close" aria-hidden="true">
-                        <i class="uil-multiply"></i>
-                    </span>
+                <span type="button" class="close" data-bs-dismiss="modal" aria-label="Close" aria-hidden="true">
+                    <i class="uil-multiply"></i>
+                </span>
             </div>
             <div class="modal-body">
                 <form id="categoryForm" name="categoryForm" class="form-horizontal" enctype="multipart/form-data">
@@ -28,15 +28,12 @@
                             <input type="file" class="form-control" id="image" name="image">
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Status</label>
-                        <div class="col-sm-12">
-                            <select class="form-control" name="status" id="status">
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
-                            </select>
-                        </div>
+                        <label for="status" class="col-sm-2 control-label">Status</label>
+                        <select class="form-select">
+                            <option value="0">Inactive</option>
+                            <option value="1">Active</option>
+                        </select>
                     </div>
                     <div class="col-sm-offset-2 col-sm-10 pt-3">
                         <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes</button>

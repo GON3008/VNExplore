@@ -13,25 +13,7 @@
 @endsection
 
 @section('scripts')
-    {{--    <script src="{{asset('assets/js/pages/categories.js')}}"></script>--}}
-    <script>
-        {{--$(function () {--}}
-        {{--    $("#dataCategories").DataTable({--}}
-        {{--        processing: true,--}}
-        {{--        serverSide: true,--}}
-        {{--        ajax: "{{ route('admin.categories.index') }}",--}}
-        {{--        columns: [--}}
-        {{--            {data: 'id', name: 'id'},--}}
-        {{--            {data: 'name', name: 'name'},--}}
-        {{--            {data: 'slug', name: 'slug'},--}}
-        {{--            {data: 'image', name: 'image'},--}}
-        {{--            {data: 'status', name: 'status'},--}}
-        {{--            {data: 'action', name: 'action', orderable: false, searchable: false},--}}
-        {{--        ],--}}
-        {{--        "order": [[ 0, "desc" ]]--}}
-        {{--    });--}}
-        {{--});--}}
-
+    <script type="text/javascript">
         $(document).ready(function () {
             $.ajaxSetup({
                 headers: {
@@ -59,7 +41,32 @@
                 $('#categoryForm').trigger("reset");
                 $('#modelHeading').html("Create New Category");
                 $('#ajaxModel').modal('show');
-            })
-        })
+            });
+
+            $('#categoryForm').on('submit', function (e) {
+                e.preventDefault();
+
+                var formData = new FormData(this);
+                $('#saveBtn').html('Sending..');
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('admin.categories.store') }}",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        $('#categoryForm').trigger("reset");
+                        $('#ajaxModel').modal('hide');
+                        $('#saveBtn').html('Save changes');
+                        $("#dataCategories").DataTable().ajax.reload();
+                    },
+                    error: function (data) {
+                        console.log('Error:', data);
+                        $('#saveBtn').html('Save changes');
+                    }
+                });
+            });
+        });
     </script>
 @endsection
