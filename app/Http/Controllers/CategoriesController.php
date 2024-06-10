@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Categories;
 use Datatables;
-
+use Flasher\Toastr\Prime\ToastrInterface;
 class CategoriesController extends Controller
 {
     /**
@@ -15,7 +15,7 @@ class CategoriesController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return datatables()->of(Categories::select('id', 'name', 'slug', 'image', 'status'))
+            return datatables()->of(Categories::select('id', 'name', 'description'))
                 ->addColumn('action', function ($categories) {
                     $button = '<button type="button" name="edit" id="' . $categories->id . '" class="edit btn btn-primary btn-sm">
 <i class="uil-edit"></i>
@@ -47,15 +47,20 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-           'name' => ['required', 'max:100','unique:categories'],
+            'name' => ['required', 'max:100', 'unique:categories'],
+            'description' => ['nullable'],
         ]);
 
-        Categories::UpdateOrCreate([
-            'id' => $request->categories_id
-            ],
-           [
-               'name' => $request->name
-        ]);
+
+        $categories = Categories::UpdateOrCreate([
+            'id' => $request->id,
+        ],
+            [
+                'name' => $request->name,
+                'description' => $request->description,
+            ]);
+
+        return response()->json($categories);
     }
 
     /**
@@ -69,9 +74,14 @@ class CategoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $categories = Categories::find($id);
+        if ($categories) {
+            toastr()->success('Data Found Successfully', 'Success');
+            return response()->json($categories);
+        }
+        return response()->json(['error' => 'Data Not Found'], 404);
     }
 
     /**
@@ -87,6 +97,11 @@ class CategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $categories = Categories::find($id);
+        if ($categories) {
+            $categories->delete();
+            return response()->json(['success' => 'Data Deleted Successfully']);
+        }
+        return response()->json(['error' => 'Data Not Found'], 404);
     }
 }

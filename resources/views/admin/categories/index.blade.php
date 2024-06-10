@@ -27,9 +27,7 @@
                 columns: [
                     {title: 'ID', data: 'id', name: 'id'},
                     {title: 'Name', data: 'name', name: 'name'},
-                    {title: 'Slug', data: 'slug', name: 'slug'},
-                    {title: 'Image', data: 'image', name: 'image'},
-                    {title: 'Status', data: 'status', name: 'status'},
+                    {title: 'Description', data: 'description', name: 'description'},
                     {title: 'Action', data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
                 "order": [[0, 'desc']]
@@ -56,17 +54,55 @@
                     processData: false,
                     contentType: false,
                     success: function (data) {
-                        $('#categoryForm').trigger("reset");
                         $('#ajaxModel').modal('hide');
-                        $('#saveBtn').html('Save changes');
-                        $("#dataCategories").DataTable().ajax.reload();
+                        var onTable = $('#dataCategories').DataTable();
+                        onTable.draw(false);
+                        $('#saveBtn').html('Save Changes');
+                        $('#saveBtn').attr("disabled", false);
                     },
                     error: function (data) {
                         console.log('Error:', data);
-                        $('#saveBtn').html('Save changes');
+                        $('#saveBtn').html('Save Changes');
+                        $('#saveBtn').attr("disabled", false);
+
+                        if (data.responseJSON.errors) {
+                            var errors = data.responseJSON.errors;
+                            $('#name_error').html(errors.name);
+                        }
                     }
                 });
             });
+
+            $('body').on('click', '.edit', function () {
+                var category_id = $(this).attr('id');
+                $.get("{{ route('admin.categories.index') }}" + '/' + category_id + '/edit', function (data) {
+                    $('#modelHeading').html("Edit Category");
+                    $('#saveBtn').val("edit-category");
+                    $('#ajaxModel').modal('show');
+                    $('#id').val(data.id);
+                    $('#name').val(data.name);
+                    $('#description').val(data.description);
+                })
+            });
+
+
+            $('body').on('click', '.delete', function () {
+                var category_id = $(this).attr("id");
+                if (confirm("Are You sure want to delete !")) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('admin.categories.destroy', '') }}/"  + category_id,
+                        success: function (data) {
+                            var onTable = $('#dataCategories').DataTable();
+                            onTable.draw(false);
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                }
+            });
+
         });
     </script>
 @endsection
