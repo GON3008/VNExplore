@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\ToursController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
     })->name('dashboard');
 
     Route::resource('categories', CategoriesController::class);
+    Route::resource('tours', ToursController::class);
 });
 
 Route::middleware('auth')->group(function () {

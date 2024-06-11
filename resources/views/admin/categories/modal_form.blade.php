@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <form id="categoryForm" name="categoryForm" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="id" id="id">
+                    <input type="hidden" name="category_id" id="category_id">
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">Name</label>
                         <div class="col-sm-12">

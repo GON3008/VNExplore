@@ -20,6 +20,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
             $("#dataCategories").DataTable({
                 processing: true,
                 serverSide: true,
@@ -35,7 +36,7 @@
 
             $('#createNewCategory').click(function () {
                 $('#saveBtn').val("create-category");
-                $('#category_id').val('');
+                $('#category_id').val('');  // Clear the id field
                 $('#categoryForm').trigger("reset");
                 $('#modelHeading').html("Create New Category");
                 $('#ajaxModel').modal('show');
@@ -45,7 +46,7 @@
                 e.preventDefault();
 
                 var formData = new FormData(this);
-                $('#saveBtn').html('Sending..');
+                // $('#saveBtn').html('Sending...');
 
                 $.ajax({
                     type: "POST",
@@ -79,19 +80,18 @@
                     $('#modelHeading').html("Edit Category");
                     $('#saveBtn').val("edit-category");
                     $('#ajaxModel').modal('show');
-                    $('#id').val(data.id);
+                    $('#category_id').val(data.id);
                     $('#name').val(data.name);
                     $('#description').val(data.description);
-                })
+                });
             });
-
 
             $('body').on('click', '.delete', function () {
                 var category_id = $(this).attr("id");
                 if (confirm("Are You sure want to delete !")) {
                     $.ajax({
                         type: "DELETE",
-                        url: "{{ route('admin.categories.destroy', '') }}/"  + category_id,
+                        url: "{{ route('admin.categories.destroy', '') }}/" + category_id,
                         success: function (data) {
                             var onTable = $('#dataCategories').DataTable();
                             onTable.draw(false);

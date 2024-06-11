@@ -69,6 +69,13 @@
             </li>
 
             <li class="side-nav-item">
+                <a href="{{route('admin.tours.index')}}" class="side-nav-link">
+                    <i class="uil-folder-plus"></i>
+                    <span> Tours </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
                 <a href="apps-chat.html" class="side-nav-link">
                     <i class="uil-comments-alt"></i>
                     <span> Chat </span>

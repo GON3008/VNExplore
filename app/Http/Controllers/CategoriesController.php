@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Categories;
 use Datatables;
-use Flasher\Toastr\Prime\ToastrInterface;
 class CategoriesController extends Controller
 {
     /**
@@ -51,9 +50,8 @@ class CategoriesController extends Controller
             'description' => ['nullable'],
         ]);
 
-
         $categories = Categories::UpdateOrCreate([
-            'id' => $request->id,
+            'id' => $request->category_id,
         ],
             [
                 'name' => $request->name,
@@ -77,11 +75,8 @@ class CategoriesController extends Controller
     public function edit($id)
     {
         $categories = Categories::find($id);
-        if ($categories) {
-            toastr()->success('Data Found Successfully', 'Success');
-            return response()->json($categories);
-        }
-        return response()->json(['error' => 'Data Not Found'], 404);
+        toastr()->success('Category successfully updated');
+        return response()->json($categories);
     }
 
     /**
