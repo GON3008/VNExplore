@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str; // Import the Str class
 
 class Tours extends Model
 {
@@ -19,7 +19,8 @@ class Tours extends Model
         'departure_date',
         'return_date',
         'tour_code',
-        'tour_from',
+        'departure',
+        'tour_time',
         'tour_to',
         'quantity',
         'deleted',
@@ -30,16 +31,16 @@ class Tours extends Model
     {
         parent::boot();
 
-        static::creating(function ($tour){
+        static::creating(function ($tour) {
             $tour->tour_code = self::generateTourCode();
         });
     }
 
-    private  static function generateTourCode()
+    private static function generateTourCode()
     {
-        do{
+        do {
             $code = 'Tour-' . strtoupper(Str::random(6));
-        }while(self::where('tour_code', $code)->exists());
+        } while (self::where('tour_code', $code)->exists());
 
         return $code;
     }

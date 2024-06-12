@@ -29,14 +29,14 @@
                     {title:'Id',data: 'id', name: 'id'},
                     {title:'Name',data: 'name', name: 'name'},
                     {title:'Slug',data: 'slug', name: 'slug'},
-                    {title: 'Image',data: 'image', name: 'image'},
+                    {title:'Image',data: 'image', name: 'image', orderable: false},
                     {title: 'Tour Code',data: 'tour_code', name: 'tour_code'},
                     {title:'Price',data: 'price', name: 'price'},
                     {title:'Vehicle',data: 'vehicle', name: 'vehicle'},
                     {title:'Departure Date',data: 'departure_date', name: 'departure_date'},
                     {title:'Arrival Date',data: 'return_date', name: 'return_date'},
                     {title:'Tour Time',data: 'tour_time', name: 'tour_time'},
-                    {title: 'Tour From',data: 'tour_from', name: 'tour_from'},
+                    {title: 'Tour From',data: 'departure', name: 'departure'},
                     {title: 'Tour To',data: 'tour_to', name: 'tour_to'},
                     {title:'Quantity',data: 'quantity', name: 'quantity'},
                     {title:'Category',data: 'category.name', name: 'category.name'},
@@ -91,13 +91,36 @@
                     $('#departure_date').val(data.departure_date);
                     $('#return_date').val(data.return_date);
                     $('#tour_time').val(data.tour_time);
-                    $('#tour_from').val(data.tour_from);
+                    $('#departure').val(data.departure);
                     $('#tour_to').val(data.tour_to);
                     $('#quantity').val(data.quantity);
+                    $('#description').val(data.description);
+                    $('#image').val(data.image);
                     $('#category_id').val(data.category_id);
 
                 })
             });
+
+
+            $('body').on('click', '.delete', function () {
+                var tour_id = $(this).attr('id');
+                if (confirm("Are You sure want to delete !")) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('admin.tours.store') }}" + '/' + tour_id,
+                        success: function (data) {
+                            var onTable = $('#dataTour').DataTable();
+                            onTable.draw(false);
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                }
+            });
+
+
+
 
 
         });

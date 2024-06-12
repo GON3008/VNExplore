@@ -10,6 +10,7 @@
             <div class="modal-body">
                 <form id="tourForm" name="tourForm" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
+
                     <input type="hidden" name="tour_id" id="tour_id">
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">Name</label>
@@ -23,7 +24,7 @@
                     <div class="form-group">
                         <label for="price" class="col-sm-2 control-label">Price tour</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="price" name="price"
+                            <input type="number" class="form-control" id="price" name="price"
                                    placeholder="Enter Price tour" value="" maxlength="100">
                             <span class="text-danger" id="price_error"></span>
                         </div>
@@ -66,11 +67,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="tour_form" class="col-sm-2 control-label">Tour Form</label>
+                        <label for="departure" class="col-sm-2 control-label">Tour Form</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="tour_form" name="tour_form"
+                            <input type="text" class="form-control" id="departure" name="departure"
                                    placeholder="Enter Tour Form" value="" maxlength="100">
-                            <span class="text-danger" id="tour_form_error"></span>
                         </div>
                     </div>
 

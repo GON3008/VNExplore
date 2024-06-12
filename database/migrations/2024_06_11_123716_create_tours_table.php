@@ -17,12 +17,12 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('image', 100)->nullable();
             $table->string('slug', 150)->unique()->nullable();
-            $table->integer('price'); // removed second argument
+            $table->string('price', 50); // removed second argument
             $table->string('vehicle', 100);
             $table->string('departure_date', 100);
             $table->string('return_date', 100);
             $table->string('tour_code', 100)->unique(); // tour codes are usually unique
-            $table->string('tour_from', 100);
+            $table->string('departure', 100);
             $table->string('tour_time', 100);
             $table->string('tour_to', 100);
             $table->integer('quantity'); // removed second argument
