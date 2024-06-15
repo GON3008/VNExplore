@@ -135,7 +135,13 @@ class ToursController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $tour = tours::find($id);
+        if ($tour) {
+            $tour->delete();
+        } else {
+            return response()->json(['message' => 'Tour not found'], 404);
+        }
+        
     }
 
 }
