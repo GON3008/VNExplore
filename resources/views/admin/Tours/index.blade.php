@@ -75,6 +75,12 @@
                 });
             });
 
+            document.addEventListener("DOMContentLoaded", function() {
+                var today = new Date().toISOString().split('T')[0];
+                document.getElementById("departure_date").setAttribute('min', today);
+                document.getElementById("return_date").setAttribute('min', today);
+            });
+
 
             $('body').on('click', '.edit', function () {
                 var tour_id = $(this).attr('id');
@@ -95,8 +101,12 @@
                     $('#tour_to').val(data.tour_to);
                     $('#quantity').val(data.quantity);
                     $('#description').val(data.description);
-                    $('#image').val(data.image);
                     $('#category_id').val(data.category_id);
+                    $('#image_preview').attr('src', data.image);
+
+                    var today = new Date().toISOString().split('T')[0];
+                    document.getElementById("departure_date").setAttribute('min', today);
+                    document.getElementById("return_date").setAttribute('min', today);
 
                 })
             });

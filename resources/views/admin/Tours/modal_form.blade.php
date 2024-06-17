@@ -97,7 +97,7 @@
                         <div class="col-sm-12">
                             <select class="form-control" id="category_id" name="category_id">
                                 <option value="">Select Category</option>
-                                @foreach($categories as $category)
+                                @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
@@ -108,6 +108,7 @@
                         <label for="image" class="col-sm-2 control-label">Image</label>
                         <div class="col-sm-12">
                             <input type="file" class="form-control" id="image" name="image">
+                            <img id="image_preview" style="width: 100px; height: 100px;">
                         </div>
                     </div>
 

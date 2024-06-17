@@ -118,7 +118,7 @@ class ToursController extends Controller
     public function edit(string $id)
     {
         $tour = Tours::find($id);
-
+        $tour->image = asset('tours/' . $tour->image);
         return response()->json($tour);
     }
 
@@ -135,13 +135,7 @@ class ToursController extends Controller
      */
     public function destroy(string $id)
     {
-        $tour = tours::find($id);
-        if ($tour) {
-            $tour->delete();
-        } else {
-            return response()->json(['message' => 'Tour not found'], 404);
-        }
-        
+        //
     }
 
 }
