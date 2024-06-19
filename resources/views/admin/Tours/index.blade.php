@@ -23,6 +23,7 @@
 
             $("#dataTour").DataTable({
                 processing: true,
+                responsive: true,
                 serverSide: true,
                 ajax: "{{ route('admin.tours.index') }}",
                 columns: [
@@ -69,16 +70,21 @@
                         var onTable = $('#dataTour').DataTable();
                         onTable.draw(false);
                     },
+
+                    error: function (xhr) {
+                        if(xhr.responseJSON && xhr.responseJSON.errors) {
+                            let errors = xhr.responseJSON.errors;
+                            if(errors.name) {
+                                $('#name_error').text(errors.name[0]);
+                            }
+                            // Handle other potential errors in a similar manner
+                        }
+                        $('#saveBtn').html('Save changes');
+                    },
                     error: function (data) {
                         console.log('Error:', data);
                     }
                 });
-            });
-
-            document.addEventListener("DOMContentLoaded", function() {
-                var today = new Date().toISOString().split('T')[0];
-                document.getElementById("departure_date").setAttribute('min', today);
-                document.getElementById("return_date").setAttribute('min', today);
             });
 
 
@@ -104,20 +110,22 @@
                     $('#category_id').val(data.category_id);
                     $('#image_preview').attr('src', data.image);
 
-                    var today = new Date().toISOString().split('T')[0];
-                    document.getElementById("departure_date").setAttribute('min', today);
-                    document.getElementById("return_date").setAttribute('min', today);
-
                 })
             });
 
+            $('body').on('click', '.delete', function (){
+                var tour_id = $(this).attr("id");
+                var url = "{{ route('admin.tours.destroy', ':id') }}";
+                url = url.replace(':id', tour_id);
 
-            $('body').on('click', '.delete', function () {
-                var tour_id = $(this).attr('id');
                 if (confirm("Are You sure want to delete !")) {
                     $.ajax({
                         type: "DELETE",
-                        url: "{{ route('admin.tours.store') }}" + '/' + tour_id,
+                        url: url,
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            _method: "DELETE"
+                        },
                         success: function (data) {
                             var onTable = $('#dataTour').DataTable();
                             onTable.draw(false);
@@ -125,13 +133,9 @@
                         error: function (data) {
                             console.log('Error:', data);
                         }
-                    });
+                    })
                 }
             });
-
-
-
-
 
         });
     </script>

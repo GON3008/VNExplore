@@ -12,6 +12,7 @@
                     @csrf
 
                     <input type="hidden" name="tour_id" id="tour_id">
+                    <input type="hidden" name="tour_code" id="tour_code">
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">Name</label>
                         <div class="col-sm-12">
@@ -127,3 +128,11 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    var today = new Date().toISOString().split('T')[0];
+
+    document.getElementById("departure_date").setAttribute("min", today);
+    document.getElementById("return_date").setAttribute("min", today);
+</script>

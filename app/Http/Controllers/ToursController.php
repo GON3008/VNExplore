@@ -55,7 +55,7 @@ class ToursController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'max:100', 'unique:tours'],
+            'name' => 'required|unique:tours,name,' . $request->tour_id . '|max:100',
             'description' => ['nullable'],
             'category_id' => ['required'],
             'price' => ['required', 'numeric'],
@@ -119,6 +119,7 @@ class ToursController extends Controller
     {
         $tour = Tours::find($id);
         $tour->image = asset('tours/' . $tour->image);
+
         return response()->json($tour);
     }
 
@@ -135,7 +136,15 @@ class ToursController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $tour = Tours::find($id);
+        if (!$tour) {
+            return response()->json($tour, 404);
+        }
+
+        $tour->deleted = 1;
+        $tour->save();
+
+        return response()->json($tour, 200);
     }
 
 }

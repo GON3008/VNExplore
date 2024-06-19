@@ -49,4 +49,9 @@ class Tours extends Model
     {
         return $this->belongsTo(Categories::class, 'category_id');
     }
+
+    public  function scopeNotDeleted($query)
+    {
+        return $query->where('deleted', 0);
+    }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ToursController;
+use App\Http\Controllers\GalleriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
     Route::resource('categories', CategoriesController::class);
     Route::resource('tours', ToursController::class);
+    Route::resource('galleries', GalleriesController::class);
 });
 
 Route::middleware('auth')->group(function () {
