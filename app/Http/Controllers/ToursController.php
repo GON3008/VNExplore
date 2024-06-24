@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Galleries_tour;
 use App\Models\Tours;
 use App\Models\Categories;
 use Illuminate\Http\Request;
@@ -10,6 +11,8 @@ class ToursController extends Controller
 {
 
     const PATH_UPLOAD = 'tours';
+
+    const PATH_GALLERIES = 'galleries';
     /**
      * Display a listing of the resource.
      */
@@ -87,6 +90,7 @@ class ToursController extends Controller
             'tour_code' => $request->tour_code,
         ];
 
+
         // Handle image upload
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -98,6 +102,21 @@ class ToursController extends Controller
         $tour = Tours::updateOrCreate([
             'id' => $request->tour_id,
         ], $tourData);
+
+        // Handle gallery images upload
+        if ($request->hasFile('galleries')) {
+            $images = $request->file('galleries');
+            foreach ($images as $image) {
+                $filename = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path(self::PATH_GALLERIES), $filename);
+
+                Galleries_tour::create([
+                    'tour_id' => $tour->id,
+                    'image_path' => $filename,
+                ]);
+            }
+        }
+
 
         return response()->json($tour);
     }
@@ -117,8 +136,17 @@ class ToursController extends Controller
      */
     public function edit(string $id)
     {
-        $tour = Tours::find($id);
-        $tour->image = asset('tours/' . $tour->image);
+        $tour = Tours::with('images')->find($id);
+
+        if ($tour->image)
+        {
+            $tour->image = asset('tours/' . $tour->image);
+        }
+
+        foreach ($tour->images as $img)
+        {
+            $img->image_path = asset('galleries/' . $img->image_path);
+        }
 
         return response()->json($tour);
     }

@@ -114,6 +114,12 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="galleries" class="col-sm-2 control-label">Galleries</label>
+                        <div class="col-sm-12">
+                            <input type="file" class="form-control" id="galleries" name="galleries[]" multiple>
+                    </div>
+
+                    <div class="form-group">
                         <label for="description" class="col-sm-2 control-label">Description</label>
                         <div class="col-sm-12">
                             <textarea id="description" name="description" class="form-control"

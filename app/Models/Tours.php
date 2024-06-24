@@ -54,4 +54,9 @@ class Tours extends Model
     {
         return $query->where('deleted', 0);
     }
+
+    public function images_list()
+    {
+        return $this->hasMany(Galleres_tour::class, 'tour_id');
+    }
 }
