@@ -16,6 +16,6 @@ class Galleries_tour extends Model
 
     public function tour()
     {
-        return $this->belongsTo(Tours::class, 'tour_id');
+        return $this->belongsTo(Tours::class, 'tour_id', 'id');
     }
 }
