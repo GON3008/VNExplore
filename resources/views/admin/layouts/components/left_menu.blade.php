@@ -75,12 +75,14 @@
                 </a>
             </li>
 
+
             <li class="side-nav-item">
-                <a href="apps-chat.html" class="side-nav-link">
+                <a href="{{route('admin.messages.index')}}" class="side-nav-link">
                     <i class="uil-comments-alt"></i>
                     <span> Chat </span>
                 </a>
             </li>
+
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarCrm" aria-expanded="false" aria-controls="sidebarCrm" class="side-nav-link">
@@ -188,9 +190,9 @@
             </li>
 
             <li class="side-nav-item">
-                <a href="apps-social-feed.html" class="side-nav-link">
-                    <i class="uil-rss"></i>
-                    <span> Social Feed </span>
+                <a href="{{route('admin.users.index')}}" class="side-nav-link">
+                    <i class="uil-users-alt"></i>
+                    <span> Users </span>
                 </a>
             </li>
 

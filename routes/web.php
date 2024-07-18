@@ -5,34 +5,25 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ToursController;
 use App\Http\Controllers\GalleriesController;
+use App\Http\Controllers\MessagesController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
-Route::get('/', function () {
-    return view('admin.dashboard');
-});
 
-//Route::get('/dashboard', function () {
-//    return view('dashboard');
-//})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::prefix('admin')->as('admin.')->group(function () {
-    Route::get('dashboard', function (){
+    Route::get('dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');
 
     Route::resource('categories', CategoriesController::class);
     Route::resource('tours', ToursController::class);
     Route::resource('galleries', GalleriesController::class);
+    Route::resource('messages', MessagesController::class);
+    Route::resource('users', UserController::class);
 });
 
 Route::middleware('auth')->group(function () {
@@ -41,4 +32,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('login', [AuthController::class, 'login'])->name('login');
+    Route::post('login', [AuthController::class, 'loginPost']);
+    Route::get('register', [AuthController::class, 'register'])->name('register');
+    Route::post('register', [AuthController::class, 'registerPost']);
+});
+
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+

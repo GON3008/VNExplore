@@ -57,6 +57,6 @@ class Tours extends Model
 
     public function images()
     {
-        return $this->hasMany(Galleries_tour::class, 'tour_id', 'id');
+        return $this->hasMany(Galleries_tour::class, 'tour_id');
     }
 }

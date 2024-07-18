@@ -25,6 +25,7 @@
                 processing: true,
                 responsive: true,
                 serverSide: true,
+                scrollX: true,
                 ajax: "{{ route('admin.tours.index') }}",
                 columns: [
                     {title:'Id',data: 'id', name: 'id'},
@@ -43,7 +44,7 @@
                     {title:'Category',data: 'category.name', name: 'category.name'},
                     {title:'Action',data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
-                "order": [[0, 'desc']]
+                "order": [[0, 'desc']],
             });
 
             $('#createNewTour').click(function () {

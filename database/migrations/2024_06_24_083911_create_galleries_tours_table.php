@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('galleries_tours', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('tour_id')->constrained('tours')->onDelete('cascade');
-            $table->string('image_path');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('galleries_tours')) {
+            Schema::create('galleries_tours', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('tour_id')->constrained('tours')->onDelete('cascade');
+                $table->string('image_path');
+                $table->boolean('deleted')->default(0);
+                $table->timestamps();
+            });
+        }
     }
 
     /**
