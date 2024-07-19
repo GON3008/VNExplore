@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered login-pop-form" role="document">
         <div class="modal-content" id="loginmodal">
             <div class="modal-header">
-                <h4 class="modal-title fs-6">Sign In / Register</h4>
+                <h4 class="modal-title fs-6">Sign In</h4>
                 <a href="#" class="text-muted fs-4" data-bs-dismiss="modal" aria-label="Close"><i
                         class="fa-solid fa-square-xmark"></i></a>
             </div>
@@ -43,10 +43,11 @@
                 </div>
                 <div class="social-login py-4 px-2">
                     <ul class="row align-items-center justify-content-between g-3 p-0 m-0">
-                        <li class="col"><a href="#" class="square--60 border br-dashed rounded-2 full-width"><i
+                        <li class="col"><a href="#" class="square--60 border br-dashed rounded-2 full-width g-signin2"
+                                           data-onsuccess="onSignIn"><i
                                     class="fa-brands fa-facebook color--facebook fs-2"></i></a></li>
-                        <li class="col"><a href="#" class="square--60 border br-dashed rounded-2"><i
-                                    class="fa-brands fa-whatsapp color--whatsapp fs-2"></i></a></li>
+                        <li class="col"><a href="{{route('auth.google')}}" class="square--60 border br-dashed rounded-2"><i
+                                    class="fa-brands fa-google color--google fs-2"></i></a></li>
                         <li class="col"><a href="#" class="square--60 border br-dashed rounded-2"><i
                                     class="fa-brands fa-linkedin color--linkedin fs-2"></i></a></li>
                         <li class="col"><a href="#" class="square--60 border br-dashed rounded-2"><i
@@ -57,9 +58,34 @@
                 </div>
             </div>
             <div class="modal-footer align-items-center justify-content-center">
-                <p>Don't have an account yet? <a href="signup.html" class="text-primary fw-medium ms-1">Sign Up</a></p>
+                <p>Don't have an account yet? <a href="#" data-bs-toggle="modal" data-bs-target="#signup" class="text-primary fw-medium ms-1">Sign Up</a></p>
             </div>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function onSignIn(googleUser) {
+        var id_token = googleUser.getAuthResponse().id_token;
+
+        $.ajax({
+            url: '/auth/google/callback',
+            type: 'POST',
+            data: {
+                id_token: id_token,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if (response.success) {
+                    window.location.href = '/';
+                } else {
+                    console.error('Login failed:', response.message);
+                }
+            },
+            error: function(error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+</script>
 

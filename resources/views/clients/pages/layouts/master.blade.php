@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport, google-signin-client-id" content="width=device-width,
+    initial-scale=1,94244170434-1go6b0ucup667ae1smvcii3uv3vi5mla.apps.googleusercontent.com">
     <title>GeoTrip - Tour & Travel Booking Agency HTML Template | ThemezHub</title>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
 
@@ -436,6 +437,7 @@
 
     <!-- Log In Modal -->
     @include('clients.auth.login.modal_form_login')
+    @include('clients.auth.signUp.modal_form_signUp')
     <!-- End Modal -->
 
     <!-- Choose Currency Modal -->
@@ -909,6 +911,8 @@
 
 <script src="{{asset('geotrip/assets/js/addadult.js')}}"></script>
 <script src="{{asset('geotrip/assets/js/custom.js')}}"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
 <!-- ============================================================== -->
 <!-- This page plugins -->
 <!-- ============================================================== -->

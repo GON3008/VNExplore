@@ -237,17 +237,37 @@
                                 <i class="fa-solid fa-user fs-6 me-2"></i>{{ Auth::user()->name }}
                             </a>
                             <ul class="dropdown-menu">
+                                @if(Auth::user()->isAdmin())
+                                <li>
+                                    <a href="{{route('admin.dashboard')}}">
+                                        <i class="fa-solid fa-user fs-6 me-2" style="color: #0a53be"></i>
+                                        <span>Administration</span>
+                                    </a>
+                                </li>
+                                @else
                                 <li>
                                     <a href="#">
                                         <i class="fa-solid fa-user fs-6 me-2" style="color: #0a53be"></i>
                                         <span>Edit profile</span>
                                     </a>
+                                </li>
+                                @endif
+
+                                <li style="width: 250px">
                                     <a href="#">
-                                        <i class="" style="color: #0a53be"></i>
+                                        <i class="fa-solid fa-bell fs-6 me-2" style="color: #0a53be"></i>
+                                        <span>Airline ticket notification</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa-solid fa-tag fs-6 me-2" style="color: #0a53be"></i>
                                         <span>Promotion</span>
                                     </a>
+                                </li>
+                                <li>
                                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                      <i class="" style="color: #0a53be"></i>
+                                      <i class="fa-solid fa-right-from-bracket fs-6 me-2" style="color: #0a53be"></i>
                                         <span>Logout</span>
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

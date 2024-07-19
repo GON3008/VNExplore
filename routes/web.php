@@ -9,6 +9,7 @@ use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\GoogleController;
 
 
 
@@ -40,4 +41,17 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+Route::controller(GoogleController::class)->group(function(){
+    Route::get('auth/google', 'redirectToGoogle')->name('auth.google');
+    Route::get('auth/google/callback', 'handleGoogleCallback');
+});
 
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

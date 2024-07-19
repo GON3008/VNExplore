@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone', 10)->nullable();
             $table->string('address', 255)->nullable();
-            $table->string('role')->default('user');
+            $table->enum('role',['admin','client','lead'])->default('client');
             $table->boolean('is_verified')->default(0);
             $table->boolean('is_active')->default(0);
             $table->boolean('is_admin')->default(0);
@@ -36,5 +36,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->boolean('is_admin')->default(0)->change();
+        });
     }
 };
