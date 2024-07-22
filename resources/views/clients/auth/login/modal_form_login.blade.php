@@ -10,6 +10,18 @@
                 <div class="modal-login-form py-4 px-md-3 px-0">
                     <form id="loginForm" action="{{route('login')}}" method="POST">
                         @csrf
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+
                         <div class="form-floating mb-4">
                             <input type="email" class="form-control" name="email" id="email"
                                    placeholder="name@example.com" required>

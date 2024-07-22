@@ -21,14 +21,28 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'phone' => 'required|string|max:15',
-            'address' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:255',
             'avatar' => 'nullable|string|max:255',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
+                ->withInput();
+        }
+
+        $existingUser = User::where('email', $request->input('email'))->first();
+        if($existingUser) {
+            return redirect()->back()
+                ->withErrors(['email' => 'Email already exists.'])
+                ->withInput();
+        }
+
+        $existingUser = User::where('phone', $request->input('phone'))->first();
+        if($existingUser) {
+            return redirect()->back()
+                ->withErrors(['phone' => 'Phone already exists.'])
                 ->withInput();
         }
 
@@ -47,7 +61,7 @@ class AuthController extends Controller
             'deleted' => false,
         ]);
 
-        return redirect()->route('login');
+        return redirect('/')->with('success', 'Register successfully!');
     }
 
     public function login()
@@ -71,7 +85,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 //            return response()->json(['success' => true, 'redirect' => url('home')]);
-            return redirect('/')->with('Login', 'Login successfully!');
+            return redirect('/')->with('success', 'Login successfully!');
         } else {
             return response()->json(['success' => false, 'message' => 'Invalid credentials'], 401);
         }
@@ -83,6 +97,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')->with('success', 'Logout successfully!');
     }
 }

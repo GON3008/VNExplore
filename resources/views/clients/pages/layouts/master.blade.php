@@ -23,7 +23,6 @@
     <!-- Fontawesome & Bootstrap Icons CSS -->
     <link href="{{asset('geotrip/assets/css/bootstrap-icons.css')}}" rel="stylesheet">
     <link href="{{asset('geotrip/assets/css/fontawesome.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
     <!-- Custom CSS -->
     <link href="{{asset('geotrip/assets/css/style.css')}}" rel="stylesheet">
@@ -912,7 +911,6 @@
 <script src="{{asset('geotrip/assets/js/addadult.js')}}"></script>
 <script src="{{asset('geotrip/assets/js/custom.js')}}"></script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
-
 <!-- ============================================================== -->
 <!-- This page plugins -->
 <!-- ============================================================== -->

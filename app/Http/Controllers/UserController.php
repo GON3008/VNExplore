@@ -12,6 +12,23 @@ class UserController extends Controller
      */
     public function index()
     {
+        if (request()->ajax()) {
+            $users = User::where('deleted', 0)->select('users.*');
+            return datatables()->of($users)
+                ->addColumn('action', function ($users) {
+                    $button = '<button type="button" name="edit" id="' . $users->id . '" class="edit btn btn-primary btn-sm">
+                    <i class="uil-edit"></i>
+                    </button>';
+                    $button .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                    $button .= '<button type="button" name="delete" id="' . $users->id . '" class="delete btn btn-danger btn-sm">
+                    <i class=" uil-trash-alt"></i>
+                    </button>';
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
         $users = User::all();
         return view('admin.users.index', compact('users'));
     }

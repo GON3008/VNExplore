@@ -15,7 +15,12 @@ use App\Http\Controllers\GoogleController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::prefix('admin')->as('admin.')->group(function () {
+
+
+//Route::middleware(['auth', 'admin'])->group(function () {
+//    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+//});
+Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
     Route::get('dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');

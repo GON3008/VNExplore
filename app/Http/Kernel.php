@@ -36,6 +36,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Illuminate\Session\Middleware\StartSession::class,
         ],
 
         'api' => [
@@ -65,4 +66,13 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
+
+    /**
+     *  The priority-sorted list of middleware.
+     */
+    protected $routeMiddleware = [
+        // Other middlewares
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
+    ];
+
 }
