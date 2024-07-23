@@ -25,12 +25,21 @@ class UserController extends Controller
                     </button>';
                     return $button;
                 })
+                ->editColumn('is_active' , function ($users) {
+                    if ($users->is_active == 0) {
+                        $span = 'Active';
+                    } else {
+                        $span= 'Inactive';
+                    }
+                    return $span;
+                })
                 ->rawColumns(['action'])
                 ->addIndexColumn()
                 ->make(true);
         }
         $users = User::all();
-        return view('admin.users.index', compact('users'));
+        $roles = ['admin', 'client', 'lead'];
+        return view('admin.users.index', compact('users','roles'));
     }
 
     /**
@@ -46,7 +55,32 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required | unique:users',
+            'password' => 'required',
+            'role' => 'required',
+            'is_active' => 'required',
+        ]);
+
+        $userData = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
+            'is_active' => $request->is_active,
+        ];
+
+        $user = User::updateOrCreate([
+            'id' => $request->user_id,
+        ], $userData);
+
+        if ($user) {
+            return response()->json(['success' => 'User saved successfully.']);
+        }else{
+            return response()->json(['error' => 'Something went wrong.']);
+        }
+
     }
 
     /**
@@ -62,7 +96,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::find($id);
+        return response()->json($user);
     }
 
     /**

@@ -2,7 +2,8 @@
 <div class="navbar-custom">
     <ul class="list-unstyled topbar-menu float-end mb-0">
         <li class="dropdown notification-list d-lg-none">
-            <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+            <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button"
+               aria-haspopup="false" aria-expanded="false">
                 <i class="dripicons-search noti-icon"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-animated dropdown-lg p-0">
@@ -12,37 +13,44 @@
             </div>
         </li>
         <li class="dropdown notification-list topbar-dropdown">
-            <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+            <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button"
+               aria-haspopup="false" aria-expanded="false">
                 <img src="{{asset('assets/images/flags/us.jpg')}}" alt="user-image" class="me-0 me-sm-1" height="12">
-                <span class="align-middle d-none d-sm-inline-block">English</span> <i class="mdi mdi-chevron-down d-none d-sm-inline-block align-middle"></i>
+                <span class="align-middle d-none d-sm-inline-block">English</span> <i
+                    class="mdi mdi-chevron-down d-none d-sm-inline-block align-middle"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu">
 
                 <!-- item-->
                 <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <img src="{{asset('assets/images/flags/germany.jpg')}}" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
+                    <img src="{{asset('assets/images/flags/germany.jpg')}}" alt="user-image" class="me-1" height="12">
+                    <span class="align-middle">German</span>
                 </a>
 
                 <!-- item-->
                 <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <img src="{{asset('assets/images/flags/italy.jpg')}}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
+                    <img src="{{asset('assets/images/flags/italy.jpg')}}" alt="user-image" class="me-1" height="12">
+                    <span class="align-middle">Italian</span>
                 </a>
 
                 <!-- item-->
                 <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <img src="{{asset('assets/images/flags/spain.jpg')}}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
+                    <img src="{{asset('assets/images/flags/spain.jpg')}}" alt="user-image" class="me-1" height="12">
+                    <span class="align-middle">Spanish</span>
                 </a>
 
                 <!-- item-->
                 <a href="javascript:void(0);" class="dropdown-item notify-item">
-                    <img src="{{asset('assets/images/flags/russia.jpg')}}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
+                    <img src="{{asset('assets/images/flags/russia.jpg')}}" alt="user-image" class="me-1" height="12">
+                    <span class="align-middle">Russian</span>
                 </a>
 
             </div>
         </li>
 
         <li class="dropdown notification-list">
-            <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+            <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button"
+               aria-haspopup="false" aria-expanded="false">
                 <i class="dripicons-bell noti-icon"></i>
                 <span class="noti-icon-badge"></span>
             </a>
@@ -63,7 +71,8 @@
 
                     <h5 class="text-muted font-13 fw-normal mt-0">Today</h5>
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-2">
+                    <a href="javascript:void(0);"
+                       class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-2">
                         <div class="card-body">
                             <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>
                             <div class="d-flex align-items-center">
@@ -73,8 +82,10 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1 text-truncate ms-2">
-                                    <h5 class="noti-item-title fw-semibold font-14">Datacorp <small class="fw-normal text-muted ms-1">1 min ago</small></h5>
-                                    <small class="noti-item-subtitle text-muted">Caleb Flakelar commented on Admin</small>
+                                    <h5 class="noti-item-title fw-semibold font-14">Datacorp <small
+                                            class="fw-normal text-muted ms-1">1 min ago</small></h5>
+                                    <small class="noti-item-subtitle text-muted">Caleb Flakelar commented on
+                                        Admin</small>
                                 </div>
                             </div>
                         </div>
@@ -91,7 +102,8 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1 text-truncate ms-2">
-                                    <h5 class="noti-item-title fw-semibold font-14">Admin <small class="fw-normal text-muted ms-1">1 hours ago</small></h5>
+                                    <h5 class="noti-item-title fw-semibold font-14">Admin <small
+                                            class="fw-normal text-muted ms-1">1 hours ago</small></h5>
                                     <small class="noti-item-subtitle text-muted">New user registered</small>
                                 </div>
                             </div>
@@ -107,12 +119,15 @@
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
                                     <div class="notify-icon">
-                                        <img src="{{asset('assets/images/users/avatar-2.jpg')}}" class="img-fluid rounded-circle" alt="" />
+                                        <img src="{{asset('assets/images/users/avatar-2.jpg')}}"
+                                             class="img-fluid rounded-circle" alt=""/>
                                     </div>
                                 </div>
                                 <div class="flex-grow-1 text-truncate ms-2">
-                                    <h5 class="noti-item-title fw-semibold font-14">Cristina Pride <small class="fw-normal text-muted ms-1">1 day ago</small></h5>
-                                    <small class="noti-item-subtitle text-muted">Hi, How are you? What about our next meeting</small>
+                                    <h5 class="noti-item-title fw-semibold font-14">Cristina Pride <small
+                                            class="fw-normal text-muted ms-1">1 day ago</small></h5>
+                                    <small class="noti-item-subtitle text-muted">Hi, How are you? What about our next
+                                        meeting</small>
                                 </div>
                             </div>
                         </div>
@@ -132,7 +147,8 @@
                                 </div>
                                 <div class="flex-grow-1 text-truncate ms-2">
                                     <h5 class="noti-item-title fw-semibold font-14">Datacorp</h5>
-                                    <small class="noti-item-subtitle text-muted">Caleb Flakelar commented on Admin</small>
+                                    <small class="noti-item-subtitle text-muted">Caleb Flakelar commented on
+                                        Admin</small>
                                 </div>
                             </div>
                         </div>
@@ -145,12 +161,14 @@
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
                                     <div class="notify-icon">
-                                        <img src="{{asset('assets/images/users/avatar-4.jpg')}}" class="img-fluid rounded-circle" alt="" />
+                                        <img src="{{asset('assets/images/users/avatar-4.jpg')}}"
+                                             class="img-fluid rounded-circle" alt=""/>
                                     </div>
                                 </div>
                                 <div class="flex-grow-1 text-truncate ms-2">
                                     <h5 class="noti-item-title fw-semibold font-14">Karen Robinson</h5>
-                                    <small class="noti-item-subtitle text-muted">Wow ! this admin looks good and awesome design</small>
+                                    <small class="noti-item-subtitle text-muted">Wow ! this admin looks good and awesome
+                                        design</small>
                                 </div>
                             </div>
                         </div>
@@ -162,7 +180,8 @@
                 </div>
 
                 <!-- All-->
-                <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item border-top border-light py-2">
+                <a href="javascript:void(0);"
+                   class="dropdown-item text-center text-primary notify-item border-top border-light py-2">
                     View All
                 </a>
 
@@ -170,7 +189,8 @@
         </li>
 
         <li class="dropdown notification-list d-none d-sm-inline-block">
-            <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+            <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button"
+               aria-haspopup="false" aria-expanded="false">
                 <i class="dripicons-view-apps noti-icon"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg p-0">
@@ -229,14 +249,17 @@
         </li>
 
         <li class="dropdown notification-list">
-            <a class="nav-link dropdown-toggle nav-user arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+            <a class="nav-link dropdown-toggle nav-user arrow-none me-0" data-bs-toggle="dropdown" href="#"
+               role="button" aria-haspopup="false"
                aria-expanded="false">
                                     <span class="account-user-avatar">
-                                        <img src="{{asset('assets/images/users/avatar-1.jpg')}}" alt="user-image" class="rounded-circle">
+                                        <img src="{{ Auth::user()->avatar ? asset('storage/avatars/' . Auth::user()->avatar) :
+                                               asset('assets/images/users/avatar-1.jpg') }}" alt="user-image"
+                                             class="rounded-circle">
                                     </span>
                 <span>
-                                        <span class="account-user-name">Dominic Keller</span>
-                                        <span class="account-position">Founder</span>
+                                        <span class="account-user-name">{{ Auth::user()->name }}</span>
+                                        <span class="account-position">{{ ucfirst(Auth::user()->role) }}</span>
                                     </span>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown">
@@ -284,7 +307,7 @@
     <div class="app-search dropdown d-none d-lg-block">
         <form>
             <div class="input-group">
-                <input type="text" class="form-control dropdown-toggle"  placeholder="Search..." id="top-search">
+                <input type="text" class="form-control dropdown-toggle" placeholder="Search..." id="top-search">
                 <span class="mdi mdi-magnify search-icon"></span>
                 <button class="input-group-text btn-primary" type="submit">Search</button>
             </div>
@@ -323,7 +346,8 @@
                 <!-- item-->
                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                     <div class="d-flex">
-                        <img class="d-flex me-2 rounded-circle" src="assets/images/users/avatar-2.jpg" alt="Generic placeholder image" height="32">
+                        <img class="d-flex me-2 rounded-circle" src="assets/images/users/avatar-2.jpg"
+                             alt="Generic placeholder image" height="32">
                         <div class="w-100">
                             <h5 class="m-0 font-14">Erwin Brown</h5>
                             <span class="font-12 mb-0">UI Designer</span>
@@ -334,7 +358,8 @@
                 <!-- item-->
                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                     <div class="d-flex">
-                        <img class="d-flex me-2 rounded-circle" src="assets/images/users/avatar-5.jpg" alt="Generic placeholder image" height="32">
+                        <img class="d-flex me-2 rounded-circle" src="assets/images/users/avatar-5.jpg"
+                             alt="Generic placeholder image" height="32">
                         <div class="w-100">
                             <h5 class="m-0 font-14">Jacob Deo</h5>
                             <span class="font-12 mb-0">Developer</span>

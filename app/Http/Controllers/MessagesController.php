@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Messages;
+use App\Models\Messager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,12 +13,14 @@ class MessagesController extends Controller
      */
     public function index()
     {
-        $messages = Messages::with('User')
-//            ->where('deleted', 0)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $user = Auth::user();
+        $messages = Messager::where(function ($query) use ($user) {
+            $query->where('sender_id', $user->id)
+                ->orWhere('receiver_id', $user->id);
+        })->get();
 
-        return view('admin.messages.index', compact('messages'));
+
+        return view('admin.messages.index', ['messages' => $messages]);
     }
 
     /**
@@ -34,12 +36,25 @@ class MessagesController extends Controller
      */
     public function store(Request $request)
     {
-        $message = Messages::create([
-            'user_id' => Auth::id(),
+        $request->validate([
+            'receiver_id' => 'required|exists:users,id',
+            'message' => 'required|string|max:1000',
+        ]);
+
+        $message = Messager::create([
+            'sender_id' => Auth::id(),
+            'receiver_id' => $request->receiver_id,
             'message' => $request->message,
         ]);
 
-        return response()->json(['message' => $message->load('user')], 201);
+        $message->load('sender', 'receiver');
+
+        return response()->json([
+            'message' => $message->message,
+            'sender' => $message->sender,
+            'receiver' => $message->receiver,
+            'created_at' => $message->created_at->diffForHumans(),
+        ]);
     }
 
     /**
