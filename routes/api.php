@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\GoogleController;
+use App\Http\Controllers\Api\LocationController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
+Route::get('locations', [LocationController::class, 'getData']);

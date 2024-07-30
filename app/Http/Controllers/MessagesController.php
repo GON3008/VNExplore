@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Messager;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,10 +18,16 @@ class MessagesController extends Controller
         $messages = Messager::where(function ($query) use ($user) {
             $query->where('sender_id', $user->id)
                 ->orWhere('receiver_id', $user->id);
+        })->orderBy('created_at', 'desc')->get();
+
+        // add list of users with messages
+        $users = User::whereHas('sentMessages', function ($query) use ($user) {
+            $query->where('receiver_id', $user->id);
+        })->orWhereHas('receivedMessages', function ($query) use ($user) {
+            $query->where('sender_id', $user->id);
         })->get();
 
-
-        return view('admin.messages.index', ['messages' => $messages]);
+        return view('admin.messages.index', ['messages' => $messages, 'users' => $users]);
     }
 
     /**
@@ -60,15 +67,25 @@ class MessagesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $user = Auth::user();
+        $otherUser = User::findOrFail($id);
+        $messages = Messager::where(function ($query) use ($user, $otherUser) {
+            $query->where('sender_id', $user->id)
+                ->where('receiver_id', $otherUser->id);
+        })->orWhere(function($query) use ($user, $otherUser) {
+            $query->where('sender_id', $otherUser->id)
+                ->where('receiver_id', $user->id);
+        })->orderBy('created_at', 'asc')->get();
+
+        return view('admin.messages.list_chat', ['messages' => $messages, 'otherUser' => $otherUser]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
         //
     }
@@ -76,7 +93,7 @@ class MessagesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -84,7 +101,7 @@ class MessagesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         //
     }

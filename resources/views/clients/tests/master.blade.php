@@ -105,7 +105,7 @@
     @include('clients.tests.currency')
 
 
-    <!-- Choose Countries Modal -->
+    <!-- Choose Country Modal -->
     @include('clients.tests.countries')
 
     <!-- Video Modal -->

@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
+use App\Models\Messager;
 
 class User extends Authenticatable
 {
@@ -70,5 +71,15 @@ class User extends Authenticatable
     public function isLead()
     {
         return $this->role === 'lead';
+    }
+
+    public function sentMessages()
+    {
+        return $this->hasMany(Messager::class, 'sender_id');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->hasMany(Messager::class, 'receiver_id');
     }
 }

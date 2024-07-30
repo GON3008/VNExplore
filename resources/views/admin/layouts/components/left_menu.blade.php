@@ -63,15 +63,57 @@
 
             <li class="side-nav-item">
                 <a href="{{route('admin.categories.index')}}" class="side-nav-link">
-                    <i class="uil-folder-plus"></i>
+                    <i class="uil-suitcase"></i>
                     <span> Categories </span>
                 </a>
             </li>
 
             <li class="side-nav-item">
                 <a href="{{route('admin.tours.index')}}" class="side-nav-link">
-                    <i class="uil-folder-plus"></i>
+                    <i class="uil-map-pin-alt"></i>
                     <span> Tours </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="#" class="side-nav-link">
+                    <i class="uil-plane-departure"></i>
+                    <span> Flights </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="#" class="side-nav-link">
+                    <i class="uil-car-sideview"></i>
+                    <span> Cars </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="#" class="side-nav-link">
+                    <i class="uil-subway"></i>
+                    <span> Transport </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="#" class="side-nav-link">
+                    <i class="uil-building"></i>
+                    <span> Hotels </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="{{route('admin.locations.index')}}" class="side-nav-link">
+                    <i class="uil-map"></i>
+                    <span> Locations </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="#" class="side-nav-link">
+                    <i class="uil-ticket"></i>
+                    <span> Vouchers </span>
                 </a>
             </li>
 

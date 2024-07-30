@@ -253,7 +253,7 @@
                                     </li>
                                 @endif
 
-                                <li style="width: 250px">
+                                <li style="width: 230px">
                                     <a href="#">
                                         <i class="fa-solid fa-bell fs-6 me-2" style="color: #0a53be"></i>
                                         <span>Airline ticket notification</span>
