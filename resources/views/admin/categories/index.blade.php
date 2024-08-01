@@ -10,6 +10,7 @@
     </div>
 
     @include('admin.categories.modal_form')
+
 @endsection
 
 @section('scripts')

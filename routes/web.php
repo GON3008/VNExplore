@@ -11,6 +11,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\LocationsController;
+use App\Http\Controllers\VoucherController;
 
 
 
@@ -33,6 +34,7 @@ Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('locations', LocationsController::class);
     Route::get('locations/getData', [LocationsController::class, 'getData'])->name('locations.getData');
+    Route::resource('vouchers', VoucherController::class);
 });
 
 Route::middleware('auth')->group(function () {

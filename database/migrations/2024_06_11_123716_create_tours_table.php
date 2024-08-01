@@ -28,6 +28,7 @@ return new class extends Migration
             $table->integer('quantity'); // removed second argument
             $table->boolean('deleted')->default(0); // changed to boolean for clarity
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->foreignId('location_id')->constrained('locations')->onDelete('cascade');
             $table->timestamps();
         });
     }
