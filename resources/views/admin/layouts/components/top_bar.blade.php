@@ -254,7 +254,7 @@
                aria-expanded="false">
                                     <span class="account-user-avatar">
                                         <img src="{{ Auth::user()->avatar ? asset('storage/avatars/' . Auth::user()->avatar) :
-                                               asset('assets/images/users/avatar-1.jpg') }}" alt="user-image"
+                                               asset('assets/images/profile.png') }}" alt="user-image"
                                              class="rounded-circle">
                                     </span>
                 <span>

@@ -15,9 +15,6 @@ class User extends Authenticatable
     use HasFactory, Notifiable, HasApiTokens, TwoFactorAuthenticatable, HasProfilePhoto;
 
 
-    const Active = 0;
-    const Inactive = 1;
-
     protected $fillable = [
         'name',
         'email',
@@ -26,7 +23,7 @@ class User extends Authenticatable
         'address',
         'role',
         'is_verified',
-        'is_active',
+        'status',
         'is_admin',
         'avatar',
         'deleted',

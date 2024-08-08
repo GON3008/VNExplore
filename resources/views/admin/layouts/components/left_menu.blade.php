@@ -125,6 +125,13 @@
                 </a>
             </li>
 
+            <li class="side-nav-item">
+                <a href="{{route('admin.users.index')}}" class="side-nav-link">
+                    <i class="uil-users-alt"></i>
+                    <span> Users </span>
+                </a>
+            </li>
+
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarCrm" aria-expanded="false" aria-controls="sidebarCrm" class="side-nav-link">
@@ -231,12 +238,6 @@
                 </div>
             </li>
 
-            <li class="side-nav-item">
-                <a href="{{route('admin.users.index')}}" class="side-nav-link">
-                    <i class="uil-users-alt"></i>
-                    <span> Users </span>
-                </a>
-            </li>
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarTasks" aria-expanded="false" aria-controls="sidebarTasks" class="side-nav-link">

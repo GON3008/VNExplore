@@ -24,7 +24,7 @@
                         <label for="email" class="col-sm-2 control-label">Email</label>
                         <div class="col-sm-12">
                             <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email"
-                                   value="" maxlength="100">
+                                   oninput="this.value = this.value.toLowerCase();">
                             <span class="text-danger" id="email_error"></span>
                         </div>
                     </div>
@@ -39,19 +39,22 @@
                         </div>
                     </div>
 
+
                     <div class="form-group">
                         <label for="role" class="col-sm-2 control-label">Role</label>
                         <div class="col-sm-12">
                             <select class="form-control" id="role" name="role" required>
                                 <option value="">Select Role</option>
                                 @foreach(['admin', 'client', 'lead'] as $role)
-                                    <option value="{{ $role }}" {{ isset($user) && $user->role == $role ? 'selected' : '' }}>
+                                    <option
+                                        value="{{ $role }}" {{ isset($user) && $user->role == $role ? 'selected' : '' }}>
                                         {{ ucfirst($role) }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
+
 
                     <div class="form-group" id="isActiveField" style="display: none">
                         <label for="is_active" class="col-sm-2 control-label">Status</label>
@@ -63,12 +66,35 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label for="avatar" class="col-sm-2 control-label">Avatar</label>
+                        <div class="col-sm-12">
+                            <input type="file" class="form-control" id="avatar" name="avatar">
+                            <span class="text-danger" id="avatar_error"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-offset-2 col-sm-10 pt-3">
+                        <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes</button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="saveBtn" value="create">Save changes
-                </button>
             </div>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#valid_until').on('change', function () {
+            checkVoucherStatus();
+        });
+
+        function checkVoucherStatus() {
+            var validUntil = new Date($('#valid_until').val());
+            var now = new Date();
+            if (validUntil < now) {
+                $('#is_active').val('0');
+            }
+        }
+    });
+</script>

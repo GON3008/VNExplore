@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Voucher extends Model
 {
@@ -18,7 +19,7 @@ class Voucher extends Model
         'discount_amount',
         'valid_from',
         'valid_until',
-        'active',
+        'status',
         'deleted',
     ];
 
@@ -27,17 +28,17 @@ class Voucher extends Model
         parent::boot();
 
         static::creating(function ($voucher) {
-            $voucher->voucher_code = str::upper(Str::random(10));
+            $voucher->voucher_code = strtoupper(Str::random(10));
         });
     }
 
-    public function userVouchers()
+    public function useVoucher()
     {
         if ($this->quantity > 0) {
-            $this->quantity -=1;
+            $this->quantity -= 1;
             $this->save();
-        }else{
-            throw new Exception('No voucher left');
+        } else {
+            throw new \Exception('No voucher left');
         }
     }
 }

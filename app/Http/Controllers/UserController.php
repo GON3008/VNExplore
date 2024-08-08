@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use Datatables;
 class UserController extends Controller
 {
+    const PATH_UPLOAD = 'users';
     /**
      * Display a listing of the resource.
      */
@@ -25,15 +26,24 @@ class UserController extends Controller
                     </button>';
                     return $button;
                 })
-                ->editColumn('is_active' , function ($users) {
-                    if ($users->is_active == 0) {
+                ->addColumn('avatar', function ($users) {
+                    if($users->avatar){
+                        $avatarPath = asset('users/'. $users->avatar);
+                    }else{
+                        $avatarPath = asset('assets/images/profile.png');
+                    }
+                     return '<img src="' . $avatarPath . '" width="50px" height="45px"/>';
+                })
+
+                ->editColumn('status' , function ($users) {
+                    if ($users->status == 0) {
                         $span = 'Active';
                     } else {
                         $span= 'Inactive';
                     }
                     return $span;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'avatar'])
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -55,33 +65,57 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required | unique:users',
-            'password' => 'required',
-            'role' => 'required',
-            'is_active' => 'required',
-        ]);
+        $userId = $request->user_id;
+
+        $rules = [
+            'name' => ['required', 'max:50'],
+            'email' => ['required', 'email', 'unique:users,email,' . $userId],
+            'role' => ['required', 'in:admin,client,lead'],
+        ];
+
+        if (empty($userId) || !empty($request->password)) {
+            $rules['password'] = [
+                'required',
+                'min:8',
+                'max:20',
+//                'confirmed',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*#?&]/'
+            ];
+        }
+
+        $request->validate($rules);
 
         $userData = [
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
             'role' => $request->role,
-            'is_active' => $request->is_active,
+            'status' => $request->is_active,
+            'deleted' => 0,
         ];
 
-        $user = User::updateOrCreate([
-            'id' => $request->user_id,
-        ], $userData);
+        if (!empty($request->password)) {
+            $userData['password'] = bcrypt($request->password);
+        }
+
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            $avatar->move(public_path(self::PATH_UPLOAD), $filename);
+            $userData['avatar'] = $filename;
+        }
+
+        $user = User::updateOrCreate(['id' => $userId], $userData);
 
         if ($user) {
             return response()->json(['success' => 'User saved successfully.']);
-        }else{
+        } else {
             return response()->json(['error' => 'Something went wrong.']);
         }
-
     }
+
 
     /**
      * Display the specified resource.
@@ -113,6 +147,12 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::find($id);
+        if (!$user){
+            return response()->json(['error' => 'Data Not Found'], 404);
+        }
+        $user->deleted = 1;
+        $user->save();
+        return response()->json(['success' => 'Data Deleted Successfully'], 200);
     }
 }
