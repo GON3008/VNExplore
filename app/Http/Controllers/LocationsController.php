@@ -45,7 +45,7 @@ class LocationsController extends Controller
                 ->make(true);
         }
 
-        return view('admin.location.index');
+        return view('admin.locations.index');
     }
 
     public function store(Request $request)

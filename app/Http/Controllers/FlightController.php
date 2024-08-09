@@ -3,15 +3,40 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Flight;
+use Datatables;
 
 class FlightController extends Controller
 {
+    const PATH_UPLOAD = 'flights';
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        if (request()->ajax()){
+            $flights = Flight::width('category')->where('deleted', 0)->select('flights.*');
+            return datatables()->of($flights)
+                ->addColumn('action', function ($flights) {
+                    $button = '<button type="button" name="edit" id="' . $flights->id . '" class="edit btn btn-primary btn-sm">
+                    <i class="uil-edit"></i>
+                    </button>';
+                    $button .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                    $button .= '<button type="button" name="delete" id="' . $flights->id . '" class="delete btn btn-danger btn-sm">
+                    <i class=" uil-trash-alt"></i>
+                    </button>';
+                    return $button;
+                })
+                ->addColumn('image', function ($flights) {
+                    $imagePath = asset('flights/' . $flights->image);
+                    $image = '<img src="' . $imagePath . '" width="50px" height="50px"/>';
+                    return $image;
+                })
+                ->rawColumns(['action','image'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return view('admin.flights.index');
     }
 
     /**

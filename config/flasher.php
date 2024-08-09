@@ -35,7 +35,7 @@ return array(
     |---------------------------------------------------------------------------
     | Main PHPFlasher javascript file
     |---------------------------------------------------------------------------
-    | This option specifies the location of the main javascript file that is
+    | This option specifies the locations of the main javascript file that is
     | required by PHPFlasher to display notifications in your Laravel application.
     |
     | By default, PHPFlasher uses a CDN to serve the latest version of the library.
@@ -58,7 +58,7 @@ return array(
     |---------------------------------------------------------------------------
     | PHPFlasher Stylesheet
     |---------------------------------------------------------------------------
-    | This option specifies the location of the stylesheet file that is
+    | This option specifies the locations of the stylesheet file that is
     | required by PHPFlasher to style the notifications in your Laravel application.
     |
     | By default, PHPFlasher uses a CDN to serve the latest version of the stylesheet.

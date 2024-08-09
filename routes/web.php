@@ -12,6 +12,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\VoucherController;
+use App\Http\Controllers\FlightController;
+use App\Http\Controllers\CarController;
 
 
 
@@ -34,6 +36,8 @@ Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('vouchers', VoucherController::class);
     Route::resource('locations', LocationController::class);
+    Route::resource('flights', FlightController::class);
+    Route::resource('cars', CarController::class);
 });
 
 Route::middleware('auth')->group(function () {

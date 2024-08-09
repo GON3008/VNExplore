@@ -33,8 +33,8 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
 
-            $table->foreignId('departure_location_id')->constrained('locations')->onDelete('cascade');
-            $table->foreignId('arrival_location_id')->constrained('locations')->onDelete('cascade');
+            $table->foreignId('location_departure_id')->constrained('flight_locations')->onDelete('cascade');
+            $table->foreignId('location_arrival_id')->constrained('flight_locations')->onDelete('cascade');
 
             $table->foreignId('tour_id')->constrained('tours')->onDelete('cascade');
             $table->timestamps();

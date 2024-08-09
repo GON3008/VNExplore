@@ -76,14 +76,14 @@
             </li>
 
             <li class="side-nav-item">
-                <a href="#" class="side-nav-link">
+                <a href="{{route('admin.flights.index')}}" class="side-nav-link">
                     <i class="uil-plane-departure"></i>
                     <span> Flights </span>
                 </a>
             </li>
 
             <li class="side-nav-item">
-                <a href="#" class="side-nav-link">
+                <a href="{{route('admin.cars.index')}}" class="side-nav-link">
                     <i class="uil-car-sideview"></i>
                     <span> Cars </span>
                 </a>

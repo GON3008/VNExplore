@@ -258,8 +258,9 @@
                                              class="rounded-circle">
                                     </span>
                 <span>
-                                        <span class="account-user-name">{{ Auth::user()->name }}</span>
-                                        <span class="account-position">{{ ucfirst(Auth::user()->role) }}</span>
+                                        <span class="account-user-name pt-2"
+                                              style="text-transform: capitalize">{{ Auth::user()->name }}</span>
+{{--                                        <span class="account-position">{{ ucfirst(Auth::user()->role) }}</span>--}}
                                     </span>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown">

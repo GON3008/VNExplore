@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class LocationController extends Controller
+class CarController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view ('admin.locations.index');
+        return view('admin.cars.index');
     }
 
     /**

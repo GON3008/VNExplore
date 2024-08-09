@@ -5,6 +5,30 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
+/*this can be set to anything, but default usage is:
+ * production
+ * tester
+ * pre_installtion
+ * development
+ * local
+ */
+
+//define('Environment', 'production');
+//
+//if (Environment === 'pre_installtion') {
+//    $domain = $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
+//
+//    $domain = preg_replace('/index.php.*/', '', $domain); //remove everything after index.php
+//    if (!empty($_SERVER['HTTPS'])) {
+//        $domain = 'https://' . $domain;
+//    } else {
+//        $domain = 'http://' . $domain;
+//    }
+//
+//    header("Location: $domain./install/index.php");
+//    exit;
+//}
+
 /*
 |--------------------------------------------------------------------------
 | Check If The Application Is Under Maintenance
