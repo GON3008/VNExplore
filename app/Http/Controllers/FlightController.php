@@ -15,7 +15,7 @@ class FlightController extends Controller
     public function index()
     {
         if (request()->ajax()){
-            $flights = Flight::width('category')->where('deleted', 0)->select('flights.*');
+            $flights = Flight::where('deleted', 0)->select('flights.*');
             return datatables()->of($flights)
                 ->addColumn('action', function ($flights) {
                     $button = '<button type="button" name="edit" id="' . $flights->id . '" class="edit btn btn-primary btn-sm">

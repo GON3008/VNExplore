@@ -8,15 +8,27 @@
                 </span>
             </div>
             <div class="modal-body">
-                <form id="userForm" name="userForm" class="form-horizontal" enctype="multipart/form-data">
+                <form id="flightForm" name="flightForm" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="user_id" id="user_id">
+                    <input type="hidden" name="flight_id" id="flight_id">
+                    <input type="hidden" name="flight_code" id="flight_code">
+
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">Name</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name"
                                    value="" maxlength="100">
                             <span class="text-danger" id="name_error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price" class="col-sm-2 control-label">Price</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="price" name="price" placeholder="Enter Price"
+                                   value="" maxlength="100"
+                                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                            <span class="text-danger" id="price_error"></span>
                         </div>
                     </div>
 
@@ -45,7 +57,7 @@
                         <div class="col-sm-12">
                             <select class="form-control" id="role" name="role" required>
                                 <option value="">Select Role</option>
-                                @foreach(['Super Admin','admin', 'client', 'lead'] as $role)
+                                @foreach(['admin', 'client', 'lead'] as $role)
                                     <option
                                         value="{{ $role }}" {{ isset($user) && $user->role == $role ? 'selected' : '' }}>
                                         {{ ucfirst($role) }}

@@ -8,6 +8,8 @@
         </div>
         <table class="table table-bordered data-table" id="dataFlights"></table>
     </div>
+
+    @include('admin.flights.modal_form')
 @endsection
 
 @section('scripts')
@@ -22,12 +24,11 @@
             $("#dataFlights").DataTable({
                 processing: true,
                 serverSide: true,
-                scrollX: true,
                 ajax: "{{ route('admin.flights.index') }}",
                 columns: [
                     {title: 'Id', data: 'id', name: 'id'},
                     {title: 'Name', data: 'name', name: 'name'},
-                    {title: 'Image', data: 'image', name: 'image', orderable: false},
+                    // {title: 'Image', data: 'image', name: 'image'},
                     {title: 'Code', data: 'flight_code', name: 'flight_code'},
                     {title: 'Price', data: 'price', name: 'price'},
                     {title: 'Discount', data: 'price_discount', name: 'price_discount'},
@@ -35,8 +36,17 @@
                     {title: 'Departure', data: 'departure_date', name: 'departure_date'},
                     {title: 'Arrival', data: 'return_date', name: 'return_date'},
                     {title: 'Action', data: 'action', name: 'action', orderable: false, searchable: false},
-                ]
-            })
+                ],
+                "order": [[0, 'desc']]
+            });
+
+            $('#createNewFlight').click(function () {
+                $('#saveBtn').val("create-flight");
+                $('#flight_id').val('');
+                $('#flightForm').trigger("reset");
+                $('#modelHeading').html("Create New Flight");
+                $('#ajaxModel').modal('show');
+            });
         })
     </script>
 @endsection

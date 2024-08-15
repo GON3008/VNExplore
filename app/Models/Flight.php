@@ -11,7 +11,6 @@ class Flight extends Model
 
     protected $fillable = [
         'name',
-        'slug',
         'image',
         'description',
         'price',
@@ -22,7 +21,8 @@ class Flight extends Model
         'return_date',
         'flight_code',
         'departure',
-        'flight_time',
+        'flight_time_begins',
+        'flight_time_ends',
         'flight_to',
         'quantity',
         'deleted',

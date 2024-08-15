@@ -105,7 +105,9 @@
                     $('#passwordShow').hide();
                 });
             });
+
         });
+
     </script>
 
 @endsection

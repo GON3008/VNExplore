@@ -32,7 +32,7 @@ class UserController extends Controller
                     }else{
                         $avatarPath = asset('assets/images/profile.png');
                     }
-                     return '<img src="' . $avatarPath . '" width="50px" height="45px"/>';
+                     return '<img class="rounded-circle" src="' . $avatarPath . '" width="50px" height="45px"/>';
                 })
 
                 ->editColumn('status' , function ($users) {
@@ -48,7 +48,7 @@ class UserController extends Controller
                 ->make(true);
         }
         $users = User::all();
-        $roles = ['admin', 'client', 'lead'];
+        $roles = ['superAdmin','admin', 'client', 'lead'];
         return view('admin.users.index', compact('users','roles'));
     }
 
