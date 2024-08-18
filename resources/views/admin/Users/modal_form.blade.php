@@ -45,7 +45,7 @@
                         <div class="col-sm-12">
                             <select class="form-control" id="role" name="role" required>
                                 <option value="">Select Role</option>
-                                @foreach(['Super Admin','admin', 'client', 'lead'] as $role)
+                                @foreach(['SuperAdmin','admin', 'client', 'lead'] as $role)
                                     <option
                                         value="{{ $role }}" {{ isset($user) && $user->role == $role ? 'selected' : '' }}>
                                         {{ ucfirst($role) }}

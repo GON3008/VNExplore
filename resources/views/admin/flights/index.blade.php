@@ -38,7 +38,7 @@
                     {title: 'Action', data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
                 "order": [[0, 'desc']]
-            });
+            })
 
             $('#createNewFlight').click(function () {
                 $('#saveBtn').val("create-flight");

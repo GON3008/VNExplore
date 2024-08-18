@@ -70,7 +70,7 @@ class UserController extends Controller
         $rules = [
             'name' => ['required', 'max:50'],
             'email' => ['required', 'email', 'unique:users,email,' . $userId],
-            'role' => ['required', 'in:admin,client,lead'],
+            'role' => ['required', 'in:superAdmin,admin,client,lead'],
         ];
 
         if (empty($userId) || !empty($request->password)) {
