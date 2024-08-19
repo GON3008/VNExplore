@@ -93,31 +93,31 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="location_departure_id" class="col-sm-3 control-label">Location Departure</label>
-                        <div class="col-sm-12">
-                            <select class="form-control" id="location_departure_id" name="location_departure_id">
-                                <option>Select Location Departure</option>
-                                @foreach($locations as $location)
-                                    <option value="{{$location->id}}">{{$location->name}}</option>
-                                @endforeach
-                            </select>
-                            <span class="text-danger" id="departure_date_error"></span>
-                        </div>
-                    </div>
+{{--                    <div class="form-group">--}}
+{{--                        <label for="location_departure_id" class="col-sm-3 control-label">Location Departure</label>--}}
+{{--                        <div class="col-sm-12">--}}
+{{--                            <select class="form-control" id="location_departure_id" name="location_departure_id">--}}
+{{--                                <option>Select Location Departure</option>--}}
+{{--                                @foreach($locations as $location)--}}
+{{--                                    <option value="{{$location->id}}">{{$location->name}}</option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
+{{--                            <span class="text-danger" id="departure_date_error"></span>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
-                    <div class="form-group">
-                        <label for="location_arrival_id" class="col-sm-3 control-label">Location Arrival</label>
-                        <div class="col-sm-12">
-                            <select class="form-control" id="location_arrival_id" name="location_arrival_id">
-                                <option>Select Location Arrival
-                                @foreach($locations as $location)
-                                    <option value="{{$location->id}}">{{$location->name}}</option>
-                                @endforeach
-                            </select>
-                            <span class="text-danger" id="departure_date_error"></span>
-                        </div>
-                    </div>
+{{--                    <div class="form-group">--}}
+{{--                        <label for="location_arrival_id" class="col-sm-3 control-label">Location Arrival</label>--}}
+{{--                        <div class="col-sm-12">--}}
+{{--                            <select class="form-control" id="location_arrival_id" name="location_arrival_id">--}}
+{{--                                <option>Select Location Arrival--}}
+{{--                                @foreach($locations as $location)--}}
+{{--                                    <option value="{{$location->id}}">{{$location->name}}</option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
+{{--                            <span class="text-danger" id="departure_date_error"></span>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                     <div class="form-group">
                         <label for="category_id" class="col-sm-3 control-label">Category</label>

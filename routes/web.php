@@ -14,6 +14,8 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\FlightCategories_Controller;
+use App\Http\Controllers\TourCategories_Controller;
 
 
 
@@ -38,6 +40,8 @@ Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
     Route::resource('locations', LocationController::class);
     Route::resource('flights', FlightController::class);
     Route::resource('cars', CarController::class);
+    Route::resource('flightCategories', FlightCategories_Controller::class);
+    Route::resource('tourCategories', TourCategories_Controller::class);
 });
 
 Route::middleware('auth')->group(function () {
