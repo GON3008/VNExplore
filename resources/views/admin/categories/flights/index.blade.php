@@ -31,13 +31,46 @@
             }
 
             $('#createNewFlightCategory').click(function () {
-                $('#saveBtn').val("create-users");
-                $('#user_id').val('');
-                $('#userForm').trigger("reset");
-                $('#modelHeading').html("Create New Flight Category");
-                $('#ajaxModel').modal('show');
+                $('#saveBtn').val("create-flightCategory");
+                $('#flightCategory_id').val('');
+                $('#flight_categoriesForm').trigger("reset");
+                $('#modelHeadingFlight').html("Create New Flight Category");
+                $('#ajaxModelFlight').modal('show');
                 $('#isActiveField').hide();
-                $('#passwordShow').show();
+            });
+
+            $('#flight_categoriesForm').on('submit', function (e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                formData.append('id', $('#flightCategory_id').val());
+                $('#saveBtn').html('Sending...');
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('admin.flightCategories.store') }}",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        $('#ajaxModelFlight').modal('hide');
+                        var onTable = $('#flightCategoryData').DataTable();
+                        onTable.draw(false);
+                    },
+
+                    error: function (xhr) {
+                        if(xhr.responseJSON && xhr.responseJSON.errors) {
+                            let errors = xhr.responseJSON.errors;
+                            if(errors.name) {
+                                $('#name_error').text(errors.name[0]);
+                            }
+                            // Handle other potential errors in a similar manner
+                        }
+                        $('#saveBtn').html('Save changes');
+                    },
+                    error: function (data) {
+                        console.log('Error:', data);
+                    }
+                });
             });
         });
     </script>

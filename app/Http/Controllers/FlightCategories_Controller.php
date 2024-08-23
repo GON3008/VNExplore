@@ -14,7 +14,8 @@ class FlightCategories_Controller extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return datatables()->of(FlightCategories::select('flight_categories.*'))
+            $flightCategories = FlightCategories::where('deleted', 0)->select('flight_categories.*');
+            return datatables()->of($flightCategories)
                 ->addColumn('action', function ($flightCategories) {
                     $button = '<button type="button" name="edit" id="' . $flightCategories->id . '" class="edit btn btn-primary btn-sm">
 <i class="uil-edit"></i>
@@ -37,7 +38,8 @@ class FlightCategories_Controller extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
-        return view('admin.categories.flights.index');
+        $flightCategories = FlightCategories::all();
+        return view('admin.categories.flights.index', compact('flightCategories'));
     }
 
     /**
@@ -53,7 +55,22 @@ class FlightCategories_Controller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $flightCategory_id = $request->flightCategory_id;
+        $request->validate([
+            'name' => ['required', 'max:100', 'unique:flight_categories'],
+            'description' => ['nullable'],
+        ]);
+
+        $flightCategories = FlightCategories::UpdateOrCreate([
+            'id' => $flightCategory_id,
+        ],
+            [
+            'name' => $request->name,
+            'description' => $request->description,
+            'status' => $request->is_active,
+        ]);
+
+        return response()->json($flightCategories);
     }
 
     /**

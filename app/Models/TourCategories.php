@@ -13,6 +13,6 @@ class TourCategories extends Model
         'name',
         'description',
         'status',
-        'deleted'
+        'deleted',
     ];
 }

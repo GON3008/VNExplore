@@ -1,17 +1,17 @@
-<div class="modal fade" id="ajaxModelFlight" aria-hidden="true">
+<div class="modal fade" id="ajaxModelTour" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="modelHeadingFlight"></h4>
+                <h4 class="modal-title" id="modelHeadingTour"></h4>
                 <span type="button" class="close" data-bs-dismiss="modal" aria-label="Close" aria-hidden="true">
                     <i class="uil-multiply"></i>
                 </span>
             </div>
             <div class="modal-body">
-                <form id="flight_categoriesForm" name="flight_categoriesForm" class="form-horizontal"
+                <form id="tour_categoriesForm" name="tour_categoriesForm" class="form-horizontal"
                       enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="flightCategory_id" id="flightCategory_id">
+                    <input type="hidden" name="tourCategory_id" id="tourCategory_id">
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">Name</label>
                         <div class="col-sm-12">

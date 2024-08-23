@@ -106,6 +106,30 @@
                 });
             });
 
+            $('body').on('click', '.delete', function (){
+                var user_id = $(this).attr("id");
+                var url = "{{ route('admin.users.destroy', ':id') }}";
+                url = url.replace(':id', user_id);
+
+                if (confirm("Are You sure want to delete !")) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: url,
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            _method: "DELETE"
+                        },
+                        success: function (data) {
+                            var onTable = $('#dataUser').DataTable();
+                            onTable.draw(false);
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    })
+                }
+            });
+
         });
 
     </script>

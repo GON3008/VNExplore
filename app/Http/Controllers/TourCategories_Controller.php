@@ -13,7 +13,8 @@ class TourCategories_Controller extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return datatables()->of(TourCategories::select('tour_categories.*'))
+            $tourCategories = TourCategories::where('deleted', 0)->select('tour_categories.*');
+            return datatables()->of($tourCategories)
                 ->addColumn('action', function ($tourCategories) {
                     $button = '<button type="button" name="edit" id="' . $tourCategories->id . '" class="edit btn btn-primary btn-sm">
 <i class="uil-edit"></i>
@@ -36,7 +37,8 @@ class TourCategories_Controller extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
-        return view('admin.categories.tours.index');
+         $tourCategories = TourCategories::all();
+        return view('admin.categories.tours.index', compact('tourCategories'));
     }
 
     /**
@@ -52,7 +54,23 @@ class TourCategories_Controller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tourCategory_id = $request->tourCategory_id;
+
+        $request->validate([
+            'name' => ['required', 'max:100', 'unique:tour_categories'],
+            'description' => ['nullable'],
+        ]);
+
+        $tourCategories = TourCategories::UpdateOrCreate([
+            'id' => $tourCategory_id,
+        ],
+            [
+                'name' => $request->name,
+                'description' => $request->description,
+                'status' => $request->is_active,
+        ]);
+
+        return response()->json($tourCategories);
     }
 
     /**
@@ -68,7 +86,8 @@ class TourCategories_Controller extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $tourCategories = TourCategories::find($id);
+        return response()->json($tourCategories);
     }
 
     /**
@@ -84,6 +103,12 @@ class TourCategories_Controller extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $tourCategories = TourCategories::find($id);
+        if (!$tourCategories){
+            return response()->json(['error' => 'Data Not Found'], 404);
+        }
+        $tourCategories->deleted = 1;
+        $tourCategories->save();
+        return response()->json(['success' => 'Data Deleted Successfully'], 200);
     }
 }
