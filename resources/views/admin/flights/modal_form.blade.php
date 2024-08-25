@@ -124,7 +124,7 @@
                         <div class="col-sm-12">
                             <select class="form-control" id="category_id" name="category_id">
                                 <option>Select Category</option>
-                                @foreach($categories as $category)
+                                @foreach($flightCategories as $category)
                                     <option value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
                             </select>

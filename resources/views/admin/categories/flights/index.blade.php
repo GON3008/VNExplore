@@ -72,6 +72,44 @@
                     }
                 });
             });
+
+            $('body').on('click', '.edit-flight', function (){
+                var flightCategory_id = $(this).attr('id');
+                $.get("{{ route('admin.flightCategories.index') }}" + '/' + flightCategory_id + '/edit', function (data) {
+                    $('#modelHeadingFlight').html("Edit Flight Category");
+                    $('#saveBtn').val("edit-flightCategory");
+                    $('#ajaxModelFlight').modal('show');
+                    $('#flightCategory_isActiveField').show();
+                    $('#flightCategory_id').val(data.id);
+                    $('#flightCategory_isActive').val(data.status);
+                    $('#flightCategory_name').val(data.name);
+                    $('#flightCategory_description').val(data.description);
+                });
+            });
+
+            $('body').on('click', '.delete-flight', function (){
+                var flightCategory_id = $(this).attr("id");
+                var url = "{{ route('admin.flightCategories.destroy', ':id') }}";
+                url = url.replace(':id', flightCategory_id);
+
+                if (confirm("Are You sure want to delete !")) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: url,
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            _method: "DELETE"
+                        },
+                        success: function (data) {
+                            var onTable = $('#flightCategoryData').DataTable();
+                            onTable.draw(false);
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    })
+                }
+            });
         });
     </script>
 @endpush

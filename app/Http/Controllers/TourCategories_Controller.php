@@ -16,11 +16,11 @@ class TourCategories_Controller extends Controller
             $tourCategories = TourCategories::where('deleted', 0)->select('tour_categories.*');
             return datatables()->of($tourCategories)
                 ->addColumn('action', function ($tourCategories) {
-                    $button = '<button type="button" name="edit" id="' . $tourCategories->id . '" class="edit btn btn-primary btn-sm">
+                    $button = '<button type="button" name="edit" id="' . $tourCategories->id . '" class="edit-tour btn btn-primary btn-sm">
 <i class="uil-edit"></i>
 </button>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" id="' . $tourCategories->id . '" class="delete btn btn-danger btn-sm">
+                    $button .= '<button type="button" name="delete" id="' . $tourCategories->id . '" class="delete-tour btn btn-danger btn-sm">
 <i class=" uil-trash-alt"></i>
 </button>';
                     return $button;

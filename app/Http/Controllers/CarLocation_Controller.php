@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class Tour_LocationController extends Controller
+class CarLocation_Controller extends Controller
 {
     /**
      * Display a listing of the resource.

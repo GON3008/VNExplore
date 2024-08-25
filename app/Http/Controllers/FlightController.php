@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categories;
+use App\Models\FlightCategories;
 use Illuminate\Http\Request;
 use App\Models\Flight;
 use Datatables;
@@ -16,7 +16,7 @@ class FlightController extends Controller
     public function index()
     {
         if (request()->ajax()){
-            $flights = Flight::with('category','location')->where('deleted', 0)->select('flights.*');
+            $flights = Flight::with('flightCategories','location')->where('deleted', 0)->select('flights.*');
             return datatables()->of($flights)
                 ->addColumn('action', function ($flights) {
                     $button = '<button type="button" name="edit" id="' . $flights->id . '" class="edit btn btn-primary btn-sm">
@@ -37,8 +37,8 @@ class FlightController extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
-        $categories= Categories::all();
-        return view('admin.flights.index', compact('categories'));
+        $flightCategories= FlightCategories::all();
+        return view('admin.flights.index', compact('flightCategories'));
     }
 
     /**

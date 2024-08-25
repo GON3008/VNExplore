@@ -1,11 +1,11 @@
 <div class="tab-pane show active" id="tour_category">
     <div class="py-3">
         <a href="javascript:void(0)" class="btn btn-success" id="createNewTourCategory">Add Tour Category</a>
-        <form action="" method="POST" enctype="multipart/form-data" class="mt-3">
-            @csrf
-            <input type="file" name="file" class="form-control" required>
-            <button type="submit" class="btn btn-primary mt-2">Import Tour Categories</button>
-        </form>
+{{--        <form action="" method="POST" enctype="multipart/form-data" class="mt-3">--}}
+{{--            @csrf--}}
+{{--            <input type="file" name="file" class="form-control" required>--}}
+{{--            <button type="submit" class="btn btn-primary mt-2">Import Tour Categories</button>--}}
+{{--        </form>--}}
     </div>
     <table class="table table-bordered data-table" id="tourCategoryData"></table>
 
@@ -32,7 +32,17 @@
                         {title: 'Action', data: 'action', name: 'action', orderable: false, searchable: false},
                     ],
                     "order": [[0, 'desc']],
-                    "autoWidth": false
+                    "autoWidth": false,
+                    // dom: 'Bfrtip',
+                    // buttons: [
+                    //     {
+                    //         extend: 'excelHtml5',
+                    //         text: 'Export to Excel',
+                    //         exportOptions: {
+                    //             columns: ':visible:not(:last-child)'
+                    //         }
+                    //     },
+                    // ],
                 });
             }
             $('#createNewTourCategory').click(function () {
@@ -78,21 +88,21 @@
                 });
             });
 
-            $('body').on('click', '.edit', function () {
+            $('body').on('click', '.edit-tour', function () {
                 var tourCategory_id = $(this).attr('id');
                 $.get("{{ route('admin.tourCategories.index') }}" + '/' + tourCategory_id + '/edit', function (data) {
                     $('#modelHeadingTour').html("Edit Tour Category");
                     $('#saveBtn').val("edit-tourCategory");
                     $('#ajaxModelTour').modal('show');
-                    $('#isActiveField').show();
+                    $('#tourCategory_isActiveField').show();
                     $('#tourCategory_id').val(data.id);
-                    $('#is_active').val(data.status);
-                    $('#name').val(data.name);
-                    $('#description').val(data.description);
+                    $('#tourCategory_isActive').val(data.status);
+                    $('#tourCategory_name').val(data.name);
+                    $('#tourCategory_description').val(data.description);
                 })
             });
 
-            $('body').on('click', '.delete', function (){
+            $('body').on('click', '.delete-tour', function (){
                 var tourCategory_id = $(this).attr("id");
                 var url = "{{ route('admin.tourCategories.destroy', ':id') }}";
                 url = url.replace(':id', tourCategory_id);

@@ -2,18 +2,24 @@
 
 @section('content')
     <div class="container">
-        <h2>Locations</h2>
-        <div class="py-3">
-{{--            <a href="{{route('admin.locations.flights_location.index')}}" class="btn btn-success" id="createNewLocation">Flight Location</a>--}}
-{{--            <a href="{{route('admin.locations.hotel_location.index')}}" class="btn btn-success" id="createNewLocation">Hotel Location</a>--}}
-{{--            <a href="{{route('admin.locations.car_location.index')}}" class="btn btn-success" id="createNewLocation">Car Location</a>--}}
-{{--            <a href="{{route('admin.locations.tour_location.index')}}" class="btn btn-success" id="createNewLocation">Tour Location</a>--}}
-        </div>
+        <h2>Location</h2>
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" href="#tour_location" data-bs-toggle="tab" data-bs-target="#tour_location">Tour Locations</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" href="#flight_location" data-bs-toggle="tab" data-bs-target="#flight_location">Flight Locations</button>
+            </li>
+        </ul>
 
-        @include('admin.locations.car_location')
+        <div class="tab-content">
+            @include('admin.locations.tour_location.index')
+            @include('admin.locations.flight_location.index')
+        </div>
     </div>
 @endsection
 
 @section('scripts')
-    <script type="text/javascript"></script>
+    @stack('scripts')
 @endsection
+

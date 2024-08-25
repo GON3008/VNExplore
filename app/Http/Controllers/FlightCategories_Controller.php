@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\FlightCategories;
 use Datatables;
+use function Pest\Laravel\json;
 
 class FlightCategories_Controller extends Controller
 {
@@ -17,11 +18,11 @@ class FlightCategories_Controller extends Controller
             $flightCategories = FlightCategories::where('deleted', 0)->select('flight_categories.*');
             return datatables()->of($flightCategories)
                 ->addColumn('action', function ($flightCategories) {
-                    $button = '<button type="button" name="edit" id="' . $flightCategories->id . '" class="edit btn btn-primary btn-sm">
+                    $button = '<button type="button" name="edit" id="' . $flightCategories->id . '" class="edit-flight btn btn-primary btn-sm">
 <i class="uil-edit"></i>
 </button>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" id="' . $flightCategories->id . '" class="delete btn btn-danger btn-sm">
+                    $button .= '<button type="button" name="delete" id="' . $flightCategories->id . '" class="delete-flight btn btn-danger btn-sm">
 <i class=" uil-trash-alt"></i>
 </button>';
                     return $button;
@@ -86,7 +87,8 @@ class FlightCategories_Controller extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $flightCategories = FlightCategories::find($id);
+        return response()->json($flightCategories);
     }
 
     /**
@@ -94,7 +96,7 @@ class FlightCategories_Controller extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+       //
     }
 
     /**
@@ -102,6 +104,12 @@ class FlightCategories_Controller extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $flightCategories = FlightCategories::find($id);
+        if (!$flightCategories){
+            return response()->json(['error' => 'Data Not Found'], 404);
+        }
+        $flightCategories->deleted = 1;
+        $flightCategories->save();
+        return response()->json(['success' => 'Data Deleted Successfully'], 200);
     }
 }

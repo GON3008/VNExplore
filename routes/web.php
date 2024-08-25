@@ -16,6 +16,9 @@ use App\Http\Controllers\FlightController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\FlightCategories_Controller;
 use App\Http\Controllers\TourCategories_Controller;
+use App\Http\Controllers\TourLocation_Controller;
+use App\Http\Controllers\FlightLocation_Controller;
+use App\Http\Controllers\CarLocation_Controller;
 
 
 
@@ -42,6 +45,9 @@ Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
     Route::resource('cars', CarController::class);
     Route::resource('flightCategories', FlightCategories_Controller::class);
     Route::resource('tourCategories', TourCategories_Controller::class);
+    Route::resource('tourLocations', TourLocation_Controller::class);
+    Route::resource('flightLocations', FlightLocation_Controller::class);
+    Route::resource('carLocations', CarLocation_Controller::class);
 });
 
 Route::middleware('auth')->group(function () {
