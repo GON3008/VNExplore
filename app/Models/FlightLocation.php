@@ -14,6 +14,7 @@ class FlightLocation extends Model
         'flight_country',
         'flight_district',
         'flight_ward',
+        'symbol',
         'deleted',
     ];
 }

@@ -48,6 +48,15 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label for="symbol" class="col-sm-2 control-label">Symbol</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control"
+                                   id="symbol" name="symbol" placeholder="Enter Symbol Name" value=""
+                                   maxlength="100">
+                        </div>
+                    </div>
+
                     <div class="col-sm-offset-2 col-sm-10 pt-3">
                         <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes</button>
                     </div>

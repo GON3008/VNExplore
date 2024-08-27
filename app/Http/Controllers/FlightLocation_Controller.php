@@ -52,17 +52,22 @@ class FlightLocation_Controller extends Controller
 
         $rules = [
             'flight_country' => ['required', 'max:100'],
-            'flight_city' => ['required', 'max:100'],
+            'flight_city' => ['required', 'max:100', 'unique:flight_locations,flight_city,' . $flightLocation_id],
             'flight_district' => ['required', 'max:100'],
             'flight_ward' => ['required', 'max:100'],
+            'symbol' => ['required', 'max:100', 'unique:flight_locations,symbol,' . $flightLocation_id],
         ];
 
-        $uniqueFields = ['flight_country', 'flight_city', 'flight_district', 'flight_ward'];
-        foreach ($uniqueFields as $field) {
-            if (!$flightLocation_id || FlightLocation::where('id', $flightLocation_id)->value($field) !== $request->$field) {
-                $rules[$field][] = 'unique:flight_locations,' . $field;
-            }
+        if (!$flightLocation_id || FlightLocation::where('id', $flightLocation_id)->value('flight_city') !== $request->flight_city) {
+            $rules['flight_city'][] = 'unique:flight_locations,flight_city';
         }
+
+        if (!$flightLocation_id || FlightLocation::where('id', $flightLocation_id)->value('symbol') !== $request->symbol) {
+            $rules['symbol'][] = 'unique:flight_locations,symbol';
+        }
+
+        $request->validate($rules);
+
 
 
         $request->validate($rules);
@@ -74,6 +79,7 @@ class FlightLocation_Controller extends Controller
                 'flight_city' => $request->flight_city,
                 'flight_district' => $request->flight_district,
                 'flight_ward' => $request->flight_ward,
+                'symbol' => $request->symbol,
             ]
         );
 

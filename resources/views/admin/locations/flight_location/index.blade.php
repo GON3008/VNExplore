@@ -24,6 +24,7 @@
                         {title: 'Flight City', data: 'flight_city', name: 'flight_city'},
                         {title: 'Flight District', data: 'flight_district', name: 'flight_district'},
                         {title: 'Flight Ward', data: 'flight_ward', name: 'flight_ward'},
+                        {title: 'Symbol', data: 'symbol', name: 'symbol'},
                         {title: 'Action', data: 'action', name: 'action', orderable: false, searchable: false},
                     ],
                     "order": [[0, 'desc']],
@@ -86,6 +87,7 @@
                     $('#flight_city').val(data.flight_city);
                     $('#flight_district').val(data.flight_district);
                     $('#flight_ward').val(data.flight_ward);
+                    $('#symbol').val(data.symbol);
                 });
             });
 
