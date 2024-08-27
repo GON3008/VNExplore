@@ -51,7 +51,7 @@
                 $('#tour_categoriesForm').trigger("reset");
                 $('#modelHeadingTour').html("Create New Tour Category");
                 $('#ajaxModelTour').modal('show');
-                $('#isActiveField').hide();
+                $('#tourCategory_isActiveField').hide();
             });
 
             $('#tour_categoriesForm').on('submit', function (e) {
@@ -70,6 +70,9 @@
                         $('#ajaxModelTour').modal('hide');
                         var onTable = $('#tourCategoryData').DataTable();
                         onTable.draw(false);
+                        // Reset form after successful edit or create
+                        $('#tour_categoriesForm').trigger("reset");
+                        $('#saveBtn').html('Save changes');
                     },
 
                     error: function (xhr) {

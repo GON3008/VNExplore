@@ -56,21 +56,28 @@ class TourCategories_Controller extends Controller
     {
         $tourCategory_id = $request->tourCategory_id;
 
-        $request->validate([
-            'name' => ['required', 'max:100', 'unique:tour_categories'],
+        $rules = [
+            'name' => ['required', 'max:100'],
             'description' => ['nullable'],
-        ]);
+        ];
 
-        $tourCategories = TourCategories::UpdateOrCreate([
-            'id' => $tourCategory_id,
-        ],
+        if (!$tourCategory_id || TourCategories::where('id', $tourCategory_id)->value('name') !== $request->name) {
+            $rules['name'][] = 'unique:tour_categories';
+        }
+
+        $request->validate($rules);
+
+        $tourCategories = TourCategories::updateOrCreate(
+            ['id' => $tourCategory_id],
             [
                 'name' => $request->name,
                 'description' => $request->description,
                 'status' => $request->is_active,
-        ]);
+            ]
+        );
 
         return response()->json($tourCategories);
+
     }
 
     /**

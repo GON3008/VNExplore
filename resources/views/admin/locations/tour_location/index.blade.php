@@ -1,4 +1,4 @@
-<div class="tab-pane" id="tour_location">
+<div class="tab-pane show active" id="tour_location">
     <div class="py-3">
         <a href="javascript:void(0)" class="btn btn-success" id="createNewTourLocation">Add Tour Location</a>
     </div>
@@ -20,8 +20,8 @@
                     ajax: ajaxUrl,
                     columns: [
                         {title: 'ID', data: 'id', name: 'id'},
-                        {title: 'Tour City', data: 'tour_city', name: 'tour_city'},
                         {title: 'Tour Country', data: 'tour_country', name: 'tour_country'},
+                        {title: 'Tour City', data: 'tour_city', name: 'tour_city'},
                         {title: 'Tour District', data: 'tour_district', name: 'tour_district'},
                         {title: 'Tour Ward', data: 'tour_ward', name: 'tour_ward'},
                         {title: 'Action', data: 'action', name: 'action', orderable: false, searchable: false},
@@ -40,7 +40,7 @@
                 $('#isActiveField').hide();
             });
 
-            $('#tour_categoriesForm').on('submit', function (e) {
+            $('#tour_locationForm').on('submit', function (e) {
                 e.preventDefault();
                 var formData = new FormData(this);
                 formData.append('id', $('#tourLocation_id').val());
@@ -82,9 +82,10 @@
                     $('#ajaxModelTour').modal('show');
                     $('#tourLocation_isActiveField').show();
                     $('#tourLocation_id').val(data.id);
-                    $('#tourLocation_isActive').val(data.status);
-                    $('#tourLocation_name').val(data.name);
-                    $('#tourLocation_description').val(data.description);
+                    $('#tour_country').val(data.tour_country);
+                    $('#tour_city').val(data.tour_city);
+                    $('#tour_district').val(data.tour_district);
+                    $('#tour_ward').val(data.tour_ward);
                 });
             });
 

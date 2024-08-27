@@ -18,23 +18,15 @@ class FlightLocation_Controller extends Controller
             $flightLocations= FlightLocation::where('deleted', 0)->select('flight_locations.*');
             return datatables()->of($flightLocations)
                 ->addColumn('action', function ($flightLocations) {
-                    $button = '<button type="button" name="edit" id="' . $flightLocations->id . '" class="edit-tour btn btn-primary btn-sm">
+                    $button = '<button type="button" name="edit" id="' . $flightLocations->id . '" class="edit-flight btn btn-primary btn-sm">
 <i class="uil-edit"></i>
 </button>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" id="' . $flightLocations->id . '" class="delete-tour btn btn-danger btn-sm">
+                    $button .= '<button type="button" name="delete" id="' . $flightLocations->id . '" class="delete-flight btn btn-danger btn-sm">
 <i class=" uil-trash-alt"></i>
 </button>';
                     return $button;
                 })
-//                ->editColumn('status', function ($flightLocations) {
-//                    if ($flightLocations->status == 0) {
-//                        $span = 'Active';
-//                    } else {
-//                        $span = 'Inactive';
-//                    }
-//                    return $span;
-//                })
                 ->rawColumns(['action'])
                 ->addIndexColumn()
                 ->make(true);
@@ -56,7 +48,36 @@ class FlightLocation_Controller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $flightLocation_id = $request->flightLocation_id;
+
+        $rules = [
+            'flight_country' => ['required', 'max:100'],
+            'flight_city' => ['required', 'max:100'],
+            'flight_district' => ['required', 'max:100'],
+            'flight_ward' => ['required', 'max:100'],
+        ];
+
+        $uniqueFields = ['flight_country', 'flight_city', 'flight_district', 'flight_ward'];
+        foreach ($uniqueFields as $field) {
+            if (!$flightLocation_id || FlightLocation::where('id', $flightLocation_id)->value($field) !== $request->$field) {
+                $rules[$field][] = 'unique:flight_locations,' . $field;
+            }
+        }
+
+
+        $request->validate($rules);
+
+        $flightLocaions = FlightLocation::updateOrCreate(
+            ['id' => $flightLocation_id],
+            [
+                'flight_country' => $request->flight_country,
+                'flight_city' => $request->flight_city,
+                'flight_district' => $request->flight_district,
+                'flight_ward' => $request->flight_ward,
+            ]
+        );
+
+        return response()->json($flightLocaions);
     }
 
     /**
@@ -72,7 +93,8 @@ class FlightLocation_Controller extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $flightLocations = FlightLocation::find($id);
+        return response()->json($flightLocations);
     }
 
     /**
@@ -88,6 +110,14 @@ class FlightLocation_Controller extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $flightLocations = FlightLocation::find($id);
+
+        if(!$flightLocations){
+            return response()->json(['error' => 'Data Not Found'], 404);
+        }
+        $flightLocations->deleted = 1;
+        $flightLocations->save();
+
+        return response()->json(['success' => 'Data Delete Successfully'], 200);
     }
 }

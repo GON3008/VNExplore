@@ -46,7 +46,36 @@ class TourLocation_Controller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tourLocation_id = $request->tourLocation_id;
+
+        $rules = [
+            'tour_country' => ['required', 'max:100'],
+            'tour_city' => ['required', 'max:100'],
+            'tour_district' => ['required', 'max:100'],
+            'tour_ward' => ['required', 'max:100'],
+        ];
+
+        $uniqueFields = ['tour_country', 'tour_city', 'tour_district', 'tour_ward'];
+        foreach ($uniqueFields as $field) {
+            if (!$tourLocation_id || TourLocation::where('id', $tourLocation_id)->value($field) !== $request->$field) {
+                $rules[$field][] = 'unique:tour_locations,' . $field;
+            }
+        }
+
+
+        $request->validate($rules);
+
+        $tourLocaions = TourLocation::updateOrCreate(
+            ['id' => $tourLocation_id],
+            [
+                'tour_country' => $request->tour_country,
+                'tour_city' => $request->tour_city,
+                'tour_district' => $request->tour_district,
+                'tour_ward' => $request->tour_ward,
+            ]
+        );
+
+        return response()->json($tourLocaions);
     }
 
     /**
@@ -62,7 +91,9 @@ class TourLocation_Controller extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $tourLocations = TourLocation::find($id);
+
+        return response()->json($tourLocations);
     }
 
     /**
@@ -78,6 +109,14 @@ class TourLocation_Controller extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $tourLocations = TourLocation::find($id);
+
+        if(!$tourLocations){
+            return response()->json(['error' => 'Data Not Found'], 404);
+        }
+
+        $tourLocations->deleted = 1;
+        $tourLocations->save();
+        return response()->json(['success' => 'Data Delete Successfully'], 200);
     }
 }
