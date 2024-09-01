@@ -1,25 +1,24 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\ToursController;
-use App\Http\Controllers\GalleriesController;
-use App\Http\Controllers\MessagesController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\CarLocation_Controller;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\clients\HomeController;
+use App\Http\Controllers\FlightCategories_Controller;
+use App\Http\Controllers\FlightController;
+use App\Http\Controllers\FlightLocation_Controller;
+use App\Http\Controllers\GalleriesController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\LocationController;
-use App\Http\Controllers\VoucherController;
-use App\Http\Controllers\FlightController;
-use App\Http\Controllers\CarController;
-use App\Http\Controllers\FlightCategories_Controller;
+use App\Http\Controllers\MessagesController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TourCategories_Controller;
 use App\Http\Controllers\TourLocation_Controller;
-use App\Http\Controllers\FlightLocation_Controller;
-use App\Http\Controllers\CarLocation_Controller;
-
+use App\Http\Controllers\ToursController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\VoucherController;
+use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');

@@ -34,7 +34,7 @@
             $('#createNewTourLocation').click(function () {
                 $('#saveBtn').val("create-tourLocation");
                 $('#tourLocation_id').val('');
-                $('#tour_categoriesForm').trigger("reset");
+                $('#tour_locationForm').trigger("reset");
                 $('#modelHeadingTour').html("Create New Tour Location");
                 $('#ajaxModelTour').modal('show');
                 $('#isActiveField').hide();

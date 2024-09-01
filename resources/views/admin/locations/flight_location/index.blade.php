@@ -35,7 +35,7 @@
             $('#createNewFlightLocation').click(function () {
                 $('#saveBtn').val("create-flightLocation");
                 $('#flightLocation_id').val('');
-                $('#flight_categoriesForm').trigger("reset");
+                $('#flight_locationForm').trigger("reset");
                 $('#modelHeadingFlight').html("Create New Flight Location");
                 $('#ajaxModelFlight').modal('show');
                 $('#isActiveField').hide();

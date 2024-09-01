@@ -56,6 +56,15 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label for="quantity" class="col-sm-3 control-label">Flight Quantity</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="quantity" name="quantity"
+                                   placeholder="Enter Flight Quantity">
+                            <span class="text-danger" id="flight_number_error"></span>
+                        </div>
+                    </div>
+
 
                     <div class="form-group">
                         <label for="departure_date" class="col-sm-3 control-label">Start Date</label>
