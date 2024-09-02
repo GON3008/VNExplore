@@ -45,6 +45,7 @@
     <!-- ============================================================== -->
     <!-- Start Navigation -->
    @include('clients.tests.header')
+    @yield('header')
     <!-- End Navigation -->
     <div class="clearfix"></div>
     <!-- ============================================================== -->

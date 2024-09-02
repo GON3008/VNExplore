@@ -1,9 +1,8 @@
 <?php
-
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CarLocation_Controller;
-use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\ListCategories_Controller;
 use App\Http\Controllers\clients\HomeController;
 use App\Http\Controllers\FlightCategories_Controller;
 use App\Http\Controllers\FlightController;
@@ -18,10 +17,15 @@ use App\Http\Controllers\TourLocation_Controller;
 use App\Http\Controllers\ToursController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\HotelCategories_Controller;
+
+use App\Http\Controllers\clients\ClientsHotelController;
 use Illuminate\Support\Facades\Route;
 
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/hotels', [ClientsHotelController::class, 'index'])->name('hotels');
+
 
 
 
@@ -33,6 +37,7 @@ Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
         return view('admin.dashboard');
     })->name('dashboard');
 
+    Route::resource('listCategories', ListCategories_Controller::class);
     Route::resource('categories', CategoriesController::class);
     Route::resource('tours', ToursController::class);
     Route::resource('galleries', GalleriesController::class);
@@ -44,6 +49,7 @@ Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
     Route::resource('cars', CarController::class);
     Route::resource('flightCategories', FlightCategories_Controller::class);
     Route::resource('tourCategories', TourCategories_Controller::class);
+    Route::resource('hotelCategories', HotelCategories_Controller::class);
     Route::resource('tourLocations', TourLocation_Controller::class);
     Route::resource('flightLocations', FlightLocation_Controller::class);
     Route::resource('carLocations', CarLocation_Controller::class);

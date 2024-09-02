@@ -1,4 +1,4 @@
-<div class="tab-pane show active" id="tour_category">
+<div class="tab-pane" id="tour_category">
     <div class="py-3">
         <a href="javascript:void(0)" class="btn btn-success" id="createNewTourCategory">Add Tour Category</a>
 {{--        <form action="" method="POST" enctype="multipart/form-data" class="mt-3">--}}

@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\clients;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class FlightController extends Controller
+class HotelCategories_Controller extends Controller
 {
     /**
      * Display a listing of the resource.
