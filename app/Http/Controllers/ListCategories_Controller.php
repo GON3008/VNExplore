@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Categories;
+use App\Models\ListCategories;
 use Datatables;
 class ListCategories_Controller extends Controller
 {
@@ -14,7 +14,7 @@ class ListCategories_Controller extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return datatables()->of(Categories::select('id', 'name', 'description'))
+            return datatables()->of(ListCategories::select('id', 'name', 'description'))
                 ->addColumn('action', function ($categories) {
                     $button = '<button type="button" name="edit" id="' . $categories->id . '" class="edit-listCategory btn btn-primary btn-sm">
 <i class="uil-edit"></i>
@@ -50,7 +50,7 @@ class ListCategories_Controller extends Controller
             'description' => ['nullable'],
         ]);
 
-        $categories = Categories::UpdateOrCreate([
+        $categories = ListCategories::UpdateOrCreate([
             'id' => $request->category_id,
         ],
             [
@@ -74,7 +74,7 @@ class ListCategories_Controller extends Controller
      */
     public function edit($id)
     {
-        $categories = Categories::find($id);
+        $categories = ListCategories::find($id);
         toastr()->success('Category successfully updated');
         return response()->json($categories);
     }
@@ -92,7 +92,7 @@ class ListCategories_Controller extends Controller
      */
     public function destroy(string $id)
     {
-        $categories = Categories::find($id);
+        $categories = ListCategories::find($id);
         if ($categories) {
             $categories->delete();
             return response()->json(['success' => 'Data Deleted Successfully']);

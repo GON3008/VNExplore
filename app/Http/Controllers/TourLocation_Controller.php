@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TourLocation;
 use Illuminate\Http\Request;
+use Datatables;
 
 class TourLocation_Controller extends Controller
 {

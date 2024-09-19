@@ -31,6 +31,18 @@
                         </div>
                     </div>
 
+{{--                    <div class="form-group">--}}
+{{--                        <label for="category_id" class="col-sm-2 control-label">Category</label>--}}
+{{--                        <div class="col-sm-12">--}}
+{{--                            <select class="form-control" id="category_id" name="category_id">--}}
+{{--                                <option value="0">Select Category</option>--}}
+{{--                                @foreach($listCategories as $category)--}}
+{{--                                    <option value="{{ $category->id }}">{{ $category->name }}</option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
                     <div class="form-group">
                         <label for="tourCategory_description" class="col-sm-2 control-label">Description</label>
                         <div class="col-sm-12">

@@ -99,7 +99,14 @@
             <li class="side-nav-item">
                 <a href="#" class="side-nav-link">
                     <i class="uil-building"></i>
-                    <span> Hotels </span>
+                    <span> Hotels Room </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="#" class="side-nav-link">
+                    <i class="room-service"></i>
+                    <span>Hotel Services</span>
                 </a>
             </li>
 

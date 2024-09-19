@@ -68,8 +68,6 @@ class FlightLocation_Controller extends Controller
 
         $request->validate($rules);
 
-
-
         $request->validate($rules);
 
         $flightLocaions = FlightLocation::updateOrCreate(

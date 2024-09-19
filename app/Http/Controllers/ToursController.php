@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Galleries_tour;
+use App\Models\TourCategories;
 use App\Models\Tours;
-use App\Models\Categories;
+use App\Models\ListCategories;
 use Illuminate\Http\Request;
 use Datatables;
 class ToursController extends Controller
@@ -40,7 +41,7 @@ class ToursController extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
-        $categories = Categories::all();
+        $categories = TourCategories::all();
         return view('admin.tours.index', compact('categories'));
     }
 

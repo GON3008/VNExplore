@@ -27,7 +27,8 @@
                     {title: 'Description', data: 'description', name: 'description'},
                     {title: 'Action', data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
-                "order": [[0, 'desc']]
+                "order": [[0, 'desc']],
+                "autoWidth": false,
             });
 
             $('#createNewCategory').click(function () {

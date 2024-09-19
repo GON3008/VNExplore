@@ -4,7 +4,7 @@
 {{--        <form action="" method="POST" enctype="multipart/form-data" class="mt-3">--}}
 {{--            @csrf--}}
 {{--            <input type="file" name="file" class="form-control" required>--}}
-{{--            <button type="submit" class="btn btn-primary mt-2">Import Tour Categories</button>--}}
+{{--            <button type="submit" class="btn btn-primary mt-2">Import Tour ListCategories</button>--}}
 {{--        </form>--}}
     </div>
     <table class="table table-bordered data-table" id="tourCategoryData"></table>
@@ -101,6 +101,7 @@
                     $('#tourCategory_id').val(data.id);
                     $('#tourCategory_isActive').val(data.status);
                     $('#tourCategory_name').val(data.name);
+                    // $('#category_id').val(data.category_id);
                     $('#tourCategory_description').val(data.description);
                 })
             });

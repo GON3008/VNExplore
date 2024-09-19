@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100);
             $table->text('description')->nullable();
-            $table->string('image')->nullable();
-            $table->unsignedTinyInteger('rating')->default(1)->nullable();
-            $table->boolean('is_active')->default(0);
+            $table->text('images')->nullable();
+            $table->boolean('status')->default(0);
+            $table->boolean('rating')->default(1);
             $table->boolean('deleted')->default(0);
+            $table->foreignId('list_categories_id')->constrained('list_categories')->onDelete('cascade');
+            $table->foreignId('hotel_location_id')->constrained('hotel_locations')->onDelete('cascade');
+            $table->foreignId('hotel_service_id')->constrained('hotel_services')->onDelete('cascade');
             $table->timestamps();
         });
     }

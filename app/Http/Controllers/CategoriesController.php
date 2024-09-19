@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ListCategories;
 use Illuminate\Http\Request;
+use Termwind\Components\Li;
 
 class CategoriesController extends Controller
 {
     public function index(){
-        return view ('admin.categories.index');
+        $listCategories = ListCategories::all();
+        return view ('admin.categories.index', compact('listCategories'));
     }
 }

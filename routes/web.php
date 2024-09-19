@@ -19,6 +19,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\HotelCategories_Controller;
+use App\Http\Controllers\admin\HotelLocation_Controller;
 
 use App\Http\Controllers\clients\ClientsHotelController;
 use Illuminate\Support\Facades\Route;
@@ -50,6 +51,7 @@ Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
     Route::resource('flightCategories', FlightCategories_Controller::class);
     Route::resource('tourCategories', TourCategories_Controller::class);
     Route::resource('hotelCategories', HotelCategories_Controller::class);
+    Route::resource('hotelLocations', HotelLocation_Controller::class);
     Route::resource('tourLocations', TourLocation_Controller::class);
     Route::resource('flightLocations', FlightLocation_Controller::class);
     Route::resource('carLocations', CarLocation_Controller::class);
