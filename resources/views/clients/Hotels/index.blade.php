@@ -27,7 +27,7 @@
                                 <div class="d-flex align-items-center justify-content-start">
                                     <div class="d-inline-block">
                                         @for ($i = 1; $i <= 5; $i++)
-                                            @if ($i <= $item->rating)
+                                            @if ($i <= $item->hotelCategory_rating)
                                                 <i class="fas fa-star" style="color: gold"></i> <!-- full star icon -->
                                             @else
                                                 <i class="far fa-star" style="color: gold"></i> <!-- empty star icon -->
@@ -35,7 +35,7 @@
                                         @endfor
                                     </div>
                                 </div>
-                                <h4 class="fs-5 fw-bold mb-1">{{$item->name}}</h4>
+                                <h4 class="fs-5 fw-bold mb-1">{{$item->hotelCategory_name}}</h4>
                                 <ul class="row gx-2 p-0 excortio">
                                     <li class="col-auto">
                                         <p class="text-muted-2 text-md">Waterloo and Southwark</p>
@@ -100,7 +100,11 @@
                                 <div
                                     class="d-flex align-items-center justify-content-start justify-content-md-end">
                                     <div class="text-muted-2 fw-medium text-decoration-line-through me-2">
-                                        US$79
+                                        @if($item->lowest_room_price)
+                                            ${{$item->lowest_room_price}}
+                                        @else
+                                            Not Available
+                                        @endif
                                     </div>
                                     <div class="text-dark fw-bold fs-3">$59</div>
                                 </div>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FlightCategories;
+use App\Models\HotelLocation;
 use Illuminate\Http\Request;
 use App\Models\ListCategories;
 use App\Models\HotelCategories;
@@ -18,28 +18,28 @@ class HotelCategories_Controller extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $hotelCategories = HotelCategories::with('category')->where('deleted', 0)->select('hotel_categories.*');
+            $hotelCategories = HotelCategories::with('category', 'location', 'service')
+                ->where('hotelCategory_deleted', 1)
+                ->select('hotel_categories.*');
 
-            return datatables()->of($hotelCategories)
+            return datatables()
+                ->of($hotelCategories)
                 ->addColumn('action', function ($hotelCategories) {
                     $button = '<button type="button" name="edit" id="' . $hotelCategories->id . '" class="edit-hotel btn btn-primary btn-sm">
-<i class="uil-edit"></i>
-</button>';
+                <i class="uil-edit"></i></button>';
                     $button .= '&nbsp;&nbsp;';
                     $button .= '<button type="button" name="delete" id="' . $hotelCategories->id . '" class="delete-hotel btn btn-danger btn-sm">
-<i class="uil-trash-alt"></i>
-</button>';
+                <i class="uil-trash-alt"></i></button>';
                     return $button;
                 })
-                ->addColumn('images', function ($hotelCategories) {
+                ->addColumn('hotelCategory_images', function ($hotelCategories) {
                     $images = explode(',', $hotelCategories->images);
-
                     $firstImage = $images[0] ?? 'default-image.jpg';
                     $imagePath = asset('HotelCategories/' . $firstImage);
 
                     return '<img src="' . $imagePath . '" width="50px" height="50px"/>';
                 })
-                ->editColumn('status', function ($hotelCategories) {
+                ->editColumn('hotelCategory_status', function ($hotelCategories) {
                     return $hotelCategories->status == 0 ? 'Active' : 'Inactive';
                 })
                 ->rawColumns(['action', 'images'])
@@ -47,7 +47,12 @@ class HotelCategories_Controller extends Controller
                 ->make(true);
         }
 
-        return view('admin.categories.hotels.index');
+        // Get the required data for the form
+        $hotelLocations = HotelLocation::all();
+        $listCategories = ListCategories::all();
+
+        // Pass both variables to the view
+        return view('admin.categories.hotels.index', compact( 'hotelLocations','listCategories'));
     }
 
     /**
@@ -134,6 +139,15 @@ class HotelCategories_Controller extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $hotelCategories = HotelCategories::find($id);
+
+        if(!$hotelCategories){
+            return response()->json(['error' => 'Data Not Found'], 404);
+        }
+
+        $hotelCategories->hotelCategory_deleted = 0;
+        $hotelCategories->save();
+
+        return response()->json(['success'=>'Data Delete Successfully'],200);
     }
 }

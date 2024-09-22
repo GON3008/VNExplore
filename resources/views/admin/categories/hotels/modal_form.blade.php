@@ -56,6 +56,19 @@
                         </div>
                     </div>
 
+{{--                    <div class="form-group">--}}
+{{--                        <label for="HotelLocation_id" class="col-sm-2 control-label">Location</label>--}}
+{{--                        <div class="col-sm-12">--}}
+{{--                            <select class="form-control" id="HotelLocation_id" name="location_id">--}}
+{{--                                <option value="0">Select Location</option>--}}
+{{--                                @foreach($hotelLocations as $location)--}}
+{{--                                    <option value="{{ $location->id }}">{{ $location->hotel_country }} - {{ $location->hotel_city }}</option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
+
                     <div class="form-group">
                         <label for="hotel_description" class="col-sm-2 control-label">Description</label>
                         <div class="col-sm-12">

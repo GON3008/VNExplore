@@ -21,16 +21,16 @@
                     ajax: ajaxUrl,
                     columns: [
                         {title: 'ID', data: 'id', name: 'id'},
-                        {title: 'Name', data: 'name', name: 'name'},
-                        {title: 'Description', data: 'description', name: 'description'},
+                        {title: 'Name', data: 'hotelCategory_name', name: 'name'},
+                        {title: 'Description', data: 'hotelCategory_description', name: 'description'},
                         {
                             title: 'Image',
-                            data: 'images',
+                            data: 'hotelCategory_images',
                             name: 'images',
                         },
                         {
                             title: 'Rating',
-                            data: 'rating',
+                            data: 'hotelCategory_rating',
                             name: 'rating',
                             render: function(data) {
                                 let stars = '';
@@ -45,7 +45,15 @@
                             }
                         },
                         {title: 'Category', data: 'category.name', name: 'category.name'},
-                        {title: 'Status', data: 'status', name: 'status'},
+                        {
+                            title:'Location',
+                            data:'null',
+                            name:'location.hotel_country',
+                            render: function (data,type,row){
+                                return row.location.hotel_country+','+row.location.hotel_city+','+row.location.hotel_district;
+                            }
+                        },
+                        {title: 'Status', data: 'hotelCategory_status', name: 'status'},
                         {title: 'Action', data: 'action', name: 'action', orderable: false, searchable: false},
                     ],
                     "order": [[0, 'desc']],
@@ -121,6 +129,29 @@
                 });
             });
 
+            $('body').on('click', '.delete-hotel', function (){
+                var hotelCategory_id = $(this).attr("id");
+                var url = "{{ route('admin.hotelCategories.destroy', ':id') }}";
+                url = url.replace(':id', hotelCategory_id);
+
+                if (confirm("Are You sure want to delete!")) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: url,
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            _method: "DELETE"
+                        },
+                        success: function (data) {
+                            var onTable = $('#hotelCategoryData').DataTable();
+                            onTable.draw(false);
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    })
+                }
+            });
         });
     </script>
 @endpush

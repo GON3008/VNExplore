@@ -26,8 +26,6 @@ return new class extends Migration
             $table->boolean('kitchen')->default(1);
             $table->boolean('status')->default(1);
             $table->boolean('deleted')->default(1);
-            $table->foreign('hotel_room_id')->references('id')->on('hotel_rooms')->onDelete('cascade');
-            $table->foreignId('hotel_location_id')->constrained('hotel_locations')->onDelete('cascade');
             $table->timestamps();
         });
     }

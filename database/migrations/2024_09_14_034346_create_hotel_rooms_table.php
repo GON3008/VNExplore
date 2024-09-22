@@ -20,10 +20,14 @@ return new class extends Migration
             $table->text('room_description')->nullable();
             $table->boolean('room_rating')->default(1);
             $table->boolean('room_status')->default(1);
-            $table->enum('bed_type',['1 king bed','2 single bed'])->default('single');
+            $table->boolean('refund_available')->default(0);
+            $table->dateTime('refund_deadline')->nullable();
+            $table->enum('guests',['1','2','3','4','5','6','7','8','9','10'])->default('1');
+            $table->enum('bed_type',['1 king bed','2 single bed'])->default('1 king bed');
             $table->foreignId('hotel_category_id')->constrained('hotel_categories')->onDelete('cascade');
             $table->foreignId('hotel_service_id')->constrained('hotel_services')->onDelete('cascade');
             $table->foreignId('hotel_location_id')->constrained('hotel_locations')->onDelete('cascade');
+            $table->foreignId('room_type_id')->constrained('room_types')->onDelete('cascade');
             $table->timestamps();
         });
     }

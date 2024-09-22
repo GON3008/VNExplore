@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('hotel_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->text('description')->nullable();
-            $table->text('images')->nullable();
-            $table->boolean('status')->default(0);
-            $table->boolean('rating')->default(1);
-            $table->boolean('deleted')->default(0);
+            $table->string('hotelCategory_name', 100);
+            $table->text('hotelCategory_description')->nullable();
+            $table->text('hotelCategory_images')->nullable();
+            $table->boolean('hotelCategory_status')->default(1);
+            $table->boolean('hotelCategory_rating')->default(1);
+            $table->boolean('hotelCategory_deleted')->default(1);
             $table->foreignId('list_categories_id')->constrained('list_categories')->onDelete('cascade');
             $table->foreignId('hotel_location_id')->constrained('hotel_locations')->onDelete('cascade');
             $table->foreignId('hotel_service_id')->constrained('hotel_services')->onDelete('cascade');
