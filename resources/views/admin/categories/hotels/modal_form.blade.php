@@ -25,8 +25,8 @@
                         <label for="isActive" class="col-sm-2 control-label">Status</label>
                         <div class="col-sm-12">
                             <select class="form-control" id="isActive" name="status">
-                                <option value="0">Active</option>
-                                <option value="1">Inactive</option>
+                                <option value="0">Inactive</option>
+                                <option value="1">Active</option>
                             </select>
                         </div>
                     </div>
@@ -45,9 +45,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="HotelCategory_id" class="col-sm-2 control-label">Category</label>
+                        <label for="listCategory_id" class="col-sm-2 control-label">Category</label>
                         <div class="col-sm-12">
-                            <select class="form-control" id="HotelCategory_id" name="category_id">
+                            <select class="form-control" id="listCategory_id" name="category_id">
                                 <option value="0">Select Category</option>
                                 @foreach($listCategories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -56,17 +56,33 @@
                         </div>
                     </div>
 
-{{--                    <div class="form-group">--}}
-{{--                        <label for="HotelLocation_id" class="col-sm-2 control-label">Location</label>--}}
-{{--                        <div class="col-sm-12">--}}
-{{--                            <select class="form-control" id="HotelLocation_id" name="location_id">--}}
-{{--                                <option value="0">Select Location</option>--}}
-{{--                                @foreach($hotelLocations as $location)--}}
-{{--                                    <option value="{{ $location->id }}">{{ $location->hotel_country }} - {{ $location->hotel_city }}</option>--}}
-{{--                                @endforeach--}}
-{{--                            </select>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    <div class="form-group">
+                        <label for="hotelLocation_id" class="col-sm-2 control-label">Location</label>
+                        <div class="col-sm-12">
+                            <select class="form-control" id="hotelLocation_id" name="location_id">
+                                <option value="0">Select Location</option>
+                                @foreach($hotelLocations as $location)
+                                    <option value="{{ $location->id }}">{{ $location->hotel_country }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hotelService_id" class="col-sm-2 control-label">Service</label>
+                        <div class="col-sm-12">
+                            <select class="form-control" id="hotelService_id" name="service_id">
+                                <option value="0">Select Service</option>
+                                @foreach($hotelServices as $services)
+                                    @if($services->status==1)
+                                    <option value="{{ $services->id }}">
+                                      Service:  {{ $services->id }}
+                                    </option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
 
 
                     <div class="form-group">

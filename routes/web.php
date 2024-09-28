@@ -18,8 +18,8 @@ use App\Http\Controllers\ToursController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\HotelCategories_Controller;
-use App\Http\Controllers\admin\HotelLocation_Controller;
+use App\Http\Controllers\Admin\HotelCategories_Controller;
+use App\Http\Controllers\Admin\HotelLocation_Controller;
 
 use App\Http\Controllers\clients\ClientsHotelController;
 use Illuminate\Support\Facades\Route;

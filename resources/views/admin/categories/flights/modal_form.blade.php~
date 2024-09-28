@@ -36,8 +36,8 @@
                         <div class="col-sm-12">
                             <select class="form-control" id="HotelCategory_id" name="category_id">
                                 <option value="0">Select Category</option>
-                                @foreach($listCategories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @foreach($flightLocations as $category)
+                                    <option value="{{ $category->id }}">{{ $category->flight_city }}</option>
                                 @endforeach
                             </select>
                         </div>

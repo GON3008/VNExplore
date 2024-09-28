@@ -22,7 +22,6 @@
                     columns: [
                         {title: 'ID', data: 'id', name: 'id'},
                         {title: 'Name', data: 'hotelCategory_name', name: 'name'},
-                        {title: 'Description', data: 'hotelCategory_description', name: 'description'},
                         {
                             title: 'Image',
                             data: 'hotelCategory_images',
@@ -47,13 +46,14 @@
                         {title: 'Category', data: 'category.name', name: 'category.name'},
                         {
                             title:'Location',
-                            data:'null',
+                            data:'location.hotel_country',
                             name:'location.hotel_country',
                             render: function (data,type,row){
                                 return row.location.hotel_country+','+row.location.hotel_city+','+row.location.hotel_district;
                             }
                         },
                         {title: 'Status', data: 'hotelCategory_status', name: 'status'},
+                        {title: 'Description', data: 'hotelCategory_description', name: 'description'},
                         {title: 'Action', data: 'action', name: 'action', orderable: false, searchable: false},
                     ],
                     "order": [[0, 'desc']],
@@ -116,12 +116,14 @@
                     $('#saveBtn').val("edit-hotelCategory");
                     $('#ajaxModelHotel').modal('show');
                     $('#hotelCategory_isActiveField').show();
-                    $('#hotel_name').val(data.name);
+                    $('#hotel_name').val(data.hotelCategory_name);
                     $('#hotelCategory_id').val(data.id);
-                    $('#HotelCategory_id').val(data.category_id);
-                    $('#hotel_description').val(data.description);
-                    $('#isActive').val(data.status);
-                    $('#rating').val(data.rating);
+                    $('#hotel_description').val(data.hotelCategory_description);
+                    $('#isActive').val(data.hotelCategory_status);
+                    $('#rating').val(data.hotelCategory_rating);
+                    $('#listCategory_id').val(data.list_categories_id);
+                    $('#hotelLocation_id').val(data.hotel_location_id);
+                    $('#hotelService_id').val(data.hotel_service_id);
                     // $('#image_preview').html('');
                     // $.each(data.images, function(index, image) {
                     //     $('#image_preview').append('<img src="' + image.image_path + '" width="100px" height="100px"/>');

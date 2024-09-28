@@ -6,6 +6,7 @@
 
         <!-- Single List -->
         @foreach($data as $item)
+            @if($item->hotelCategory_status == 1)
             <div class="col-xl-12 col-lg-12 col-12">
                 <div class="card list-layout-block rounded-3 p-3">
                     <div class="row">
@@ -125,6 +126,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         @endforeach
         <!-- /Single List -->
 

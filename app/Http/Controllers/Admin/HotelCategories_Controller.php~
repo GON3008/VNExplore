@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\HotelLocation;
 use Illuminate\Http\Request;
 use App\Models\ListCategories;
@@ -33,26 +34,21 @@ class HotelCategories_Controller extends Controller
                     return $button;
                 })
                 ->addColumn('hotelCategory_images', function ($hotelCategories) {
-                    $images = explode(',', $hotelCategories->images);
+                    $images = explode(',', $hotelCategories->hotelCategory_images);
                     $firstImage = $images[0] ?? 'default-image.jpg';
                     $imagePath = asset('HotelCategories/' . $firstImage);
 
-                    return '<img src="' . $imagePath . '" width="50px" height="50px"/>';
+                    return '<img src="' . $imagePath . '" width="50px" height="50px"/ alt="image"/>';
                 })
                 ->editColumn('hotelCategory_status', function ($hotelCategories) {
-                    return $hotelCategories->status == 0 ? 'Active' : 'Inactive';
+                    return $hotelCategories->hotelCategory_status == 1 ? 'Active' : 'Inactive';
                 })
                 ->rawColumns(['action', 'images'])
                 ->addIndexColumn()
                 ->make(true);
         }
-
-        // Get the required data for the form
-        $hotelLocations = HotelLocation::all();
-        $listCategories = ListCategories::all();
-
         // Pass both variables to the view
-        return view('admin.categories.hotels.index', compact( 'hotelLocations','listCategories'));
+        return view('admin.categories.hotels.index');
     }
 
     /**
@@ -83,11 +79,13 @@ class HotelCategories_Controller extends Controller
             'id' => $hotelCategory_id,
         ],
             [
-                'name' => $request->name,
-                'description' => $request->description,
-                'category_id' => $request->category_id,
-                'rating' => $request->rating,
-                'status' => $request->status,
+                'hotelCategory_name' => $request->name,
+                'hotelCategory_description' => $request->description,
+                'list_categories_id' => $request->category_id,
+                'hotelCategory_rating' => $request->rating,
+                'hotelCategory_status' => $request->status,
+                'hotel_location_id' => $request->location_id,
+                'hotel_service_id' => $request->service_id,
             ]);
 
         // Kiểm tra nếu có ảnh được tải lên

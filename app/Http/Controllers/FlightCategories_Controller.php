@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FlightLocation;
 use Illuminate\Http\Request;
 use App\Models\FlightCategories;
 use Datatables;
@@ -40,7 +41,8 @@ class FlightCategories_Controller extends Controller
                 ->make(true);
         }
         $flightCategories = FlightCategories::all();
-        return view('admin.categories.flights.index', compact('flightCategories'));
+        $flightLocations = FlightLocation::all();
+        return view('admin.categories.flights.index', compact('flightCategories','flightLocations'));
     }
 
     /**

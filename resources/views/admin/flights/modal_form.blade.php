@@ -108,7 +108,7 @@
                             <select class="form-control" id="location_departure_id" name="location_departure_id">
                                 <option>Select Location Departure</option>
                                 @foreach($flightLocations as $location)
-                                    <option value="{{$location->id}}">{{$location->flight_city}}{{$location->symbol}}</option>
+                                    <option value="{{$location->id}}">{{$location->flight_city}}-{{$location->symbol}}</option>
                                 @endforeach
                             </select>
                             <span class="text-danger" id="departure_date_error"></span>
