@@ -34,16 +34,14 @@ class HotelCategories_Controller extends Controller
                     return $button;
                 })
                 ->addColumn('hotelCategory_images', function ($hotelCategories) {
-                    $images = explode(',', $hotelCategories->hotelCategory_images);
+                    $images = json_decode($hotelCategories->hotelCategory_images);
                     $firstImage = $images[0] ?? 'default-image.jpg';
-                    $imagePath = asset('HotelCategories/' . $firstImage);
-
-                    return '<img src="' . $imagePath . '" width="50px" height="50px"/ alt="image"/>';
+                    return '<img src="' . asset(self::PATH_UPLOAD . '/' . $firstImage) . '" width="70px" height="50px"/>';
                 })
                 ->editColumn('hotelCategory_status', function ($hotelCategories) {
                     return $hotelCategories->hotelCategory_status == 1 ? 'Active' : 'Inactive';
                 })
-                ->rawColumns(['action', 'images', 'hotelCategory_status'])
+                ->rawColumns(['action', 'hotelCategory_images', 'hotelCategory_status'])
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -67,7 +65,7 @@ class HotelCategories_Controller extends Controller
         $hotelCategory_id = $request->hotelCategory_id;
         $rules = [
             'name' => ['required', 'max:100'],
-            'images.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'], // Thay đổi từ 'image' sang 'images.*' để xử lý nhiều ảnh
+            'hotelCategory_images.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'], // Thay đổi từ 'image' sang 'images.*' để xử lý nhiều ảnh
             'category_id' => ['required'],
             'rating' => ['required'],
             'description' => ['nullable'],
@@ -88,20 +86,19 @@ class HotelCategories_Controller extends Controller
                 'hotel_service_id' => $request->service_id,
             ]);
 
-        // Kiểm tra nếu có ảnh được tải lên
-        if ($request->hasFile('images')) {
+        if ($request->hasFile('hotelCategory_images')) {
             $images = [];
 
-            foreach ($request->file('images') as $file) {
+            foreach ($request->file('hotelCategory_images') as $file) {
                 $filename = time() . '-' . $file->getClientOriginalName();
                 $file->move(public_path(self::PATH_UPLOAD), $filename);
-                $images[] = $filename; // Lưu tên ảnh vào mảng
+                $images[] = $filename; // Save images array
             }
 
-            // Lưu tất cả các đường dẫn ảnh dưới dạng JSON hoặc mảng (tuỳ theo cách bạn lưu trữ trong database)
-            $hotelCategories->images = json_encode($images); // Hoặc $hotelCategories->images = $images; nếu bạn lưu trữ dưới dạng array
+            $hotelCategories->hotelCategory_images = json_encode($images);
             $hotelCategories->save();
         }
+
 
         return response()->json($hotelCategories);
     }

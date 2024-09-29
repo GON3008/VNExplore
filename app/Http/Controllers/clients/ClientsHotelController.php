@@ -10,7 +10,10 @@ class ClientsHotelController extends Controller
 {
     const PATH_UPLOAD = 'HotelCategories';
     public function index(){
-        $data = HotelCategories::query()->where('hotelCategory_deleted', 1)->get();
+        $data = HotelCategories::query()
+            ->with('category','service')
+            ->where('hotelCategory_deleted', 1)
+            ->get();
         return view('clients.hotels.index', compact('data'));
     }
 }

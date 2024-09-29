@@ -25,8 +25,8 @@
                         <label for="isActive" class="col-sm-2 control-label">Status</label>
                         <div class="col-sm-12">
                             <select class="form-control" id="isActive" name="status">
-                                <option value="0">Inactive</option>
                                 <option value="1">Active</option>
+                                <option value="0">Inactive</option>
                             </select>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                     <div class="form-group">
                         <label for="images" class="col-sm-2 control-label">Image</label>
                         <div class="col-sm-12">
-                            <input type="file" class="form-control" id="images" name="images[]" placeholder="Enter Name"
+                            <input type="file" class="form-control" id="hotelCategory_images" name="hotelCategory_images[]" placeholder="Enter Name"
                                    value="" maxlength="100" multiple>
                             <span class="text-danger" id="image_error"></span>
                         </div>
