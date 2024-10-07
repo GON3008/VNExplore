@@ -95,8 +95,9 @@
                         </li>
                     @else
                         <li class="list-buttons light">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#login">
-                                <i class="fa-regular fa-circle-user fs-6 me-2"></i>Sign In / Register
+                            <a href="#"  data-bs-toggle="modal" data-bs-target="#login" style="background-color: rgb(1, 148, 243);">
+                                <i class="fa-regular fa-circle-user fs-6 me-2 text-white"></i>
+                                <span class="text-white">Sign In / Register</span>
                             </a>
                         </li>
                     @endif

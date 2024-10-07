@@ -97,7 +97,7 @@
             </li>
 
             <li class="side-nav-item">
-                <a href="#" class="side-nav-link">
+                <a href="{{route('admin.rooms.index')}}" class="side-nav-link">
                     <i class="uil-building"></i>
                     <span> Hotels Room </span>
                 </a>

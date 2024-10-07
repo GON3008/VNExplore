@@ -42,4 +42,9 @@ class HotelCategories extends Model
     {
         return $this->rooms()->min('room_price');
     }
+
+    public function getLowestDiscount()
+    {
+        return $this->rooms()->min('room_discount');
+    }
 }

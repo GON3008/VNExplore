@@ -61,7 +61,7 @@ class AuthController extends Controller
             'deleted' => false,
         ]);
 
-        return redirect('/')->with('success', 'Register successfully!');
+        return redirect()->intended(url()->previous())->with('success', 'Register successfully!');
     }
 
     public function login()
@@ -85,7 +85,8 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 //            return response()->json(['success' => true, 'redirect' => url('home')]);
-            return redirect('/')->with('success', 'Login successfully!');
+//            return redirect('/')->with('success', 'Login successfully!');
+            return redirect()->intended(url()->previous())->with('success','Login successfully!');
         } else {
             return response()->json(['success' => false, 'message' => 'Invalid credentials'], 401);
         }
@@ -97,6 +98,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('success', 'Logout successfully!');
+        return redirect()->intended(url()->previous())->with('success', 'Logout successfully!');
     }
 }
