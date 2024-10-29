@@ -40,7 +40,19 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'users'
+        ]
     ],
+
+
+//    'guards' => [
+//        'api' => [
+//            'driver' => 'jwt',
+//            'provider' => 'users'
+//        ]
+//    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -61,15 +73,15 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent',
+            'driver' => 'eloquent', // Sử dụng Eloquent để lấy thông tin người dùng
             'model' => App\Models\User::class,
         ],
+    ],
 
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
-    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -99,6 +111,9 @@ return [
         ],
     ],
 
+
+
+
     /*
     |--------------------------------------------------------------------------
     | Password Confirmation Timeout
@@ -110,6 +125,6 @@ return [
     |
     */
 
-    'password_timeout' => 10800,
+    'password_timeout' => 50800,
 
 ];

@@ -8,12 +8,12 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
+use Tymon\JWTAuth\Contracts\JWTSubject; // Import JWTSubject contract
 use App\Models\Messager;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject // Implement JWTSubject
 {
     use HasFactory, Notifiable, HasApiTokens, TwoFactorAuthenticatable, HasProfilePhoto;
-
 
     protected $fillable = [
         'name',
@@ -78,5 +78,16 @@ class User extends Authenticatable
     public function receivedMessages()
     {
         return $this->hasMany(Messager::class, 'receiver_id');
+    }
+
+    // Required by JWTSubject
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

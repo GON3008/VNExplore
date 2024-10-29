@@ -38,8 +38,8 @@
                         <div class="modal-flex-item d-flex align-items-center justify-content-between mb-3">
                             <div class="modal-flex-first">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="savepassword" value="option1">
-                                    <label class="form-check-label" for="savepassword">Save Password</label>
+                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" value="option1">
+                                    <label class="form-check-label" for="remember">Save Password</label>
                                 </div>
                             </div>
                             <div class="modal-flex-last">

@@ -27,19 +27,19 @@ class HotelRooms extends Model
         'room_type_id',
     ];
 
-
     public function category()
     {
-        return $this->hasMany(HotelCategories::class, 'hotel_category_id');
+        return $this->belongsTo(HotelCategories::class, 'hotel_category_id');
     }
 
     public function service()
     {
-        return $this->hasMany(HotelServices::class, 'hotel_service_id');
+        return $this->belongsTo(HotelServices::class, 'hotel_service_id');
     }
 
     public function location()
     {
-        return $this->hasMany(HotelLocation::class, 'hotel_location_id');
+        return $this->belongsTo(HotelLocation::class, 'hotel_location_id');
     }
+
 }
