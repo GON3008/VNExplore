@@ -18,7 +18,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8',
             'phone' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
             'avatar' => 'nullable|string|max:255',
@@ -35,11 +35,11 @@ class AuthController extends Controller
             'phone' => $request->input('phone'),
             'address' => $request->input('address'),
             'avatar' => $request->input('avatar'),
-            'role' => 'user',
-            'is_verified' => false,
-            'is_active' => true,
-            'is_admin' => false,
-            'deleted' => false,
+            'role' => 'client',
+            'is_verified' => 0,
+            'is_active' => 1,
+            'is_admin' => 0,
+            'deleted' => 1,
         ]);
 
         return response()->json(['message' => 'Registered successfully', 'user' => $user], 201);
@@ -55,6 +55,13 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
+
+        $user = User::where('email', $request->input('email'))->first();
+
+        // check user status = 0 or deleted = 0
+//        if ($user && ($user->status == 1 || $user->deleted == 1)) {
+//            return response()->json(['error' => 'Account is inactive or deleted'], 403);
+//        }
 
         $credentials = $request->only('email', 'password');
 

@@ -54,11 +54,11 @@ class AuthController extends Controller
             'address' => $request->input('address'),
             'avatar' => $request->input('avatar'),
             // Set default values for the fields not included in the form
-            'role' => 'user',
-            'is_verified' => false,
-            'is_active' => true,
-            'is_admin' => false,
-            'deleted' => false,
+            'role' => 'client',
+            'is_verified' => 0,
+            'is_active' => 1,
+            'is_admin' => 0,
+            'deleted' => 1,
         ]);
 
         return redirect()->intended(url()->previous())->with('success', 'Register successfully!');
