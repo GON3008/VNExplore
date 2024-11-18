@@ -98,7 +98,8 @@
 
     <!-- Log In Modal -->
     @include('clients.auth.login.modal_form_login')
-    @include('clients.auth.signUp.modal_form_signUp')
+    @include('clients.auth.register.modal_form_register')
+    @include('clients.auth.forgot_password.modal_form_forgotPW')
     <!-- End Modal -->
 
     <!-- Choose Currency Modal -->

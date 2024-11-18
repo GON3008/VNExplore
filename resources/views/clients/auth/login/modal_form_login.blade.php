@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                             <div class="modal-flex-last">
-                                <a href="JavaScript:Void(0);" class="text-primary fw-medium">Forget Password?</a>
+                                <a href="JavaScript:Void(0);" data-bs-toggle="modal" data-bs-target="#forgot_password" class="text-primary fw-medium">Forget Password?</a>
                             </div>
                         </div>
                     </form>

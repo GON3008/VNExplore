@@ -28,3 +28,6 @@ Route::get('locations', [LocationController::class, 'getData']);
 Route::post('auth/register', [AuthController::class, 'register']);
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::post('auth/logout', [AuthController::class, 'logout']);
+Route::post('auth/forgot', [AuthController::class, 'forgotPassword']);
+Route::post('auth/reset', [AuthController::class, 'resetPassword']);
+

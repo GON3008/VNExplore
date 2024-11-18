@@ -7,14 +7,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
-
+use App\Models\PasswordReset;
+use App\Services\PHPMailerService;
+use Illuminate\Support\Str;
 class AuthController extends Controller
 {
-    public function register()
-    {
-        return view('auth.register');
-    }
 
+    protected $mailer;
+
+    public function __construct(PHPMailerService $mailer)
+    {
+        $this->mailer = $mailer;
+    }
     public function registerPost(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -64,9 +68,86 @@ class AuthController extends Controller
         return redirect()->intended(url()->previous())->with('success', 'Register successfully!');
     }
 
+    public function forgotPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            return redirect()->back()->with('error', 'Email not found.');
+        }
+
+        // Generate token and save it
+        $token = Str::random(60);
+        PasswordReset::create([
+            'email' => $request->email,
+            'token' => $token,
+        ]);
+
+        // Prepare email content
+        $resetLink = url("password/reset/{$token}");
+        $subject = 'Password Reset Request';
+        $body = "<p>Click the link below to reset your password:</p><a href='{$resetLink}'>Reset Password</a>";
+
+        // Send email
+        $sent = $this->mailer->sendMail($request->email, $subject, $body);
+
+        if ($sent) {
+            return redirect()->back()->with('success', 'Password reset link has been sent to your email.');
+        } else {
+            return redirect()->back()->with('error', 'Failed to send email.');
+        }
+    }
+
+    public function showResetPasswordForm($token)
+    {
+        $passwordReset = PasswordReset::where('token', $token)->first();
+
+        if (!$passwordReset) {
+            return redirect('/password/forgot')->withErrors(['error' => 'Invalid or expired token.']);
+        }
+
+        return view('clients.auth.forgot_password.forgot_pw', [
+            'token' => $token,
+            'email' => $passwordReset->email
+        ]);
+//        return view('clients.auth.forgot_password.forgot_pw', ['token' => $token]);
+    }
+
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|confirmed|min:8',
+            'token' => 'required'
+        ]);
+
+        $passwordReset = PasswordReset::where('token', $request->token)->where('email', $request->email)->first();
+
+        if (!$passwordReset) {
+            return back()->withErrors(['email' => 'Invalid or expired token.']);
+        }
+
+        $user = User::where('email', $request->email)->first();
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        // Delete the token after successful password reset
+        $passwordReset->delete();
+
+        return redirect('/')->with('success', 'Password has been updated successfully.');
+    }
+
     public function login()
     {
-        return view('clients.auth.login.modal_form_login');
+        return view('clients.home.index');
     }
 
     public function loginPost(Request $request)
@@ -99,5 +180,18 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->intended(url()->previous())->with('success', 'Logout successfully!');
+    }
+
+    public function forgot_password(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'email' => 'string|email|'
+        ]);
+
+        if ($validator->fails()){
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
     }
 }

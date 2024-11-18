@@ -1,4 +1,4 @@
-<div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="signupmodal" aria-hidden="true">
+<div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="signupmodal1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered login-pop-form" role="document">
         <div class="modal-content" id="signupmodal">
             <div class="modal-header">
@@ -71,7 +71,7 @@
                 </div>
             </div>
             <div class="modal-footer align-items-center justify-content-center">
-                <p>Don't have an account yet? <a href="#" class="text-primary fw-medium ms-1">Sign Up</a></p>
+                <p>Log in to your account? <a href="#" data-bs-toggle="modal" data-bs-target="#login" class="text-primary fw-medium ms-1">Login</a></p>
             </div>
         </div>
     </div>

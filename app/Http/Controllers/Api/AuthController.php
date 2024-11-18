@@ -10,9 +10,17 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
-
+use App\Models\PasswordReset;
+use App\Services\PHPMailerService;
+use Illuminate\Support\Str;
 class AuthController extends Controller
 {
+    protected $mailer;
+
+    public function __construct(PHPMailerService $mailer)
+    {
+        $this->mailer = $mailer;
+    }
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -44,6 +52,7 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Registered successfully', 'user' => $user], 201);
     }
+
 
     public function login(Request $request)
     {
@@ -96,6 +105,73 @@ class AuthController extends Controller
         }
 
         return response()->json(['message' => 'Logged out successfully'], 200);
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            return response()->json(['error' => 'Email not found'], 404);
+        }
+
+        // Generate token for password reset
+        $token = Str::random(60);
+        PasswordReset::create([
+            'email' => $request->email,
+            'token' => $token,
+        ]);
+
+        // Prepare email content
+        $resetLink = url("api/password/reset/{$token}");
+        $subject = 'Password Reset Request';
+        $body = "<p>Click the link below to reset your password:</p><a href='{$resetLink}'>Reset Password</a>";
+
+        // Send the reset email (use your PHPMailer service here)
+        $sent = $this->mailer->sendMail($request->email, $subject, $body);
+
+        if ($sent) {
+            return response()->json(['message' => 'Password reset link has been sent to your email.'], 200);
+        } else {
+            return response()->json(['error' => 'Failed to send email.'], 500);
+        }
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|string|confirmed|min:8',
+            'token' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // Check the password reset token
+        $passwordReset = PasswordReset::where('token', $request->token)->where('email', $request->email)->first();
+
+        if (!$passwordReset) {
+            return response()->json(['error' => 'Invalid or expired token.'], 400);
+        }
+
+        // Update user password
+        $user = User::where('email', $request->email)->first();
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        // Delete the password reset token
+        $passwordReset->delete();
+
+        return response()->json(['message' => 'Password has been reset successfully.'], 200);
     }
 }
 
