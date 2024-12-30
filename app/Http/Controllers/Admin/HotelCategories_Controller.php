@@ -94,11 +94,9 @@ class HotelCategories_Controller extends Controller
                 $file->move(public_path(self::PATH_UPLOAD), $filename);
                 $images[] = $filename; // Save images array
             }
-
             $hotelCategories->hotelCategory_images = json_encode($images);
             $hotelCategories->save();
         }
-
 
         return response()->json($hotelCategories);
     }

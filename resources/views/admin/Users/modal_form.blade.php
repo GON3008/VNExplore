@@ -60,8 +60,8 @@
                         <label for="is_active" class="col-sm-2 control-label">Status</label>
                         <div class="col-sm-12">
                             <select class="form-control" id="is_active" name="is_active">
-                                <option value="0">Active</option>
-                                <option value="1">Inactive</option>
+                                <option value="0">Inactive</option>
+                                <option value="1">Active</option>
                             </select>
                         </div>
                     </div>

@@ -97,6 +97,8 @@ class ListCategories_Controller extends Controller
             $categories->delete();
             return response()->json(['success' => 'Data Deleted Successfully']);
         }
+        $categories->deleted = 0;
+        $categories->save();
         return response()->json(['error' => 'Data Not Found'], 404);
     }
 }

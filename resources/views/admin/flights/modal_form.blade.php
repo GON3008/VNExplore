@@ -46,7 +46,6 @@
                         </div>
                     </div>
 
-
                     <div class="form-group">
                         <label for="flight_number" class="col-sm-3 control-label">Flight Number</label>
                         <div class="col-sm-12">
@@ -64,7 +63,6 @@
                             <span class="text-danger" id="flight_number_error"></span>
                         </div>
                     </div>
-
 
                     <div class="form-group">
                         <label for="departure_date" class="col-sm-3 control-label">Start Date</label>
@@ -140,8 +138,6 @@
                             <span class="text-danger" id="return_time_error"></span>
                         </div>
                     </div>
-
-
 
                     <div class="col-sm-offset-2 col-sm-10 pt-3">
                         <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes</button>

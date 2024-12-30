@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Voucher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Datatables;
+use Yajra\DataTables\Facades\DataTables;
 
 class VoucherController extends Controller
 {
@@ -14,15 +14,26 @@ class VoucherController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+//    public function __construct()
+//    {
+//        $this->middleware(function ($request, $next){
+//            try {
+//                return $next($request);
+//            } catch (Throwable $e) {
+//                return response()->json(['message' => $e->getMessage()], 500);
+//            }
+//        });
+//    }
     public function index()
     {
         $now = Carbon::now();
         Voucher::where('valid_until', '<', $now)
-            ->where('status', 0)
-            ->update(['status' => 1]);
+            ->where('status', 1)
+            ->update(['status' => 0]);
 
         if (request()->ajax()) {
-            $vouchers = Voucher::where('deleted', 0)->select('vouchers.*');
+            $vouchers = Voucher::where('deleted', 1)->select('vouchers.*');
             return datatables()->of($vouchers)
                 ->addColumn('action', function ($vouchers) {
                     $button = '<button type="button" name="edit" id="' . $vouchers->id . '" class="edit btn btn-primary btn-sm">
@@ -36,14 +47,14 @@ class VoucherController extends Controller
                 })
                 ->rawColumns(['action', 'image'])
                 ->addColumn('image', function ($vouchers) {
-                    $imagePath = asset('vouchers/'. $vouchers->image);
+                    $imagePath = asset('vouchers/' . $vouchers->image);
                     $img = '<img src="' . $imagePath . '" width="50px" height="50px"/>';
                     return $img;
                 })
-                ->editColumn('status' , function ($vouchers) {
-                    if ($vouchers->status == 0){
+                ->editColumn('status', function ($vouchers) {
+                    if ($vouchers->status == 1) {
                         $span = 'Active';
-                    }else{
+                    } else {
                         $span = 'Inactive';
                     }
                     return $span;
@@ -71,6 +82,16 @@ class VoucherController extends Controller
             'name' => ['required', 'max:100'],
         ]);
 
+        // Kiểm tra nếu chọn tự động tạo mã
+        if ($request->code_option === 'auto') {
+            $request->merge(['voucher_code' => $this->generateRandomVoucherCode()]);
+        } else {
+            // Nếu tự nhập, kiểm tra mã không được để trống
+            $request->validate([
+                'voucher_code' => ['required', 'unique:vouchers,voucher_code']
+            ]);
+        }
+
         $voucherData = [
             'voucher_code' => $request->voucher_code,
             'quantity' => $request->quantity,
@@ -79,23 +100,19 @@ class VoucherController extends Controller
             'description' => $request->description,
             'valid_from' => $request->valid_from,
             'valid_until' => $request->valid_until,
-            'deleted' => 0
         ];
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
             $fileName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path(self::PATH_UPLOAD), $fileName);
             $voucherData['image'] = $fileName;
         }
 
-        $voucher = Voucher::updateOrCreate([
-            'id' => $request->voucher_id,
-        ], $voucherData);
+        $voucher = Voucher::updateOrCreate(['id' => $request->voucher_id], $voucherData);
 
         return response()->json($voucher);
     }
-
 
     /**
      * Display the specified resource.
@@ -128,41 +145,69 @@ class VoucherController extends Controller
     public function destroy(string $id)
     {
         $voucher = Voucher::find($id);
-       if (!$voucher){
-           return response()->json(['error' => 'Data Not Found'], 404);
-       }
+        if (!$voucher) {
+            return response()->json(['error' => 'Data Not Found'], 404);
+        }
 
-       $voucher->deleted = 1;
-       $voucher->save();
+        $voucher->deleted = 0;
+        $voucher->save();
 
-       return response()->json(['success' => 'Data Deleted Successfully']);
+        return response()->json(['success' => 'Data Deleted Successfully']);
+    }
+
+    /**
+     * Generate a random voucher code.
+     */
+    public function generateVoucherCode()
+    {
+        try {
+            $code = $this->generateRandomVoucherCode();
+            return response()->json(['code' => $code], 200);
+        } catch (\Throwable $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    private function generateRandomVoucherCode($length = 10)
+    {
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        $code = '';
+        for ($i = 0; $i < $length; $i++) {
+            $code .= $characters[random_int(0, strlen($characters) - 1)];
+        }
+        while (Voucher::where('voucher_code', $code)->exists()) ;
+        return $code;
     }
 
     public function userVouchers(Request $request, $voucherCode)
     {
         try {
-            // check user is logged in
+            // Check user authentication
             if (!auth()->check()) {
                 return response()->json(['message' => 'Unauthorized'], 401);
             }
 
-            // Lấy thông tin voucher
-            $voucher = Voucher::where('voucher_code', $voucherCode)->firstOrFail();
-
-            // check status of voucher
             $now = Carbon::now();
-            if ($voucher->quantity > 0 && $voucher->status == 0 && $voucher->valid_from <= $now && $voucher->valid_until >= $now) {
-                // Giảm số lượng voucher
-                $voucher->quantity -= 1;
 
-                // save voucher
-                $voucher->save();
+            // Sử dụng transaction để bảo vệ dữ liệu
+            $voucher = Voucher::where('voucher_code', $voucherCode)
+                ->where('status', 1) // Active status
+                ->where('valid_from', '<=', $now)
+                ->where('valid_until', '>=', $now)
+                ->lockForUpdate() // Khoá hàng để tránh cập nhật đồng thời
+                ->first();
 
-                return response()->json(['message' => 'Voucher applied successfully'], 200);
-            } else {
-                return response()->json(['message' => 'Voucher is either inactive or expired or no quantity left'], 400);
+            if (!$voucher || $voucher->quantity <= 0) {
+                return response()->json(['message' => 'Voucher is either inactive, expired, or out of stock'], 400);
             }
-        } catch (\Exception $e) {
+
+            // Giảm số lượng voucher
+            $voucher->quantity -= 1;
+            $voucher->save();
+
+            return response()->json(['message' => 'Voucher applied successfully'], 200);
+
+        } catch (\Throwable $e) {
             return response()->json(['message' => $e->getMessage()], 400);
         }
     }

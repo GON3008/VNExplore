@@ -112,6 +112,12 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+//    'from' => [
+//        'address' => 'longbt300820@gmail.com',
+//        'name' => 'VNExplore',
+//    ],
+
+
     /*
     |--------------------------------------------------------------------------
     | Markdown Mail Settings

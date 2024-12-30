@@ -190,4 +190,39 @@ return array(
     'filter_criteria' => array(
         'limit' => 5, // Limit the number of notifications to display
     ),
+
+    /*
+    |---------------------------------------------------------------------------
+    | Default Notification Type
+    |---------------------------------------------------------------------------
+    | This option allows you to set the default notification type for your
+    | application. By default, the notification type is set to 'success'.
+    |
+    | You can use this option to change the default notification type for
+    | all notifications in your application. For example, if you want to
+    | change the default notification type to 'error', you can set the
+    | 'type' field to 'error':
+    |     'type' => 'error',
+    */
+
+    'default_type' => 'success',
+
+    'plugins' => array(
+        'sweetalert' => array(
+            'scripts' => array(
+                '/vendor/flasher/sweetalert2.min.js',
+                '/vendor/flasher/flasher-sweetalert.min.js',
+            ),
+            'styles' => array(
+                '/vendor/flasher/sweetalert2.min.css',
+            ),
+            'options' => array(
+                'timer' => 3000,
+            ),
+        ),
+    ),
+
 );
+
+
+

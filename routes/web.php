@@ -21,19 +21,23 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\Admin\HotelCategories_Controller;
 use App\Http\Controllers\Admin\HotelLocation_Controller;
 use App\Http\Controllers\Admin\HotelRoom_Controller;
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
 
 use App\Http\Controllers\clients\ClientsHotelController;
 use Illuminate\Support\Facades\Route;
 
+//TEST MAIL
+//Route::get('/send-test-email', function () {
+//    Mail::to('test@gmail.com')->send(new TestMail());
+//    return 'Test email sent successfully!';
+//});
+//Route client
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/hotels', [ClientsHotelController::class, 'index'])->name('hotels');
 
 
-
-
-//Route::middleware(['auth', 'admin'])->group(function () {
-//    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
-//});
+//Route admin
 Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
     Route::get('dashboard', function () {
         return view('admin.dashboard');
@@ -46,6 +50,7 @@ Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
     Route::resource('messages', MessagesController::class);
     Route::resource('users', UserController::class);
     Route::resource('vouchers', VoucherController::class);
+    Route::get('/generate-voucher-code', [VoucherController::class, 'generateVoucherCode']);
     Route::resource('locations', LocationController::class);
     Route::resource('flights', FlightController::class);
     Route::resource('cars', CarController::class);
@@ -65,17 +70,32 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Routes are for users who are not logged in
 Route::group(['middleware' => 'guest'], function () {
+    // Login
     Route::get('login', [AuthController::class, 'login'])->name('login');
     Route::post('login', [AuthController::class, 'loginPost']);
+
+    // Register
     Route::get('register', [AuthController::class, 'register'])->name('register');
-    Route::post('register', [AuthController::class, 'registerPost']);
+    Route::post('register', [AuthController::class, 'registerPost'])->name('registerPost');
+    Route::post('/send-otp', [AuthController::class, 'sendOtp'])->name('send.otp');
+    Route::get('/verify-otp', [AuthController::class, 'verifyOtpForm'])->name('verifyOtpForm');
+
+    // Forgot password
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot.password');
-    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('reset.password');
     Route::get('password/reset/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
+    Route::post('/register', [AuthController::class, 'registerPost'])->name('registerPost');
+    Route::get('/verify-otp', [AuthController::class, 'verifyOtpForm'])->name('verifyOtpForm');
+    Route::post('/verify-otp', [AuthController::class, 'verifyOtp'])->name('verifyOtp');
 });
 
-Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+// Routes are for logged in users
+Route::group(['middleware' => 'auth'], function () {
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+// Route Google login
 Route::controller(GoogleController::class)->group(function(){
     Route::get('auth/google', 'redirectToGoogle')->name('auth.google');
     Route::get('auth/google/callback', 'handleGoogleCallback');

@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -19,13 +18,18 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone', 10)->nullable();
             $table->string('address', 255)->nullable();
-            $table->enum('role',['admin','client','lead'])->default('client');
+            $table->string('otp', 255)->nullable();
+            $table->enum('role', ['admin', 'client', 'lead'])->default('client');
+            $table->string('google_id')->nullable()->unique();
+            $table->text('jwt_token')->nullable();
+            $table->text('token')->nullable();
             $table->boolean('is_verified')->default(0);
-            $table->boolean('is_active')->default(0);
-            $table->boolean('is_admin')->default(0);
+            $table->boolean('status')->default(1);
+            $table->boolean('is_admin')->default(1);
             $table->string('avatar')->nullable();
-            $table->boolean('deleted')->default(0);
+            $table->boolean('deleted')->default(1);
             $table->rememberToken();
+            $table->timestamp('otp_expires_at')->nullable();
             $table->timestamps();
         });
     }

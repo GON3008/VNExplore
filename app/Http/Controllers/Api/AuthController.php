@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserSession;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,6 +14,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Models\PasswordReset;
 use App\Services\PHPMailerService;
 use Illuminate\Support\Str;
+
 class AuthController extends Controller
 {
     protected $mailer;
@@ -21,6 +23,7 @@ class AuthController extends Controller
     {
         $this->mailer = $mailer;
     }
+
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -67,10 +70,16 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->input('email'))->first();
 
-        // check user status = 0 or deleted = 0
-//        if ($user && ($user->status == 1 || $user->deleted == 1)) {
-//            return response()->json(['error' => 'Account is inactive or deleted'], 403);
-//        }
+        //check user does not exist
+
+        if (!$user) {
+            return response()->json(['error' => 'Invalid credentials'], 401);
+        }
+
+//         check user status = 0 or deleted = 0
+        if ($user->status == 0 || $user->deleted == 0) {
+            return response()->json(['error' => 'Account is inactive or deleted'], 403);
+        }
 
         $credentials = $request->only('email', 'password');
 
@@ -83,8 +92,24 @@ class AuthController extends Controller
             return response()->json(['error' => 'Could not create token'], 500);
         }
 
+//        var_dump($user);
+//        die();
+
         // get user information
-        $user = Auth::user();
+//        $user = Auth::user();
+        $user->update(['jwt_token' => $token]);
+
+        if (!$user->wasChanged('jwt_token')) {
+            return response()->json(['error' => 'Could not save token'], 500);
+        }
+
+//        $userSession = UserSession::create([
+//            'user_id' => $user->id,
+//            'jwt_token' => $user->token,
+//            'ip_address' => $user->ip(),
+//            'user_agent' => $user->header('User-Agent'),
+//            ''
+//        ]);
 
         return response()->json([
             'status' => true,
@@ -99,12 +124,22 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         try {
-            JWTAuth::invalidate(JWTAuth::getToken());
-        } catch (JWTException $e) {
-            return response()->json(['error' => 'Could not log out'], 500);
-        }
+            // get information from token before invalidation
+            $user = JWTAuth::parseToken()->authenticate();
 
-        return response()->json(['message' => 'Logged out successfully'], 200);
+            if (!$user) {
+                return response()->json(['error' => 'User not found or already logged out'], 404);
+            }
+            // disable current token
+            JWTAuth::invalidate(JWTAuth::getToken());
+
+            // delete jwt_token in db
+            $user->update(['jwt_token' => null]);
+
+            return response()->json(['message' => 'Logged out successfully'], 200);
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Could not log out', 'details' => $e->getMessage()], 500);
+        }
     }
 
     public function forgotPassword(Request $request)

@@ -11,7 +11,33 @@
                 <form id="voucherForm" name="voucherForm" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="voucher_id" id="voucher_id">
-                    <input type="hidden" name="voucher_code" id="voucher_code">
+{{--                    <input type="hidden" name="voucher_code" id="voucher_code">--}}
+                    <div class="form-group">
+                        <label for="voucher_option" class="col-sm-2 control-label">Voucher Code</label>
+                        <div class="col-sm-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="voucher_option" id="input_code" value="input" checked>
+                                <label class="form-check-label" for="input_code">
+                                    Enter Code
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="voucher_option" id="random_code" value="random">
+                                <label class="form-check-label" for="random_code">
+                                    Generate Random Code
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="voucherCodeGroup">
+                        <label for="voucher_code" class="col-sm-3 control-label">Voucher Code</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="voucher_code" name="voucher_code" placeholder="Enter Voucher Code">
+                            <span class="text-danger" id="voucher_code_error"></span>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">Name</label>
                         <div class="col-sm-12">
@@ -36,7 +62,7 @@
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="discount_amount" name="discount_amount"
                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                   placeholder="Enter Name" value="" maxlength="100">
+                                   placeholder="Enter % discount" value="" maxlength="100">
                             <span class="text-danger" id="name_error"></span>
                         </div>
                     </div>
@@ -104,4 +130,6 @@
             }
         }
     });
+
 </script>
+

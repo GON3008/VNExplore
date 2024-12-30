@@ -7,9 +7,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use App\Models\PendingUsers;
 use App\Models\PasswordReset;
 use App\Services\PHPMailerService;
 use Illuminate\Support\Str;
+use function Laravel\Prompts\alert;
+
 class AuthController extends Controller
 {
 
@@ -19,53 +22,81 @@ class AuthController extends Controller
     {
         $this->mailer = $mailer;
     }
+
     public function registerPost(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'phone' => 'nullable|string|max:255',
-            'address' => 'nullable|string|max:255',
-            'avatar' => 'nullable|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users|unique:pending_users',
+            'password' => 'required|string|min:8',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $existingUser = User::where('email', $request->input('email'))->first();
-        if($existingUser) {
-            return redirect()->back()
-                ->withErrors(['email' => 'Email already exists.'])
-                ->withInput();
-        }
+        $otp = rand(100000, 999999); // Tạo OTP
+        $otpExpiresAt = now()->addMinutes(15); // OTP expires after 15 minutes
 
-        $existingUser = User::where('phone', $request->input('phone'))->first();
-        if($existingUser) {
-            return redirect()->back()
-                ->withErrors(['phone' => 'Phone already exists.'])
-                ->withInput();
-        }
-
-        User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'phone' => $request->input('phone'),
-            'address' => $request->input('address'),
-            'avatar' => $request->input('avatar'),
-            // Set default values for the fields not included in the form
-            'role' => 'client',
-            'is_verified' => 0,
-            'is_active' => 1,
-            'is_admin' => 0,
-            'deleted' => 1,
+        PendingUsers::insert([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'otp' => $otp,
+            'otp_expires_at' => $otpExpiresAt,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
-        return redirect()->intended(url()->previous())->with('success', 'Register successfully!');
+        // Gửi OTP qua email
+        $subject = 'Verify Your Account';
+        $body = "Your OTP is: $otp. It will expire in 15 minutes.";
+        $test = $this->mailer->sendMail($request->email, $subject, $body);
+
+//        var_dump($test);
+//        die();
+
+        return redirect()->route('verifyOtpForm')->with('success', 'OTP has been sent to your email.');
+    }
+
+
+    public function verifyOtpForm()
+    {
+        return view('clients.auth.register.verify_otp');
+    }
+
+    public function verifyOtp(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email',
+            'otp' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $pendingUser = PendingUsers::
+            where('email', $request->email)
+            ->where('otp', $request->otp)
+            ->where('otp_expires_at', '>=', now())
+            ->first();
+
+        if (!$pendingUser) {
+            return redirect()->back()->withErrors(['otp' => 'Invalid or expired OTP.'])->withInput();
+        }
+
+        // Move the data to the `users` table
+        User::create([
+            'name' => $pendingUser->name,
+            'email' => $pendingUser->email,
+            'password' => $pendingUser->password,
+        ]);
+
+        // Remove information from the `pending_users` table
+        PendingUsers::where('email', $request->email)->delete();
+
+        return redirect('/')->with('success', 'Your account has been verified successfully!');
     }
 
     public function forgotPassword(Request $request)
@@ -83,12 +114,24 @@ class AuthController extends Controller
             return redirect()->back()->with('error', 'Email not found.');
         }
 
-        // Generate token and save it
+        // Generate a new token
         $token = Str::random(60);
-        PasswordReset::create([
-            'email' => $request->email,
-            'token' => $token,
-        ]);
+
+        // Check if an entry for this email already exists
+        $passwordReset = PasswordReset::where('email', $request->email)->first();
+        if ($passwordReset) {
+            // Update the existing token and timestamp
+            $passwordReset->update([
+                'token' => $token,
+                'updated_at' => now(),
+            ]);
+        } else {
+            // Create a new record if it doesn't exist
+            PasswordReset::create([
+                'email' => $request->email,
+                'token' => $token,
+            ]);
+        }
 
         // Prepare email content
         $resetLink = url("password/reset/{$token}");
@@ -105,6 +148,7 @@ class AuthController extends Controller
         }
     }
 
+
     public function showResetPasswordForm($token)
     {
         $passwordReset = PasswordReset::where('token', $token)->first();
@@ -117,7 +161,6 @@ class AuthController extends Controller
             'token' => $token,
             'email' => $passwordReset->email
         ]);
-//        return view('clients.auth.forgot_password.forgot_pw', ['token' => $token]);
     }
 
 
@@ -158,28 +201,42 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $credentials = $request->only('email', 'password');
+        $email = $request->input('email');
+        $password = $request->input('password');
 
-        if (Auth::attempt($credentials)) {
+        $user = User::where('email', $email)->first();
+
+        if (!$user) {
+            sweetalert()->addError('Error', 'Email does not exist');
+            return redirect()->back();
+        }
+
+        if (!Hash::check($password, $user->password)) {
+            sweetalert()->addError('Error', 'Incorrect password');
+            return redirect()->back();
+        }
+
+        if (Auth::attempt(['email' => $email, 'password' => $password])) {
             $request->session()->regenerate();
-//            return response()->json(['success' => true, 'redirect' => url('home')]);
-//            return redirect('/')->with('success', 'Login successfully!');
-            return redirect()->intended(url()->previous())->with('success','Login successfully!');
-        } else {
-            return response()->json(['success' => false, 'message' => 'Invalid credentials'], 401);
+            sweetalert()->addSuccess('Success', 'Login successfully!');
+            return redirect()->intended(url()->previous());
         }
+        sweetalert()->addError('Error', 'Login failed!');
+        return redirect()->back();
     }
+
 
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
-        return redirect()->intended(url()->previous())->with('success', 'Logout successfully!');
+        sweetalert()->addSuccess('Success', 'Logout successfully!');
+//        return redirect()->intended(url()->previous())->with('success', 'Logout successfully!');
+        return redirect()->intended(url()->previous());
     }
 
     public function forgot_password(Request $request)

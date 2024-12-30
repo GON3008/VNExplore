@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <div class="modal-login-form py-4 px-md-3 px-0">
-                    <form id="loginForm" action="{{route('register')}}" method="POST">
+                    <form id="loginForm" action="{{route('registerPost')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-floating mb-4">
                             <input type="text" class="form-control" name="name" id="name"
@@ -35,7 +35,7 @@
                             <label>Avatar</label>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary full-width font--bold btn-lg">Log In</button>
+                            <button type="submit" class="btn btn-primary full-width font--bold btn-lg">Sign Up</button>
                         </div>
                         <div class="modal-flex-item d-flex align-items-center justify-content-between mb-3">
                             <div class="modal-flex-first">
@@ -71,7 +71,8 @@
                 </div>
             </div>
             <div class="modal-footer align-items-center justify-content-center">
-                <p>Log in to your account? <a href="#" data-bs-toggle="modal" data-bs-target="#login" class="text-primary fw-medium ms-1">Login</a></p>
+                <p>Log in to your account? <a href="#" data-bs-toggle="modal" data-bs-target="#login"
+                                              class="text-primary fw-medium ms-1">Login</a></p>
             </div>
         </div>
     </div>

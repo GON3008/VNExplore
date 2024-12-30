@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $users = User::where('deleted', 0)->select('users.*');
+            $users = User::where('deleted', 1)->select('users.*');
             return datatables()->of($users)
                 ->addColumn('action', function ($users) {
                     $button = '<button type="button" name="edit" id="' . $users->id . '" class="edit btn btn-primary btn-sm">
@@ -36,7 +36,7 @@ class UserController extends Controller
                 })
 
                 ->editColumn('status' , function ($users) {
-                    if ($users->status == 0) {
+                    if ($users->status == 1) {
                         $span = 'Active';
                     } else {
                         $span= 'Inactive';

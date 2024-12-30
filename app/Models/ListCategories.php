@@ -9,10 +9,10 @@ class ListCategories extends Model
 {
     use HasFactory;
 
-
-
     protected $fillable = [
         'name',
         'description',
+        'status',
+        'deleted',
     ];
 }

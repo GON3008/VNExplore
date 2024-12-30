@@ -1,4 +1,4 @@
-<div class="row justify-content-center align-items-center">
+<div class="row justify-content-center align-items-center translate-y-12">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
         <div class="search-wrap position-relative">
             <div class="row align-items-end gy-3 gx-md-3 gx-sm-2">
@@ -7,7 +7,7 @@
                     <div class="row gy-3 gx-md-3 gx-sm-2">
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 position-relative">
                             <div class="form-group mb-0">
-                                <label class="text-light text-uppercase opacity-75">Where</label>
+                                <label class="text-gray-400 text-uppercase opacity-75">Where</label>
                                 <select class="goingto form-control fw-bold" name="leaving[]"
                                         multiple="multiple">
                                     <option value="ny">New York</option>
@@ -23,7 +23,7 @@
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                             <div class="form-group mb-0">
-                                <label class="text-light text-uppercase opacity-75">Checkin &
+                                <label class="text-gray-400 text-uppercase opacity-75">Checkin &
                                     Checkout</label>
                                 <input type="text" class="form-control fw-bold"
                                        placeholder="Check-In & Check-Out"
@@ -36,7 +36,7 @@
                     <div class="row align-items-end gy-3 gx-md-3 gx-sm-2">
                         <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
                             <div class="form-group mb-0">
-                                <label class="text-light text-uppercase opacity-75">Guests & Rooms</label>
+                                <label class="text-gray-400 text-uppercase opacity-75">Guests & Rooms</label>
                                 <div class="booking-form__input guests-input mixer-auto">
                                     <button name="guests-btn" id="guests-input-btn">1 Guest</button>
                                     <div class="guests-input__options" id="guests-input-options">

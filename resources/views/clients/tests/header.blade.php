@@ -2,8 +2,8 @@
     <div class="container">
         <nav id="navigation" class="navigation navigation-landscape">
             <div class="nav-header">
-                <a class="nav-brand static-show" href="#"><img src="{{asset('geotrip/assets/img/logo-light.png')}}" class="logo" alt=""></a>
-                <a class="nav-brand mob-show" href="#"><img src="{{asset('geotrip/assets/img/logo.png')}}" class="logo" alt=""></a>
+                <a class="nav-brand static-show" href="#"><img src="{{asset('images/logo/logo_1.png')}}" class="logo w-30 h-15" alt=""></a>
+                <a class="nav-brand mob-show" href="#"><img src="{{asset('geotrip/assets/img/logo_1.png')}}" class="logo" alt=""></a>
                 <div class="nav-toggle"></div>
                 <div class="mobile_nav">
                     <ul>

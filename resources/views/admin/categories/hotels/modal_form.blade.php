@@ -35,11 +35,11 @@
                         <label for="rating" class="col-sm-2 control-label">Rating</label>
                         <div class="col-sm-12">
                             <select class="form-control" id="rating" name="rating">
-                                <option value="1">1 Star</option>
-                                <option value="2">2 Stars</option>
-                                <option value="3">3 Stars</option>
-                                <option value="4">4 Stars</option>
-                                <option value="5">5 Stars</option>
+                                <option value="1">⭐</option>
+                                <option value="2">⭐⭐</option>
+                                <option value="3">⭐⭐⭐</option>
+                                <option value="4">⭐⭐⭐⭐</option>
+                                <option value="5">⭐⭐⭐⭐⭐</option>
                             </select>
                         </div>
                     </div>

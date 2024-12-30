@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('hotel_rooms', function (Blueprint $table) {
             $table->id();
+            $table->string('room_number', 50);
             $table->string('room_name', 100);
             $table->decimal('room_price', 10, 2);
             $table->decimal('room_discount', 10, 2);
@@ -24,6 +25,8 @@ return new class extends Migration
             $table->dateTime('refund_deadline')->nullable();
             $table->enum('guests',['1','2','3','4','5','6','7','8','9','10'])->default('1');
             $table->enum('bed_type',['1 king bed','2 single bed'])->default('1 king bed');
+            $table->enum('availability_status', ['Available','Booked','Maintenance']);
+            $table->enum('cleaning_status', ['Cleaned','Not Cleaned','In Progress']);
             $table->foreignId('hotel_category_id')->constrained('hotel_categories')->onDelete('cascade');
             $table->foreignId('hotel_service_id')->constrained('hotel_services')->onDelete('cascade');
             $table->foreignId('hotel_location_id')->constrained('hotel_locations')->onDelete('cascade');

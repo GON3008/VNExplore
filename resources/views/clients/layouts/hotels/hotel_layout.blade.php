@@ -53,12 +53,11 @@
     <!-- ============================================================== -->
 
     <!-- ============================ Hero Banner  Start================================== -->
-    <div class="py-4 position-relative" style="background-image: linear-gradient(160deg, #1A2F78 0%, #1870C9 50%, #5195E3 100%);
-}">
+    <div class="py-4">
         <div class="container">
 
             <!-- Search Form -->
-           @include('clients.layouts.hotels.search_form')
+            {{--           @include('clients.layouts.hotels.search_form')--}}
             <!-- </row> -->
 
         </div>
@@ -72,55 +71,12 @@
             <div class="row justify-content-between gy-4 gx-xl-4 gx-lg-3 gx-md-3 gx-4">
 
                 <!-- Sidebar -->
-               @include('clients.layouts.hotels.sidebar')
+                {{--               @include('clients.layouts.hotels.sidebar')--}}
 
                 <!-- All List -->
-                <div class="col-xl-9 col-lg-8 col-md-12">
-                    <div class="row align-items-center justify-content-between">
-                        <div class="col-xl-4 col-lg-4 col-md-4">
-                            <h5 class="fw-bold fs-6 mb-lg-0 mb-3">Showing 280 Search Results</h5>
-                        </div>
-                        <div class="col-xl-8 col-lg-8 col-md-12">
-                            <div
-                                class="d-flex align-items-center justify-content-start justify-content-lg-end flex-wrap">
-                                <div class="flsx-first me-2">
-                                    <div class="bg-white rounded py-2 px-3">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch"
-                                                   id="mapoption">
-                                            <label class="form-check-label ms-1" for="mapoption">Map</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flsx-first mt-sm-0 mt-2">
-                                    <ul class="nav nav-pills nav-fill p-1 small lights blukker bg-primary rounded-3 shadow-sm"
-                                        id="filtersblocks" role="tablist">
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link active rounded-3" id="trending" data-bs-toggle="tab"
-                                                    type="button"
-                                                    role="tab" aria-selected="true">Our Trending
-                                            </button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link rounded-3" id="mostpopular" data-bs-toggle="tab"
-                                                    type="button"
-                                                    role="tab" aria-selected="false">Most Popular
-                                            </button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link rounded-3" id="lowprice" data-bs-toggle="tab"
-                                                    type="button" role="tab"
-                                                    aria-selected="false">Lowest Price
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                   @yield('hotel_content')
-
+                <div class="col-xl-9 col-lg-8 col-md-12 container">
+                    @include('clients.layouts.hotels.list_voucher')
+                    @yield('hotel_content')
                 </div>
 
             </div>
@@ -140,7 +96,7 @@
 
     <!-- Log In Modal -->
     @include('clients.auth.login.modal_form_login')
-    @include('clients.auth.signUp.modal_form_signUp')
+    @include('clients.auth.register.modal_form_register')
     <!-- End Modal -->
 
     <!-- Choose Currency Modal -->
