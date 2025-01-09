@@ -6,6 +6,8 @@ use App\Models\Voucher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class VoucherController extends Controller
 {
@@ -79,39 +81,42 @@ class VoucherController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'max:100'],
+            'name' => 'required|max:100',
+            'quantity' => 'required|integer|min:1',
+            'discount_amount' => 'required|numeric|min:0',
+            'valid_from' => 'required|date',
+            'valid_until' => 'required|date|after:valid_from',
+            'voucher_code' => [
+                'nullable',
+                Rule::unique('vouchers', 'voucher_code')
+                    ->ignore($request->voucher_id, 'id')
+            ]
         ]);
 
-        // Kiểm tra nếu chọn tự động tạo mã
-        if ($request->code_option === 'auto') {
-            $request->merge(['voucher_code' => $this->generateRandomVoucherCode()]);
-        } else {
-            // Nếu tự nhập, kiểm tra mã không được để trống
-            $request->validate([
-                'voucher_code' => ['required', 'unique:vouchers,voucher_code']
-            ]);
-        }
+//        $voucherCode = !empty(trim($request->voucher_code))
+//            ? $request->voucher_code : Str::random(10);
+        $voucherCode = ($request->voucher_code_option === 'random')
+            ? strtoupper(Str::random(10))
+            : $request->voucher_code;
 
-        $voucherData = [
-            'voucher_code' => $request->voucher_code,
-            'quantity' => $request->quantity,
-            'discount_amount' => $request->discount_amount,
-            'name' => $request->name,
-            'description' => $request->description,
-            'valid_from' => $request->valid_from,
-            'valid_until' => $request->valid_until,
-        ];
+        $voucherData = $request->only([
+            'name',
+            'quantity',
+            'discount_amount',
+            'valid_from',
+            'valid_until'
+        ]);
+        $voucherData['voucher_code'] = $voucherCode;
 
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $fileName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path(self::PATH_UPLOAD), $fileName);
+            $fileName = time() . '.' . $request->image->getClientOriginalExtension();
+            $request->image->move(public_path(self::PATH_UPLOAD), $fileName);
             $voucherData['image'] = $fileName;
         }
 
-        $voucher = Voucher::updateOrCreate(['id' => $request->voucher_id], $voucherData);
+        Voucher::updateOrCreate(['id' => $request->voucher_id], $voucherData);
 
-        return response()->json($voucher);
+        return response()->json(['success' => true, 'message' => 'Voucher saved successfully']);
     }
 
     /**
@@ -151,31 +156,18 @@ class VoucherController extends Controller
 
         $voucher->deleted = 0;
         $voucher->save();
-
-        return response()->json(['success' => 'Data Deleted Successfully']);
+//        sweetalert()->addSuccess('Success', 'Delete voucher successfully');
+        return response()->json(sweetalert()->addSuccess('Success', 'Delete voucher successfully'), 200);
     }
 
     /**
      * Generate a random voucher code.
      */
-    public function generateVoucherCode()
+    private function generateRandomVoucherCode()
     {
-        try {
-            $code = $this->generateRandomVoucherCode();
-            return response()->json(['code' => $code], 200);
-        } catch (\Throwable $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
-
-    private function generateRandomVoucherCode($length = 10)
-    {
-        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        $code = '';
-        for ($i = 0; $i < $length; $i++) {
-            $code .= $characters[random_int(0, strlen($characters) - 1)];
-        }
-        while (Voucher::where('voucher_code', $code)->exists()) ;
+        do {
+            $code = strtoupper(Str::random(10));
+        } while (Voucher::where('voucher_code', $code)->exists());
         return $code;
     }
 

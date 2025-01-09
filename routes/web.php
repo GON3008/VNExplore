@@ -50,7 +50,7 @@ Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
     Route::resource('messages', MessagesController::class);
     Route::resource('users', UserController::class);
     Route::resource('vouchers', VoucherController::class);
-    Route::get('/generate-voucher-code', [VoucherController::class, 'generateVoucherCode']);
+    Route::get('vouchers/generateRandomCode', [VoucherController::class, 'generateRandomCode'])->name('vouchers.generateRandomCode');
     Route::resource('locations', LocationController::class);
     Route::resource('flights', FlightController::class);
     Route::resource('cars', CarController::class);
@@ -84,7 +84,7 @@ Route::group(['middleware' => 'guest'], function () {
 
     // Forgot password
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot.password');
-    Route::get('password/reset/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
+    Route::get('password/reset/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset.form');
     Route::post('/register', [AuthController::class, 'registerPost'])->name('registerPost');
     Route::get('/verify-otp', [AuthController::class, 'verifyOtpForm'])->name('verifyOtpForm');
     Route::post('/verify-otp', [AuthController::class, 'verifyOtp'])->name('verifyOtp');

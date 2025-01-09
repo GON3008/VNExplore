@@ -23,14 +23,17 @@ class Voucher extends Model
         'deleted',
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($voucher) {
-            $voucher->voucher_code = strtoupper(Str::random(10));
-        });
-    }
+//    public static function boot()
+//    {
+//        parent::boot();
+//
+//        static::creating(function ($voucher) {
+//            // random code khi voucher_code => no value
+//            if (empty($voucher->voucher_code)) {
+//                $voucher->voucher_code = strtoupper(Str::random(10));
+//            }
+//        });
+//    }
 
     public function useVoucher()
     {

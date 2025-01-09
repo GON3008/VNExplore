@@ -23,44 +23,6 @@
                     }
                 });
             }
-
-            $(document).ready(function () {
-                $('#valid_until').on('change', function () {
-                    checkVoucherStatus();
-                });
-
-                $('input[name="voucher_option"]').on('change', function () {
-                    toggleVoucherCodeInput();
-                });
-
-                function toggleVoucherCodeInput() {
-                    if ($('#random_code').is(':checked')) {
-                        $('#voucherCodeGroup').hide();
-                        generateRandomVoucherCode();
-                    } else {
-                        $('#voucherCodeGroup').show();
-                        $('#voucher_code_input').val(''); // Clear input
-                    }
-                }
-
-                function generateRandomVoucherCode() {
-                    const randomCode = 'VC-' + Math.random().toString(36).substring(2, 8).toUpperCase();
-                    $('#voucher_code').val(randomCode);
-                }
-
-                function checkVoucherStatus() {
-                    var validUntil = new Date($('#valid_until').val());
-                    var now = new Date();
-                    if (validUntil < now) {
-                        $('#is_active').val('0');
-                    }
-                }
-
-                // Initialize state
-                toggleVoucherCodeInput();
-            });
-
-
             // Initialize DataTable
             function initializeDataTable() {
                 $("#dataVouchers").DataTable({
@@ -70,9 +32,17 @@
                     columns: [
                         {title: 'Id', data: 'id', name: 'id'},
                         {title: 'Name', data: 'name', name: 'name'},
-                        {title: 'Code', data: 'voucher_code', name: 'voucher_code'},
+                        {title: 'Code', data: 'voucher_code', name: ' voucher_code'},
                         {title: 'Quantity', data: 'quantity', name: 'quantity'},
-                        {title: 'Discount', data: 'discount_amount', name: 'discount_amount'},
+                        {
+                            title: 'Discount',
+                            data: 'discount_amount',
+                            name: 'discount_amount',
+                            render: function (data) {
+                                return parseFloat(data).toFixed(0) + '%'
+                            }
+                        },
+                        {title: 'Image', data: 'image',name: 'image'},
                         {title: 'Start time', data: 'valid_from', name: 'valid_from'},
                         {title: 'End time', data: 'valid_until', name: 'valid_until'},
                         {title: 'Description', data: 'description', name: 'description'},
@@ -149,7 +119,6 @@
                     });
                 });
             }
-
             // Handle delete voucher
             function setupDeleteVoucher() {
                 $('body').on('click', '.delete', function () {

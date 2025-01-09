@@ -71,14 +71,18 @@
     <div class="upside-heading">
         <h2 style="color: rgba(7, 62, 104, 1.00);">Đăng ký để sử dụng coupon</h2>
     </div>
-    <div class="coupon-container swiper-container py-3">
+</div>
+
+<div class="coupon-container swiper-container py-3">
+{{--    <div class="main-carousel cols-3 dots-full h-auto"></div>--}}
+    @foreach($vouchers as $voucher)
         <div class="coupon-card py-2">
             <div class="d-flex gap-2 justify-content-between">
                 <div class="coupon-icon pt-2">
                     <img src="flight-icon.png" alt="Flight Icon"/>
                 </div>
                 <div class="coupon-content">
-                    <h6>Giảm ngay 50K</h6>
+                    <h6>{{$voucher->name}}</h6>
                     <p>Áp dụng cho lần đặt đầu tiên trên VNExplore.</p>
                 </div>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -96,51 +100,11 @@
             background-color:rgba(3,18,26,0.07);
             height:20px;"></div>
             <div class="coupon-code">
-                <span>TRAVELOKALANNGOC</span>
+                <span>{{$voucher->voucher_code}}</span>
                 <button onclick="copyToClipboard('TRAVELOKALANNGOC')">Copy</button>
             </div>
         </div>
-
-        <div class="coupon-card py-2">
-            <div class="d-flex gap-2">
-                <div class="coupon-icon pt-2">
-                    <img src="flight-icon.png" alt="Flight Icon"/>
-                </div>
-                <div class="coupon-content">
-                    <h6>Giảm ngay 50K</h6>
-                    <p>Áp dụng cho lần đặt đầu tiên trên VNExplore.</p>
-                </div>
-            </div>
-            <div style="background:radial-gradient(10px at right, #0000 97%, #FFFFFF) right / 51% 100% no-repeat,
-            radial-gradient(10px at left, #0000 97%, #FFFFFF) left / 51% 100% no-repeat;
-            background-color:rgba(3,18,26,0.07);
-            height:20px;"></div>
-            <div class="coupon-code">
-                <span>TRAVELOKALANNGOC</span>
-                <button onclick="copyToClipboard('TRAVELOKALANNGOC')">Copy</button>
-            </div>
-        </div>
-
-        <div class="coupon-card py-2">
-            <div class="d-flex gap-2">
-                <div class="coupon-icon pt-2">
-                    <img src="flight-icon.png" alt="Flight Icon"/>
-                </div>
-                <div class="coupon-content">
-                    <h6>Giảm ngay 50K</h6>
-                    <p>Áp dụng cho lần đặt đầu tiên trên VNExplore.</p>
-                </div>
-            </div>
-            <div style="background:radial-gradient(10px at right, #0000 97%, #FFFFFF) right / 51% 100% no-repeat,
-            radial-gradient(10px at left, #0000 97%, #FFFFFF) left / 51% 100% no-repeat;
-            background-color:rgba(3,18,26,0.07);
-            height:20px;"></div>
-            <div class="coupon-code">
-                <span>TRAVELOKALANNGOC</span>
-                <button onclick="copyToClipboard('TRAVELOKALANNGOC')">Copy</button>
-            </div>
-        </div>
-    </div>
+    @endforeach
 </div>
 
 <div class="justify-content-center align-items-center py-2">

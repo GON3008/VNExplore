@@ -21,8 +21,8 @@ return new class extends Migration
             $table->decimal('discount_amount', 8, 2);
             $table->date('valid_from');
             $table->date('valid_until');
-            $table->boolean('active')->default(0);
-            $table->boolean('deleted')->default(0);
+            $table->boolean('status')->default(1);
+            $table->boolean('deleted')->default(1);
             $table->timestamps();
         });
     }
