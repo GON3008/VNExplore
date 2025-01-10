@@ -62,7 +62,7 @@
                             <select class="form-control" id="hotelLocation_id" name="location_id">
                                 <option value="0">Select Location</option>
                                 @foreach($hotelLocations as $location)
-                                    <option value="{{ $location->id }}">{{ $location->hotel_country }}</option>
+                                    <option value="{{ $location->id }}">{{ $location->hotel_city }}</option>
                                 @endforeach
                             </select>
                         </div>

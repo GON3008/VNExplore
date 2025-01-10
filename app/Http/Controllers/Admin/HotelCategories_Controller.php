@@ -65,7 +65,7 @@ class HotelCategories_Controller extends Controller
         $hotelCategory_id = $request->hotelCategory_id;
         $rules = [
             'name' => ['required', 'max:100'],
-            'hotelCategory_images.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'], // Thay đổi từ 'image' sang 'images.*' để xử lý nhiều ảnh
+            'hotelCategory_images.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'category_id' => ['required'],
             'rating' => ['required'],
             'description' => ['nullable'],

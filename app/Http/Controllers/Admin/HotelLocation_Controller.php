@@ -9,13 +9,14 @@ use Datatables;
 
 class HotelLocation_Controller extends Controller
 {
+    const PATH_UPLOAD = 'uploads/HotelLocation_img';
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         if (request()->ajax()) {
-            $hotelLocations = HotelLocation::where('deleted', 0)->select('hotel_locations.*');
+            $hotelLocations = HotelLocation::where('deleted', 1)->select('hotel_locations.*');
             return datatables()->of($hotelLocations)
                 ->addColumn('action', function ($hotelLocations) {
                     $button = '<button type="button" name="edit" id="' . $hotelLocations->id . '" class="edit-hotel btn btn-primary btn-sm">

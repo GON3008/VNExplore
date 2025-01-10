@@ -8,7 +8,8 @@
                 </span>
             </div>
             <div class="modal-body">
-                <form id="hotel_locationForm" name="hotel_locationForm" class="form-horizontal" enctype="multipart/form-data">
+                <form id="hotel_locationForm" name="hotel_locationForm" class="form-horizontal"
+                      enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="hotelLocation_id" id="hotelLocation_id">
                     <div class="form-group">
@@ -45,6 +46,14 @@
                             <input type="text" class="form-control"
                                    id="hotel_ward" name="hotel_ward" placeholder="Enter Ward Name" value=""
                                    maxlength="100">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hotelLocation_img" class="col-md-2 control-label">Image</label>
+                        <div class="col-sm-12">
+                            <input type="file" class="form-control"
+                                   id="hotelLocation_img" name="hotelLocation_img" placeholder="Enter Image">
                         </div>
                     </div>
 

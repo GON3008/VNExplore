@@ -14,6 +14,7 @@ class HotelLocation extends Model
         'hotel_city',
         'hotel_district',
         'hotel_ward',
+        'hotelLocation_img',
         'deleted'
     ];
 }
