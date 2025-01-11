@@ -77,8 +77,8 @@
                 <div class="col-xl-9 col-lg-8 col-md-12 container">
                     @include('clients.layouts.hotels.list_voucher')
                     @yield('hotel_content')
+                    @include('clients.layouts.hotels.section')
                 </div>
-
             </div>
         </div>
     </section>
@@ -86,7 +86,7 @@
 
 
     <!-- ============================ Content ================================== -->
-    @yield('content')
+{{--    @yield('content')--}}
     <!-- ============================ End Content ================================== -->
 
 

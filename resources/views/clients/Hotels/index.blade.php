@@ -149,7 +149,7 @@
 
     <section class="py-0">
         <div class="row justify-content-center py-2">
-            <div class="col-xl-12 col-lg-12 col-md-12 p-0">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 p-0">
                 <div class="main-carousel cols-3 dots-full h-auto">
                     <!-- Single Item -->
                     @foreach($data as $item)
@@ -227,6 +227,26 @@
 
     <div class="pt-5">
         <h2 class="fs-3">Giá tốt tại các điểm đến nội địa</h2>
+        <div class="py-1">
+            <div class="row justify-content-center p-2">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 p-0">
+                    <div class="main-carousel cols-4 dots-full h-auto">
+                        @foreach($hotelLocations as $location)
+                            @php
+                                $images = json_decode($location->hotelLocation_img);
+                                $firstImage = !empty($images) ? $images[0] : null;
+                            @endphp
+                            @if ($firstImage && isset($location->hotel_country) && trim($location->hotel_country) === 'Việt Nam')
+                                <div class="carousel-cell">
+                                    <img src="{{ asset('uploads/HotelLocation_img/' . $firstImage) }}"
+                                         class="img-fluid" alt="Hotel Image">
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 @endsection

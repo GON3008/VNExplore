@@ -24,6 +24,7 @@
                         {title: 'Hotel City', data: 'hotel_city', name: 'hotel_city'},
                         {title: 'Hotel District', data: 'hotel_district', name: 'hotel_district'},
                         {title: 'Hotel Ward', data: 'hotel_ward', name: 'hotel_ward'},
+                        {title: 'Image', data: 'hotelLocation_img', name: 'hotelLocation_img'},
                         {title: 'Action', data: 'action', name: 'action', orderable: false, searchable: false},
                     ],
                     "order": [[0, 'desc']],
@@ -86,6 +87,7 @@
                     $('#hotel_city').val(data.hotel_city);
                     $('#hotel_district').val(data.hotel_district);
                     $('#hotel_ward').val(data.hotel_ward);
+                    $('#hotelLocation_img').val(data.hotelLocation_img);
                 });
             });
 

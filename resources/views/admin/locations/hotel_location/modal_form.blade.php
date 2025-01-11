@@ -53,7 +53,7 @@
                         <label for="hotelLocation_img" class="col-md-2 control-label">Image</label>
                         <div class="col-sm-12">
                             <input type="file" class="form-control"
-                                   id="hotelLocation_img" name="hotelLocation_img" placeholder="Enter Image">
+                                   id="hotelLocation_img" name="hotelLocation_img[]" placeholder="Enter Image">
                         </div>
                     </div>
 
