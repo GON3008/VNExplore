@@ -35,6 +35,7 @@ use Illuminate\Support\Facades\Route;
 //Route client
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/hotels', [ClientsHotelController::class, 'index'])->name('hotels');
+Route::get('/hotels/{hotel_category_id}', [ClientsHotelController::class, 'hotelRoomShow'])->name('hotels.show');
 
 
 //Route admin

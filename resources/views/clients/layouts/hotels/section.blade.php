@@ -15,13 +15,13 @@
                     <img src="{{asset('images/asianruby.png')}}">
                 </div>
                 <div class="col">
-                    <div class="p-3 border bg-light">Row column</div>
+                    <img src="{{asset('images/cuh.png')}}">
                 </div>
                 <div class="col">
-                    <div class="p-3 border bg-light">Row column</div>
+                    <img src="{{asset('images/ehg.png')}}">
                 </div>
                 <div class="col">
-                    <div class="p-3 border bg-light">Row column</div>
+                    <img src="{{asset('images/flc.png')}}">
                 </div>
                 <div class="col">
                     <div class="p-3 border bg-light">Row column</div>

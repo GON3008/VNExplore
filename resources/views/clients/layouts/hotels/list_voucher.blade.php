@@ -83,7 +83,7 @@
             <div class="main-carousel cols-3 dots-full h-auto">
                 @foreach($vouchers as $voucher)
                     <div class="coupon-container swiper-container py-3 carousel-cell">
-                        <div class="coupon-card  py-2">
+                        <div class="coupon-card py-2">
                             <div class="d-flex gap-2 justify-content-between">
                                 <div class="coupon-icon pt-2">
                                     <img src="{{asset('vouchers/'. $voucher->image)}}" alt="img"/>

@@ -66,7 +66,7 @@
                            && in_array($item->category->name, ['Hotel','Hotels','hotel','hotels']))
                             <div class="carousel-cell">
                                 <div class="pop-touritem">
-                                    <a href="#" class="card rounded-3 border br-dashed m-0">
+                                    <a href="{{ route('hotels.show', ['hotel_category_id' => $item->id]) }}" class="card rounded-3 border br-dashed m-0">
                                         <div class="flight-thumb-wrapper">
                                             @php
                                                 $images = json_decode($item->hotelCategory_images);
@@ -159,7 +159,7 @@
                            && in_array($item->category->name, ['Hotel','Hotels','hotel','hotels']))
                             <div class="carousel-cell">
                                 <div class="pop-touritem">
-                                    <a href="#" class="card rounded-3 border br-dashed m-0">
+                                    <a href="{{ route('hotels.show', ['hotel_category_id' => $item->id]) }}" class="card rounded-3 border br-dashed m-0">
                                         <div class="flight-thumb-wrapper">
                                             @php
                                                 $images = json_decode($item->hotelCategory_images);
