@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 class ClientsHotelController extends Controller
 {
-    const PATH_UPLOAD = 'HotelCategories';
     public function index(){
         $data = HotelCategories::query()
             ->with('category','service','rooms')

@@ -87,14 +87,14 @@ class HotelCategories_Controller extends Controller
             ]);
 
         if ($request->hasFile('hotelCategory_images')) {
-            $images = [];
+            $existingImages = json_decode($hotelCategories->hotelCategory_images, true) ?? [];
 
             foreach ($request->file('hotelCategory_images') as $file) {
                 $filename = time() . '-' . $file->getClientOriginalName();
                 $file->move(public_path(self::PATH_UPLOAD), $filename);
-                $images[] = $filename; // Save images array
+                $existingImages[] = $filename;
             }
-            $hotelCategories->hotelCategory_images = json_encode($images);
+            $hotelCategories->hotelCategory_images = json_encode($existingImages);
             $hotelCategories->save();
         }
 

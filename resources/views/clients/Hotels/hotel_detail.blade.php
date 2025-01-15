@@ -7,7 +7,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#" class="text-primary">Home</a></li>
                 <li class="breadcrumb-item"><a href="#" class="text-primary">Hotel in Denver, USA</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Royal Plaza on Scotts</li>
+                <li class="breadcrumb-item active" aria-current="page">{{$hotelCategory->hotelCategory_name}}</li>
             </ol>
         </nav>
     </div>
@@ -21,18 +21,23 @@
                     <div class="d-inline-flex align-items-center mb-1">
                         <span class="label bg-light-success text-success">Health Protected</span>
                         <div class="d-inline-block ms-2">
-                            <i class="fa fa-star text-warning text-xs"></i>
-                            <i class="fa fa-star text-warning text-xs"></i>
-                            <i class="fa fa-star text-warning text-xs"></i>
-                            <i class="fa fa-star text-warning text-xs"></i>
-                            <i class="fa fa-star text-warning text-xs"></i>
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if ($i <= $hotelCategory->hotelCategory_rating)
+                                    <i class="fas fa-star" style="color: gold"></i>
+                                    <!-- full star icon -->
+                                @else
+                                    <i class="far fa-star" style="color: gold"></i>
+                                    <!-- empty star icon -->
+                                @endif
+                            @endfor
                         </div>
                     </div>
                     <div class="d-block">
-                        <h4 class="mb-0">Royal Plaza on Scotts</h4>
+                        <h4 class="mb-0">{{ $hotelCategory->hotelCategory_name }}</h4>
                         <div class="">
                             <p class="text-md m-0"><i class="fa-solid fa-location-dot me-2"></i>577 Jalan Sultan Road
-                                Singapore, 245652 Singapore. <a href="#" class="text-primary fw-medium ms-2">Show on Map</a></p>
+                                Singapore, 245652 Singapore. <a href="#" class="text-primary fw-medium ms-2">Show on
+                                    Map</a></p>
                         </div>
                     </div>
                 </div>
@@ -51,43 +56,31 @@
                 </div>
             </div>
 
-            <div class="galleryGrid typeGrid_3 mt-2">
+            @php
+                $hotelImages = json_decode($hotelCategory->hotelCategory_images);
+            @endphp
 
-                <div class="galleryGrid__item relative d-flex">
-                    <a href="assets/img/hotel/hotel-1.jpg" data-lightbox="roadtrip"><img src="assets/img/hotel/hotel-1.jpg" alt="image"
-                                                                                         class="rounded-2 img-fluid"></a>
+            @if(!empty($hotelImages))
+                <div class="galleryGrid typeGrid_3 mt-2">
+                    @foreach($hotelImages as $index => $image)
+                        <div class="galleryGrid__item {{ $loop->last ? 'position-relative' : '' }}">
+                            <a href="{{ asset('HotelCategories/'. $image) }}" data-lightbox="roadtrip">
+                                <img src="{{ asset('HotelCategories/'. $image) }}" alt="Hotel Image" class="rounded-2 img-fluid">
+                            </a>
+                            @if($loop->last)
+                                <div class="position-absolute end-0 bottom-0 mb-3 me-3">
+                                    <a href="{{ asset('HotelCategories/'. $image) }}" data-lightbox="roadtrip"
+                                       class="btn btn-md btn-whites fw-medium text-dark">
+                                        <i class="fa-solid fa-caret-right me-1"></i>{{ count($hotelImages) - $index - 1 }} More Photos
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
-
-                <div class="galleryGrid__item">
-                    <a href="assets/img/hotel/hotel-2.jpg" data-lightbox="roadtrip"><img src="assets/img/hotel/hotel-2.jpg" alt="image"
-                                                                                         class="rounded-2 img-fluid"></a>
-                </div>
-                <div class="galleryGrid__item">
-                    <a href="assets/img/hotel/hotel-3.jpg" data-lightbox="roadtrip"><img src="assets/img/hotel/hotel-3.jpg" alt="image"
-                                                                                         class="rounded-2 img-fluid"></a>
-                </div>
-                <div class="galleryGrid__item">
-                    <a href="assets/img/hotel/hotel-4.jpg" data-lightbox="roadtrip"><img src="assets/img/hotel/hotel-4.jpg" alt="image"
-                                                                                         class="rounded-2 img-fluid"></a>
-                </div>
-                <div class="galleryGrid__item">
-                    <a href="assets/img/hotel/hotel-5.jpg" data-lightbox="roadtrip"><img src="assets/img/hotel/hotel-5.jpg" alt="image"
-                                                                                         class="rounded-2 img-fluid"></a>
-                </div>
-                <div class="galleryGrid__item">
-                    <a href="assets/img/hotel/hotel-6.jpg" data-lightbox="roadtrip"><img src="assets/img/hotel/hotel-6.jpg" alt="image"
-                                                                                         class="rounded-2 img-fluid"></a>
-                </div>
-                <div class="galleryGrid__item position-relative">
-                    <a href="assets/img/hotel/hotel-7.jpg" data-lightbox="roadtrip"><img src="assets/img/hotel/hotel-7.jpg" alt="image"
-                                                                                         class="rounded-2 img-fluid"></a>
-                    <div class="position-absolute end-0 bottom-0 mb-3 me-3">
-                        <a href="assets/img/hotel/hotel-7.jpg" data-lightbox="roadtrip"
-                           class="btn btn-md btn-whites fw-medium text-dark"><i class="fa-solid fa-caret-right me-1"></i>16
-                            More Photos</a>
-                    </div>
-                </div>
-            </div>
+            @else
+                <p>No images available.</p>
+            @endif
 
         </div>
     </div>
@@ -99,7 +92,8 @@
                 <div class="card p-3 mb-4">
                     <div class="nearestServ-wrap">
                         <div class="nearestServ-head d-flex mb-1">
-                            <h6 class="fs-6 fw-semibold text-primary mb-1"><i class="fa-brands fa-servicestack me-2"></i>Top
+                            <h6 class="fs-6 fw-semibold text-primary mb-1"><i
+                                    class="fa-brands fa-servicestack me-2"></i>Top
                                 Attractions</h6>
                         </div>
                         <div class="nearestServ-caps">
@@ -153,8 +147,9 @@
     <div class="col-xl-12 col-lg-12 col-md-12">
         <div class="d-flex align-items-center justify-content-start py-3 px-3 rounded-2 bg-success mb-4">
             <p class="text-light fw-semibold m-0"><i class="fa-solid fa-gift text-warning me-2"></i><a href="#"
-                                                                                                       class="text-white text-decoration-underline">Login</a> or <a href="#"
-                                                                                                                                                                    class="text-white text-decoration-underline">Register</a> to earn upto 100 coins (approx 1.72 US$)
+                                                                                                       class="text-white text-decoration-underline">Login</a>
+                or <a href="#"
+                      class="text-white text-decoration-underline">Register</a> to earn upto 100 coins (approx 1.72 US$)
                 after check-out.
             <p>
         </div>
@@ -188,7 +183,8 @@
                                         <li class="col-6"><span class="text-muted-2 text-md"><i
                                                     class="fa-solid fa-ban-smoking me-2"></i>Non-Smoking</span></li>
                                         <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-vector-square me-2"></i>1800sqft | 6 Floor</span></li>
+                                                    class="fa-solid fa-vector-square me-2"></i>1800sqft | 6 Floor</span>
+                                        </li>
                                         <li class="col-6"><span class="text-muted-2 text-md"><i
                                                     class="fa-solid fa-wifi me-2"></i>Free Wi-Fi</span></li>
                                         <li class="col-6"><span class="text-muted-2 text-md"><i
@@ -199,7 +195,8 @@
                                                     class="fa-solid fa-cash-register me-2"></i>Refrigerator</span></li>
                                         <li class="col-6"><span class="text-muted-2 text-md"><i
                                                     class="fa-solid fa-tty me-2"></i>Telephone</span></li>
-                                        <li class="col-12"><a href="#" class="text-primary fw-medium text-md">Show More Room
+                                        <li class="col-12"><a href="#" class="text-primary fw-medium text-md">Show More
+                                                Room
                                                 Amenties</a></li>
                                     </ul>
                                 </div>
@@ -214,7 +211,8 @@
                                 <div class="typsofrooms-wrap">
                                     <div class="d-flex align-items-center">
                                         <h6 class="fs-6 fw-semibold mb-1 me-2">Your Choice</h6><a href="#"
-                                                                                                  class="text-muted fs-6"><i class="fa-solid fa-circle-question"></i></a>
+                                                                                                  class="text-muted fs-6"><i
+                                                class="fa-solid fa-circle-question"></i></a>
                                     </div>
                                     <div class="typsofrooms-groups d-flex align-items-start">
                                         <div class="typsofrooms-brk1 mb-4">
@@ -223,20 +221,25 @@
                                                             class="fa-solid fa-mug-saucer me-2"></i>Breackfast for US$10 (Optional)</span>
                                                 </li>
                                                 <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span></li>
+                                                            class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span></li>
+                                                            class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span></li>
+                                                            class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span></li>
+                                                            class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="typsofrooms-action col-auto">
                                     <div class="prcrounce-groups">
-                                        <div class="d-flex align-items-center justify-content-start justify-content-sm-end">
+                                        <div
+                                            class="d-flex align-items-center justify-content-start justify-content-sm-end">
                                             <div class="text-dark fw-semibold fs-4">US$ 99</div>
                                         </div>
                                         <div
@@ -246,11 +249,18 @@
                                     </div>
                                     <div
                                         class="prcrounce-groups-button d-flex flex-column align-items-start align-items-md-end mt-3">
-                                        <div class="prcrounce-sngbuttons d-flex mb-2"><button
-                                                class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book at This
-                                                Price</button></div>
-                                        <div class="prcrounce-sngbuttons d-flex"><button
-                                                class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower Price</button>
+                                        <div class="prcrounce-sngbuttons d-flex mb-2">
+                                            <button
+                                                class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book at
+                                                This
+                                                Price
+                                            </button>
+                                        </div>
+                                        <div class="prcrounce-sngbuttons d-flex">
+                                            <button
+                                                class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower
+                                                Price
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -264,28 +274,35 @@
                                 <div class="typsofrooms-wrap">
                                     <div class="d-flex align-items-center">
                                         <h6 class="fs-6 fw-semibold mb-1 me-2">Your Choice</h6><a href="#"
-                                                                                                  class="text-muted fs-6"><i class="fa-solid fa-circle-question"></i></a>
+                                                                                                  class="text-muted fs-6"><i
+                                                class="fa-solid fa-circle-question"></i></a>
                                     </div>
                                     <div class="typsofrooms-groups d-flex align-items-start">
                                         <div class="typsofrooms-brk1 mb-4">
                                             <ul class="row align-items-center g-1 mb-0 p-0">
                                                 <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-mug-saucer me-2"></i>Breackfast Included</span></li>
+                                                            class="fa-solid fa-mug-saucer me-2"></i>Breackfast Included</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span></li>
+                                                            class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span></li>
+                                                            class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span></li>
+                                                            class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span></li>
+                                                            class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="typsofrooms-action col-auto">
                                     <div class="prcrounce-groups">
-                                        <div class="d-flex align-items-center justify-content-start justify-content-sm-end">
+                                        <div
+                                            class="d-flex align-items-center justify-content-start justify-content-sm-end">
                                             <div class="text-dark fw-semibold fs-4">US$ 107</div>
                                         </div>
                                         <div
@@ -295,11 +312,18 @@
                                     </div>
                                     <div
                                         class="prcrounce-groups-button d-flex flex-column align-items-start align-items-md-end mt-3">
-                                        <div class="prcrounce-sngbuttons d-flex mb-2"><button
-                                                class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book at This
-                                                Price</button></div>
-                                        <div class="prcrounce-sngbuttons d-flex"><button
-                                                class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower Price</button>
+                                        <div class="prcrounce-sngbuttons d-flex mb-2">
+                                            <button
+                                                class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book at
+                                                This
+                                                Price
+                                            </button>
+                                        </div>
+                                        <div class="prcrounce-sngbuttons d-flex">
+                                            <button
+                                                class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower
+                                                Price
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -337,7 +361,8 @@
                                         <li class="col-6"><span class="text-muted-2 text-md"><i
                                                     class="fa-solid fa-ban-smoking me-2"></i>Non-Smoking</span></li>
                                         <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-vector-square me-2"></i>1800sqft | 6 Floor</span></li>
+                                                    class="fa-solid fa-vector-square me-2"></i>1800sqft | 6 Floor</span>
+                                        </li>
                                         <li class="col-6"><span class="text-muted-2 text-md"><i
                                                     class="fa-solid fa-wifi me-2"></i>Free Wi-Fi</span></li>
                                         <li class="col-6"><span class="text-muted-2 text-md"><i
@@ -348,7 +373,8 @@
                                                     class="fa-solid fa-cash-register me-2"></i>Refrigerator</span></li>
                                         <li class="col-6"><span class="text-muted-2 text-md"><i
                                                     class="fa-solid fa-tty me-2"></i>Telephone</span></li>
-                                        <li class="col-12"><a href="#" class="text-primary fw-medium text-md">Show More Room
+                                        <li class="col-12"><a href="#" class="text-primary fw-medium text-md">Show More
+                                                Room
                                                 Amenties</a></li>
                                     </ul>
                                 </div>
@@ -363,7 +389,8 @@
                                 <div class="typsofrooms-wrap">
                                     <div class="d-flex align-items-center">
                                         <h6 class="fs-6 fw-semibold mb-1 me-2">Your Choice</h6><a href="#"
-                                                                                                  class="text-muted fs-6"><i class="fa-solid fa-circle-question"></i></a>
+                                                                                                  class="text-muted fs-6"><i
+                                                class="fa-solid fa-circle-question"></i></a>
                                     </div>
                                     <div class="typsofrooms-groups d-flex align-items-start">
                                         <div class="typsofrooms-brk1 mb-4">
@@ -372,20 +399,25 @@
                                                             class="fa-solid fa-mug-saucer me-2"></i>Breackfast for US$10 (Optional)</span>
                                                 </li>
                                                 <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span></li>
+                                                            class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span></li>
+                                                            class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span></li>
+                                                            class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span></li>
+                                                            class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="typsofrooms-action col-auto">
                                     <div class="prcrounce-groups">
-                                        <div class="d-flex align-items-center justify-content-start justify-content-sm-end">
+                                        <div
+                                            class="d-flex align-items-center justify-content-start justify-content-sm-end">
                                             <div class="text-dark fw-semibold fs-4">US$ 130</div>
                                         </div>
                                         <div
@@ -395,11 +427,18 @@
                                     </div>
                                     <div
                                         class="prcrounce-groups-button d-flex flex-column align-items-start align-items-md-end mt-3">
-                                        <div class="prcrounce-sngbuttons d-flex mb-2"><button
-                                                class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book at This
-                                                Price</button></div>
-                                        <div class="prcrounce-sngbuttons d-flex"><button
-                                                class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower Price</button>
+                                        <div class="prcrounce-sngbuttons d-flex mb-2">
+                                            <button
+                                                class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book at
+                                                This
+                                                Price
+                                            </button>
+                                        </div>
+                                        <div class="prcrounce-sngbuttons d-flex">
+                                            <button
+                                                class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower
+                                                Price
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -413,28 +452,35 @@
                                 <div class="typsofrooms-wrap">
                                     <div class="d-flex align-items-center">
                                         <h6 class="fs-6 fw-semibold mb-1 me-2">Your Choice</h6><a href="#"
-                                                                                                  class="text-muted fs-6"><i class="fa-solid fa-circle-question"></i></a>
+                                                                                                  class="text-muted fs-6"><i
+                                                class="fa-solid fa-circle-question"></i></a>
                                     </div>
                                     <div class="typsofrooms-groups d-flex align-items-start">
                                         <div class="typsofrooms-brk1 mb-4">
                                             <ul class="row align-items-center g-1 mb-0 p-0">
                                                 <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-mug-saucer me-2"></i>Breackfast Included</span></li>
+                                                            class="fa-solid fa-mug-saucer me-2"></i>Breackfast Included</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span></li>
+                                                            class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span></li>
+                                                            class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span></li>
+                                                            class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span></li>
+                                                            class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="typsofrooms-action col-auto">
                                     <div class="prcrounce-groups">
-                                        <div class="d-flex align-items-center justify-content-start justify-content-sm-end">
+                                        <div
+                                            class="d-flex align-items-center justify-content-start justify-content-sm-end">
                                             <div class="text-dark fw-semibold fs-4">US$ 107</div>
                                         </div>
                                         <div
@@ -444,11 +490,18 @@
                                     </div>
                                     <div
                                         class="prcrounce-groups-button d-flex flex-column align-items-start align-items-md-end mt-3">
-                                        <div class="prcrounce-sngbuttons d-flex mb-2"><button
-                                                class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book at This
-                                                Price</button></div>
-                                        <div class="prcrounce-sngbuttons d-flex"><button
-                                                class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower Price</button>
+                                        <div class="prcrounce-sngbuttons d-flex mb-2">
+                                            <button
+                                                class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book at
+                                                This
+                                                Price
+                                            </button>
+                                        </div>
+                                        <div class="prcrounce-sngbuttons d-flex">
+                                            <button
+                                                class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower
+                                                Price
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -486,7 +539,8 @@
                                         <li class="col-6"><span class="text-muted-2 text-md"><i
                                                     class="fa-solid fa-ban-smoking me-2"></i>Non-Smoking</span></li>
                                         <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-vector-square me-2"></i>1800sqft | 6 Floor</span></li>
+                                                    class="fa-solid fa-vector-square me-2"></i>1800sqft | 6 Floor</span>
+                                        </li>
                                         <li class="col-6"><span class="text-muted-2 text-md"><i
                                                     class="fa-solid fa-wifi me-2"></i>Free Wi-Fi</span></li>
                                         <li class="col-6"><span class="text-muted-2 text-md"><i
@@ -497,7 +551,8 @@
                                                     class="fa-solid fa-cash-register me-2"></i>Refrigerator</span></li>
                                         <li class="col-6"><span class="text-muted-2 text-md"><i
                                                     class="fa-solid fa-tty me-2"></i>Telephone</span></li>
-                                        <li class="col-12"><a href="#" class="text-primary fw-medium text-md">Show More Room
+                                        <li class="col-12"><a href="#" class="text-primary fw-medium text-md">Show More
+                                                Room
                                                 Amenties</a></li>
                                     </ul>
                                 </div>
@@ -512,7 +567,8 @@
                                 <div class="typsofrooms-wrap">
                                     <div class="d-flex align-items-center">
                                         <h6 class="fs-6 fw-semibold mb-1 me-2">Your Choice</h6><a href="#"
-                                                                                                  class="text-muted fs-6"><i class="fa-solid fa-circle-question"></i></a>
+                                                                                                  class="text-muted fs-6"><i
+                                                class="fa-solid fa-circle-question"></i></a>
                                     </div>
                                     <div class="typsofrooms-groups d-flex align-items-start">
                                         <div class="typsofrooms-brk1 mb-4">
@@ -521,20 +577,25 @@
                                                             class="fa-solid fa-mug-saucer me-2"></i>Breackfast for US$10 (Optional)</span>
                                                 </li>
                                                 <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span></li>
+                                                            class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span></li>
+                                                            class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span></li>
+                                                            class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span></li>
+                                                            class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="typsofrooms-action col-auto">
                                     <div class="prcrounce-groups">
-                                        <div class="d-flex align-items-center justify-content-start justify-content-sm-end">
+                                        <div
+                                            class="d-flex align-items-center justify-content-start justify-content-sm-end">
                                             <div class="text-dark fw-semibold fs-4">US$ 150</div>
                                         </div>
                                         <div
@@ -544,11 +605,18 @@
                                     </div>
                                     <div
                                         class="prcrounce-groups-button d-flex flex-column align-items-start align-items-md-end mt-3">
-                                        <div class="prcrounce-sngbuttons d-flex mb-2"><button
-                                                class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book at This
-                                                Price</button></div>
-                                        <div class="prcrounce-sngbuttons d-flex"><button
-                                                class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower Price</button>
+                                        <div class="prcrounce-sngbuttons d-flex mb-2">
+                                            <button
+                                                class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book at
+                                                This
+                                                Price
+                                            </button>
+                                        </div>
+                                        <div class="prcrounce-sngbuttons d-flex">
+                                            <button
+                                                class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower
+                                                Price
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -562,28 +630,35 @@
                                 <div class="typsofrooms-wrap">
                                     <div class="d-flex align-items-center">
                                         <h6 class="fs-6 fw-semibold mb-1 me-2">Your Choice</h6><a href="#"
-                                                                                                  class="text-muted fs-6"><i class="fa-solid fa-circle-question"></i></a>
+                                                                                                  class="text-muted fs-6"><i
+                                                class="fa-solid fa-circle-question"></i></a>
                                     </div>
                                     <div class="typsofrooms-groups d-flex align-items-start">
                                         <div class="typsofrooms-brk1 mb-4">
                                             <ul class="row align-items-center g-1 mb-0 p-0">
                                                 <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-mug-saucer me-2"></i>Breackfast Included</span></li>
+                                                            class="fa-solid fa-mug-saucer me-2"></i>Breackfast Included</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span></li>
+                                                            class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span></li>
+                                                            class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span></li>
+                                                            class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span>
+                                                </li>
                                                 <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span></li>
+                                                            class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="typsofrooms-action col-auto">
                                     <div class="prcrounce-groups">
-                                        <div class="d-flex align-items-center justify-content-start justify-content-sm-end">
+                                        <div
+                                            class="d-flex align-items-center justify-content-start justify-content-sm-end">
                                             <div class="text-dark fw-semibold fs-4">US$ 107</div>
                                         </div>
                                         <div
@@ -593,11 +668,18 @@
                                     </div>
                                     <div
                                         class="prcrounce-groups-button d-flex flex-column align-items-start align-items-md-end mt-3">
-                                        <div class="prcrounce-sngbuttons d-flex mb-2"><button
-                                                class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book at This
-                                                Price</button></div>
-                                        <div class="prcrounce-sngbuttons d-flex"><button
-                                                class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower Price</button>
+                                        <div class="prcrounce-sngbuttons d-flex mb-2">
+                                            <button
+                                                class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book at
+                                                This
+                                                Price
+                                            </button>
+                                        </div>
+                                        <div class="prcrounce-sngbuttons d-flex">
+                                            <button
+                                                class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower
+                                                Price
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -670,30 +752,38 @@
                                 <ul class="row align-items-center g-3 p-0 mb-0">
                                     <li class="col-xl-3 col-lg-3 col-md-6 col-6">
                                         <div class="d-flex flex-column align-items-center rounded border br-dashed p-2">
-                                            <div class="room-alsyruk mb-2"><img src="assets/img/hotel/hotel-5.jpg" class="img-fluid rounded"
+                                            <div class="room-alsyruk mb-2"><img src="assets/img/hotel/hotel-5.jpg"
+                                                                                class="img-fluid rounded"
                                                                                 alt=""></div>
-                                            <div class="tedfr-caps text-center "><span class="text-muted-2">Meeting Room</span></div>
+                                            <div class="tedfr-caps text-center "><span
+                                                    class="text-muted-2">Meeting Room</span></div>
                                         </div>
                                     </li>
                                     <li class="col-xl-3 col-lg-3 col-md-6 col-6">
                                         <div class="d-flex flex-column align-items-center rounded border br-dashed p-2">
-                                            <div class="room-alsyruk mb-2"><img src="assets/img/hotel/hotel-5.jpg" class="img-fluid rounded"
+                                            <div class="room-alsyruk mb-2"><img src="assets/img/hotel/hotel-5.jpg"
+                                                                                class="img-fluid rounded"
                                                                                 alt=""></div>
-                                            <div class="tedfr-caps text-center "><span class="text-muted-2">Restaurant</span></div>
+                                            <div class="tedfr-caps text-center "><span
+                                                    class="text-muted-2">Restaurant</span></div>
                                         </div>
                                     </li>
                                     <li class="col-xl-3 col-lg-3 col-md-6 col-6">
                                         <div class="d-flex flex-column align-items-center rounded border br-dashed p-2">
-                                            <div class="room-alsyruk mb-2"><img src="assets/img/hotel/hotel-5.jpg" class="img-fluid rounded"
+                                            <div class="room-alsyruk mb-2"><img src="assets/img/hotel/hotel-5.jpg"
+                                                                                class="img-fluid rounded"
                                                                                 alt=""></div>
-                                            <div class="tedfr-caps text-center "><span class="text-muted-2">Playground</span></div>
+                                            <div class="tedfr-caps text-center "><span
+                                                    class="text-muted-2">Playground</span></div>
                                         </div>
                                     </li>
                                     <li class="col-xl-3 col-lg-3 col-md-6 col-6">
                                         <div class="d-flex flex-column align-items-center rounded border br-dashed p-2">
-                                            <div class="room-alsyruk mb-2"><img src="assets/img/hotel/hotel-5.jpg" class="img-fluid rounded"
+                                            <div class="room-alsyruk mb-2"><img src="assets/img/hotel/hotel-5.jpg"
+                                                                                class="img-fluid rounded"
                                                                                 alt=""></div>
-                                            <div class="tedfr-caps text-center "><span class="text-muted-2">Night Bars</span></div>
+                                            <div class="tedfr-caps text-center "><span
+                                                    class="text-muted-2">Night Bars</span></div>
                                         </div>
                                     </li>
                                 </ul>
@@ -725,13 +815,15 @@
                                 <ul class="row align-items-center p-0 mb-0">
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first">Metro:<span class="text-dark ms-2">Lavender</span></div>
+                                            <div class="explot-first">Metro:<span class="text-dark ms-2">Lavender</span>
+                                            </div>
                                             <div class="explot-distance"><span class="text-muted">360m</span></div>
                                         </div>
                                     </li>
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first">Metro:<span class="text-dark ms-2">Jalan Besar MRT</span>
+                                            <div class="explot-first">Metro:<span
+                                                    class="text-dark ms-2">Jalan Besar MRT</span>
                                             </div>
                                             <div class="explot-distance"><span class="text-muted">80m</span></div>
                                         </div>
@@ -772,31 +864,36 @@
                                     </li>
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first"><span class="text-dark ms-2">Gardens by the Bay</span></div>
+                                            <div class="explot-first"><span
+                                                    class="text-dark ms-2">Gardens by the Bay</span></div>
                                             <div class="explot-distance"><span class="text-muted">80m</span></div>
                                         </div>
                                     </li>
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first"><span class="text-dark ms-2">S.E.A. Aquarium</span></div>
+                                            <div class="explot-first"><span
+                                                    class="text-dark ms-2">S.E.A. Aquarium</span></div>
                                             <div class="explot-distance"><span class="text-muted">160m</span></div>
                                         </div>
                                     </li>
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first"><span class="text-dark ms-2">Singapore Flyer</span></div>
+                                            <div class="explot-first"><span
+                                                    class="text-dark ms-2">Singapore Flyer</span></div>
                                             <div class="explot-distance"><span class="text-muted">200m</span></div>
                                         </div>
                                     </li>
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first"><span class="text-dark ms-2">Wings Of Time</span></div>
+                                            <div class="explot-first"><span class="text-dark ms-2">Wings Of Time</span>
+                                            </div>
                                             <div class="explot-distance"><span class="text-muted">200m</span></div>
                                         </div>
                                     </li>
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first"><span class="text-dark ms-2">Sands SkyPark</span></div>
+                                            <div class="explot-first"><span class="text-dark ms-2">Sands SkyPark</span>
+                                            </div>
                                             <div class="explot-distance"><span class="text-muted">200m</span></div>
                                         </div>
                                     </li>
@@ -822,32 +919,37 @@
                                     </li>
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first"><span class="text-dark ms-2">Tai Hwa Pork Noodle</span>
+                                            <div class="explot-first"><span
+                                                    class="text-dark ms-2">Tai Hwa Pork Noodle</span>
                                             </div>
                                             <div class="explot-distance"><span class="text-muted">80m</span></div>
                                         </div>
                                     </li>
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first"><span class="text-dark ms-2">Sungei Road Laksa</span></div>
+                                            <div class="explot-first"><span
+                                                    class="text-dark ms-2">Sungei Road Laksa</span></div>
                                             <div class="explot-distance"><span class="text-muted">160m</span></div>
                                         </div>
                                     </li>
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first"><span class="text-dark ms-2">The Dim Sum Place</span></div>
+                                            <div class="explot-first"><span
+                                                    class="text-dark ms-2">The Dim Sum Place</span></div>
                                             <div class="explot-distance"><span class="text-muted">200m</span></div>
                                         </div>
                                     </li>
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first"><span class="text-dark ms-2">The Ramen Stall</span></div>
+                                            <div class="explot-first"><span
+                                                    class="text-dark ms-2">The Ramen Stall</span></div>
                                             <div class="explot-distance"><span class="text-muted">200m</span></div>
                                         </div>
                                     </li>
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first"><span class="text-dark ms-2">Taliwang Restaurant</span>
+                                            <div class="explot-first"><span
+                                                    class="text-dark ms-2">Taliwang Restaurant</span>
                                             </div>
                                             <div class="explot-distance"><span class="text-muted">200m</span></div>
                                         </div>
@@ -868,43 +970,50 @@
                                 <ul class="row align-items-center p-0 mb-0">
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first"><span class="text-dark ms-2">Bugis Street</span></div>
+                                            <div class="explot-first"><span class="text-dark ms-2">Bugis Street</span>
+                                            </div>
                                             <div class="explot-distance"><span class="text-muted">360m</span></div>
                                         </div>
                                     </li>
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first"><span class="text-dark ms-2">Mustafa Centre</span></div>
+                                            <div class="explot-first"><span class="text-dark ms-2">Mustafa Centre</span>
+                                            </div>
                                             <div class="explot-distance"><span class="text-muted">80m</span></div>
                                         </div>
                                     </li>
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first"><span class="text-dark ms-2">Bugis Junction</span></div>
+                                            <div class="explot-first"><span class="text-dark ms-2">Bugis Junction</span>
+                                            </div>
                                             <div class="explot-distance"><span class="text-muted">160m</span></div>
                                         </div>
                                     </li>
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first"><span class="text-dark ms-2">Tekka Centre</span></div>
+                                            <div class="explot-first"><span class="text-dark ms-2">Tekka Centre</span>
+                                            </div>
                                             <div class="explot-distance"><span class="text-muted">200m</span></div>
                                         </div>
                                     </li>
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first"><span class="text-dark ms-2">Orchard Central</span></div>
+                                            <div class="explot-first"><span
+                                                    class="text-dark ms-2">Orchard Central</span></div>
                                             <div class="explot-distance"><span class="text-muted">200m</span></div>
                                         </div>
                                     </li>
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first"><span class="text-dark ms-2">Ngee Ann City</span></div>
+                                            <div class="explot-first"><span class="text-dark ms-2">Ngee Ann City</span>
+                                            </div>
                                             <div class="explot-distance"><span class="text-muted">200m</span></div>
                                         </div>
                                     </li>
                                     <li class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <div class="explot-first"><span class="text-dark ms-2">ION Orchard</span></div>
+                                            <div class="explot-first"><span class="text-dark ms-2">ION Orchard</span>
+                                            </div>
                                             <div class="explot-distance"><span class="text-muted">200m</span></div>
                                         </div>
                                     </li>
@@ -940,11 +1049,13 @@
                                 <ul class="row align-items-center p-0 mb-0 gy-3 gx-4">
                                     <li class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                         <div class="revs-wraps">
-                                            <div class="revs-wraps-flex d-flex align-items-center justify-content-between mb-1">
+                                            <div
+                                                class="revs-wraps-flex d-flex align-items-center justify-content-between mb-1">
                                                 <span class="text-dark fw-semibold text-md">Dishes</span>
                                                 <span class="text-dark fw-semibold text-md">8.7</span>
                                             </div>
-                                            <div class="progress " role="progressbar" aria-label="Example" aria-valuenow="87"
+                                            <div class="progress " role="progressbar" aria-label="Example"
+                                                 aria-valuenow="87"
                                                  aria-valuemin="0" aria-valuemax="100" style="height: 7px">
                                                 <div class="progress-bar bg-primary" style="width: 87%"></div>
                                             </div>
@@ -952,11 +1063,13 @@
                                     </li>
                                     <li class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                         <div class="revs-wraps">
-                                            <div class="revs-wraps-flex d-flex align-items-center justify-content-between mb-1">
+                                            <div
+                                                class="revs-wraps-flex d-flex align-items-center justify-content-between mb-1">
                                                 <span class="text-dark fw-semibold text-md">Swimming</span>
                                                 <span class="text-dark fw-semibold text-md">9.2</span>
                                             </div>
-                                            <div class="progress " role="progressbar" aria-label="Example" aria-valuenow="92"
+                                            <div class="progress " role="progressbar" aria-label="Example"
+                                                 aria-valuenow="92"
                                                  aria-valuemin="0" aria-valuemax="100" style="height: 7px">
                                                 <div class="progress-bar bg-primary" style="width: 92%"></div>
                                             </div>
@@ -964,11 +1077,13 @@
                                     </li>
                                     <li class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                         <div class="revs-wraps">
-                                            <div class="revs-wraps-flex d-flex align-items-center justify-content-between mb-1">
+                                            <div
+                                                class="revs-wraps-flex d-flex align-items-center justify-content-between mb-1">
                                                 <span class="text-dark fw-semibold text-md">Rooms</span>
                                                 <span class="text-dark fw-semibold text-md">8.8</span>
                                             </div>
-                                            <div class="progress " role="progressbar" aria-label="Example" aria-valuenow="88"
+                                            <div class="progress " role="progressbar" aria-label="Example"
+                                                 aria-valuenow="88"
                                                  aria-valuemin="0" aria-valuemax="100" style="height: 7px">
                                                 <div class="progress-bar bg-primary" style="width: 88%"></div>
                                             </div>
@@ -976,11 +1091,13 @@
                                     </li>
                                     <li class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                         <div class="revs-wraps">
-                                            <div class="revs-wraps-flex d-flex align-items-center justify-content-between mb-1">
+                                            <div
+                                                class="revs-wraps-flex d-flex align-items-center justify-content-between mb-1">
                                                 <span class="text-dark fw-semibold text-md">Location</span>
                                                 <span class="text-dark fw-semibold text-md">8.9</span>
                                             </div>
-                                            <div class="progress " role="progressbar" aria-label="Example" aria-valuenow="89"
+                                            <div class="progress " role="progressbar" aria-label="Example"
+                                                 aria-valuenow="89"
                                                  aria-valuemin="0" aria-valuemax="100" style="height: 7px">
                                                 <div class="progress-bar bg-primary" style="width: 89%"></div>
                                             </div>
@@ -988,11 +1105,13 @@
                                     </li>
                                     <li class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                         <div class="revs-wraps">
-                                            <div class="revs-wraps-flex d-flex align-items-center justify-content-between mb-1">
+                                            <div
+                                                class="revs-wraps-flex d-flex align-items-center justify-content-between mb-1">
                                                 <span class="text-dark fw-semibold text-md">Services</span>
                                                 <span class="text-dark fw-semibold text-md">9.2</span>
                                             </div>
-                                            <div class="progress " role="progressbar" aria-label="Example" aria-valuenow="92"
+                                            <div class="progress " role="progressbar" aria-label="Example"
+                                                 aria-valuenow="92"
                                                  aria-valuemin="0" aria-valuemax="100" style="height: 7px">
                                                 <div class="progress-bar bg-primary" style="width: 92%"></div>
                                             </div>
@@ -1000,11 +1119,13 @@
                                     </li>
                                     <li class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                         <div class="revs-wraps">
-                                            <div class="revs-wraps-flex d-flex align-items-center justify-content-between mb-1">
+                                            <div
+                                                class="revs-wraps-flex d-flex align-items-center justify-content-between mb-1">
                                                 <span class="text-dark fw-semibold text-md">Cleanliness</span>
                                                 <span class="text-dark fw-semibold text-md">8.6</span>
                                             </div>
-                                            <div class="progress " role="progressbar" aria-label="Example" aria-valuenow="86"
+                                            <div class="progress " role="progressbar" aria-label="Example"
+                                                 aria-valuenow="86"
                                                  aria-valuemin="0" aria-valuemax="100" style="height: 7px">
                                                 <div class="progress-bar bg-primary" style="width: 86%"></div>
                                             </div>
@@ -1033,12 +1154,16 @@
                                             <h5 class="h6 text-dark fw-semibold mb-0">Adam Bluecart</h5>
                                             <p class="text-md mb-0">Canada</p>
                                         </div>
-                                        <div class="dfls-arrios"><span class="text-muted text-md">10 July 2023</span></div>
+                                        <div class="dfls-arrios"><span class="text-muted text-md">10 July 2023</span>
+                                        </div>
                                     </div>
                                     <div class="dfls-secription">
-                                        <p class="mb-0">In a free hour, But in certain circumstances and owing to the claims of
-                                            duty or the obligations of business when our power of choice is untrammelled and when
-                                            nothing prevents our being able to do what we like best, every pleasure is to be
+                                        <p class="mb-0">In a free hour, But in certain circumstances and owing to the
+                                            claims of
+                                            duty or the obligations of business when our power of choice is untrammelled
+                                            and when
+                                            nothing prevents our being able to do what we like best, every pleasure is
+                                            to be
                                             welcomed and every pain avoided.</p>
                                     </div>
                                 </div>
@@ -1058,12 +1183,16 @@
                                             <h5 class="h6 text-dark fw-semibold mb-0">Adam Bluecart</h5>
                                             <p class="text-md mb-0">Canada</p>
                                         </div>
-                                        <div class="dfls-arrios"><span class="text-muted text-md">10 July 2023</span></div>
+                                        <div class="dfls-arrios"><span class="text-muted text-md">10 July 2023</span>
+                                        </div>
                                     </div>
                                     <div class="dfls-secription">
-                                        <p class="mb-0">In a free hour, But in certain circumstances and owing to the claims of
-                                            duty or the obligations of business when our power of choice is untrammelled and when
-                                            nothing prevents our being able to do what we like best, every pleasure is to be
+                                        <p class="mb-0">In a free hour, But in certain circumstances and owing to the
+                                            claims of
+                                            duty or the obligations of business when our power of choice is untrammelled
+                                            and when
+                                            nothing prevents our being able to do what we like best, every pleasure is
+                                            to be
                                             welcomed and every pain avoided.</p>
                                     </div>
                                 </div>
@@ -1082,12 +1211,16 @@
                                             <h5 class="h6 text-dark fw-semibold mb-0">Adam Bluecart</h5>
                                             <p class="text-md mb-0">Canada</p>
                                         </div>
-                                        <div class="dfls-arrios"><span class="text-muted text-md">10 July 2023</span></div>
+                                        <div class="dfls-arrios"><span class="text-muted text-md">10 July 2023</span>
+                                        </div>
                                     </div>
                                     <div class="dfls-secription">
-                                        <p class="mb-0">In a free hour, But in certain circumstances and owing to the claims of
-                                            duty or the obligations of business when our power of choice is untrammelled and when
-                                            nothing prevents our being able to do what we like best, every pleasure is to be
+                                        <p class="mb-0">In a free hour, But in certain circumstances and owing to the
+                                            claims of
+                                            duty or the obligations of business when our power of choice is untrammelled
+                                            and when
+                                            nothing prevents our being able to do what we like best, every pleasure is
+                                            to be
                                             welcomed and every pain avoided.</p>
                                     </div>
                                 </div>
@@ -1133,86 +1266,121 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                    aria-controls="flush-collapseOne">
                                 How To Book A resort with Booer.com?
                             </button>
                         </h2>
                         <div id="flush-collapseOne" class="accordion-collapse collapse"
                              data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">In a professional context it often happens that private or corporate
-                                clients corder a publication to be made and presented with the actual content still not being
-                                ready. Think of a news blog that's filled with content hourly on the day of going live. However,
-                                reviewers tend to be distracted by comprehensible content, say, a random text copied from a
-                                newspaper or the internet. The are likely to focus on the text, disregarding the layout and its
-                                elements.</div>
+                            <div class="accordion-body">In a professional context it often happens that private or
+                                corporate
+                                clients corder a publication to be made and presented with the actual content still not
+                                being
+                                ready. Think of a news blog that's filled with content hourly on the day of going live.
+                                However,
+                                reviewers tend to be distracted by comprehensible content, say, a random text copied
+                                from a
+                                newspaper or the internet. The are likely to focus on the text, disregarding the layout
+                                and its
+                                elements.
+                            </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                    data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                    aria-controls="flush-collapseTwo">
                                 Can We Pay After Check-out?
                             </button>
                         </h2>
                         <div id="flush-collapseTwo" class="accordion-collapse collapse"
                              data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">In a professional context it often happens that private or corporate
-                                clients corder a publication to be made and presented with the actual content still not being
-                                ready. Think of a news blog that's filled with content hourly on the day of going live. However,
-                                reviewers tend to be distracted by comprehensible content, say, a random text copied from a
-                                newspaper or the internet. The are likely to focus on the text, disregarding the layout and its
-                                elements.</div>
+                            <div class="accordion-body">In a professional context it often happens that private or
+                                corporate
+                                clients corder a publication to be made and presented with the actual content still not
+                                being
+                                ready. Think of a news blog that's filled with content hourly on the day of going live.
+                                However,
+                                reviewers tend to be distracted by comprehensible content, say, a random text copied
+                                from a
+                                newspaper or the internet. The are likely to focus on the text, disregarding the layout
+                                and its
+                                elements.
+                            </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                    data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                    aria-controls="flush-collapseThree">
                                 Is This Collaborate with Oyo?
                             </button>
                         </h2>
                         <div id="flush-collapseThree" class="accordion-collapse collapse"
                              data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">In a professional context it often happens that private or corporate
-                                clients corder a publication to be made and presented with the actual content still not being
-                                ready. Think of a news blog that's filled with content hourly on the day of going live. However,
-                                reviewers tend to be distracted by comprehensible content, say, a random text copied from a
-                                newspaper or the internet. The are likely to focus on the text, disregarding the layout and its
-                                elements.</div>
+                            <div class="accordion-body">In a professional context it often happens that private or
+                                corporate
+                                clients corder a publication to be made and presented with the actual content still not
+                                being
+                                ready. Think of a news blog that's filled with content hourly on the day of going live.
+                                However,
+                                reviewers tend to be distracted by comprehensible content, say, a random text copied
+                                from a
+                                newspaper or the internet. The are likely to focus on the text, disregarding the layout
+                                and its
+                                elements.
+                            </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                    data-bs-target="#flush-collapseFour" aria-expanded="false"
+                                    aria-controls="flush-collapseFour">
                                 Can We get Any Transport For Walk?
                             </button>
                         </h2>
                         <div id="flush-collapseFour" class="accordion-collapse collapse"
                              data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">In a professional context it often happens that private or corporate
-                                clients corder a publication to be made and presented with the actual content still not being
-                                ready. Think of a news blog that's filled with content hourly on the day of going live. However,
-                                reviewers tend to be distracted by comprehensible content, say, a random text copied from a
-                                newspaper or the internet. The are likely to focus on the text, disregarding the layout and its
-                                elements.</div>
+                            <div class="accordion-body">In a professional context it often happens that private or
+                                corporate
+                                clients corder a publication to be made and presented with the actual content still not
+                                being
+                                ready. Think of a news blog that's filled with content hourly on the day of going live.
+                                However,
+                                reviewers tend to be distracted by comprehensible content, say, a random text copied
+                                from a
+                                newspaper or the internet. The are likely to focus on the text, disregarding the layout
+                                and its
+                                elements.
+                            </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                                    data-bs-target="#flush-collapseFive" aria-expanded="false"
+                                    aria-controls="flush-collapseFive">
                                 Can We Get Any Extra Services?
                             </button>
                         </h2>
                         <div id="flush-collapseFive" class="accordion-collapse collapse"
                              data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">In a professional context it often happens that private or corporate
-                                clients corder a publication to be made and presented with the actual content still not being
-                                ready. Think of a news blog that's filled with content hourly on the day of going live. However,
-                                reviewers tend to be distracted by comprehensible content, say, a random text copied from a
-                                newspaper or the internet. The are likely to focus on the text, disregarding the layout and its
-                                elements.</div>
+                            <div class="accordion-body">In a professional context it often happens that private or
+                                corporate
+                                clients corder a publication to be made and presented with the actual content still not
+                                being
+                                ready. Think of a news blog that's filled with content hourly on the day of going live.
+                                However,
+                                reviewers tend to be distracted by comprehensible content, say, a random text copied
+                                from a
+                                newspaper or the internet. The are likely to focus on the text, disregarding the layout
+                                and its
+                                elements.
+                            </div>
                         </div>
                     </div>
                 </div>
