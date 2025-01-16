@@ -17,16 +17,16 @@ class VoucherController extends Controller
      * Display a listing of the resource.
      */
 
-//    public function __construct()
-//    {
-//        $this->middleware(function ($request, $next){
-//            try {
-//                return $next($request);
-//            } catch (Throwable $e) {
-//                return response()->json(['message' => $e->getMessage()], 500);
-//            }
-//        });
-//    }
+   public function __construct()
+   {
+       $this->middleware(function ($request, $next){
+           try {
+               return $next($request);
+           } catch (Throwable $e) {
+               return response()->json(['message' => $e->getMessage()], 500);
+           }
+       });
+   }
     public function index()
     {
         $now = Carbon::now();
