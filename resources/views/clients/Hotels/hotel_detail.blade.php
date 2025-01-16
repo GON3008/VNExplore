@@ -56,31 +56,40 @@
                 </div>
             </div>
 
-            @php
-                $hotelImages = json_decode($hotelCategory->hotelCategory_images);
-            @endphp
+            <div class="galleryGrid typeGrid_3 mt-2">
+                @php
+                    $images = json_decode($hotelCategory->hotelCategory_images);
+                @endphp
 
-            @if(!empty($hotelImages))
-                <div class="galleryGrid typeGrid_3 mt-2">
-                    @foreach($hotelImages as $index => $image)
-                        <div class="galleryGrid__item {{ $loop->last ? 'position-relative' : '' }}">
-                            <a href="{{ asset('HotelCategories/'. $image) }}" data-lightbox="roadtrip">
-                                <img src="{{ asset('HotelCategories/'. $image) }}" alt="Hotel Image" class="rounded-2 img-fluid">
+                @foreach($images as $index => $image)
+                    @if($index < 6)
+                        <div class="galleryGrid__item">
+                            <a href="{{ asset('HotelCategories/' . $image) }}" data-lightbox="roadtrip">
+                                <img src="{{ asset('HotelCategories/' . $image) }}" alt="Hotel Image"
+                                     class="rounded-2 img-fluid">
                             </a>
-                            @if($loop->last)
-                                <div class="position-absolute end-0 bottom-0 mb-3 me-3">
-                                    <a href="{{ asset('HotelCategories/'. $image) }}" data-lightbox="roadtrip"
-                                       class="btn btn-md btn-whites fw-medium text-dark">
-                                        <i class="fa-solid fa-caret-right me-1"></i>{{ count($hotelImages) - $index - 1 }} More Photos
-                                    </a>
-                                </div>
-                            @endif
                         </div>
-                    @endforeach
-                </div>
-            @else
-                <p>No images available.</p>
-            @endif
+                    @elseif($index == 6)
+                        <div class="galleryGrid__item position-relative">
+                            <a href="{{ asset('HotelCategories/' . $image) }}" data-lightbox="roadtrip">
+                                <img src="{{ asset('HotelCategories/' . $image) }}" alt="Hotel Image"
+                                     class="rounded-2 img-fluid">
+                            </a>
+                            <div class="position-absolute end-0 bottom-0 mb-3 me-3">
+                                <a href="{{ asset('HotelCategories/' . $image) }}" data-lightbox="roadtrip"
+                                   class="btn btn-md btn-whites fw-medium text-dark">
+                                    <i class="fa-solid fa-caret-right me-1"></i> {{ count($images) - 7 }} More Photos
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if($index > 6)
+                        <a href="{{ asset('HotelCategories/' . $image) }}" data-lightbox="roadtrip"
+                           style="display: none;"></a>
+                    @endif
+                @endforeach
+            </div>
 
         </div>
     </div>
@@ -157,541 +166,200 @@
 
     <!-- Rooms Details -->
     <div class="col-xl-12 col-lg-12 col-md-12">
+        @foreach($hotelRooms as $room)
+            <!-- Single Room Option -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h6 class="fw-semibold mb-0">{{ $room->room_name }}</h6>
+                </div>
 
-        <!-- Single Room Option -->
-        <div class="card mb-4">
-            <div class="card-header">
-                <h6 class="fw-semibold mb-0">Superior Double Room</h6>
-            </div>
-
-            <div class="card-body">
-                <div class="row align-items-start">
-                    <div class="col-xl-3 col-lg-4 col-md-4">
-                        <div class="roomavls-groups">
-                            <div class="roomavls-thumb mb-2">
-                                <img src="assets/img/hotel/hotel-10.jpg" class="img-fluid rounded-2" alt="">
-                            </div>
-                            <div class="roomavls-caps">
-                                <div class="roomavls-escols d-flex align-items-start mb-2">
-                                    <span class="label bg-light-purple text-purple me-2">King Bed</span><span
-                                        class="label bg-light-purple text-purple">3 Sleeps</span>
+                <div class="card-body">
+                    <div class="row align-items-start">
+                        <div class="col-xl-3 col-lg-4 col-md-4">
+                            <div class="roomavls-groups">
+                                <div class="roomavls-thumb mb-2">
+                                    @php
+                                        $room_img = json_decode($room->room_images);
+                                        $first_image = $room_img[0] ?? null;
+                                    @endphp
+                                    @if($first_image)
+                                        <img src="{{ asset('uploads/hotel_room/' . $first_image) }}" alt="Room Image"
+                                             class="img-fluid rounded-2">
+                                    @else
+                                        <img src="{{ asset('uploads/hotel_room/default.jpg') }}" alt="No Image"
+                                             class="img-fluid rounded-2">
+                                    @endif
                                 </div>
-                                <div class="roomavls-lists">
-                                    <ul class="row align-items-center gx-2 gy-1 mb-0 p-0">
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-brands fa-bity me-2"></i>City View</span></li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-ban-smoking me-2"></i>Non-Smoking</span></li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-vector-square me-2"></i>1800sqft | 6 Floor</span>
-                                        </li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-wifi me-2"></i>Free Wi-Fi</span></li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-bath me-2"></i>Private Bathroom</span></li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-snowflake me-2"></i>Air Conditioning</span></li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-cash-register me-2"></i>Refrigerator</span></li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-tty me-2"></i>Telephone</span></li>
-                                        <li class="col-12"><a href="#" class="text-primary fw-medium text-md">Show More
-                                                Room
-                                                Amenties</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-9 col-lg-8 col-md-8">
-
-                        <!-- Single Item -->
-                        <div class="d-block border br-dashed rounded-2 px-3 py-3 mb-3">
-                            <div class="d-flex align-items-sm-end justify-content-between flex-sm-row flex-column">
-                                <div class="typsofrooms-wrap">
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="fs-6 fw-semibold mb-1 me-2">Your Choice</h6><a href="#"
-                                                                                                  class="text-muted fs-6"><i
-                                                class="fa-solid fa-circle-question"></i></a>
+                                <div class="roomavls-caps">
+                                    <div class="roomavls-escols d-flex align-items-start mb-2">
+                                        <span class="label bg-light-purple text-purple me-2">King Bed</span><span
+                                            class="label bg-light-purple text-purple">3 Sleeps</span>
                                     </div>
-                                    <div class="typsofrooms-groups d-flex align-items-start">
-                                        <div class="typsofrooms-brk1 mb-4">
-                                            <ul class="row align-items-center g-1 mb-0 p-0">
-                                                <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-solid fa-mug-saucer me-2"></i>Breackfast for US$10 (Optional)</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="typsofrooms-action col-auto">
-                                    <div class="prcrounce-groups">
-                                        <div
-                                            class="d-flex align-items-center justify-content-start justify-content-sm-end">
-                                            <div class="text-dark fw-semibold fs-4">US$ 99</div>
-                                        </div>
-                                        <div
-                                            class="d-flex align-items-start align-items-sm-end justify-content-start justify-content-md-end flex-column mb-2">
-                                            <div class="text-muted-2 text-sm">After tax US$ 102</div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="prcrounce-groups-button d-flex flex-column align-items-start align-items-md-end mt-3">
-                                        <div class="prcrounce-sngbuttons d-flex mb-2">
-                                            <button
-                                                class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book at
-                                                This
-                                                Price
-                                            </button>
-                                        </div>
-                                        <div class="prcrounce-sngbuttons d-flex">
-                                            <button
-                                                class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower
-                                                Price
-                                            </button>
-                                        </div>
+                                    <div class="roomavls-lists">
+                                        <ul class="row align-items-center gx-2 gy-1 mb-0 p-0">
+                                            <li class="col-6"><span class="text-muted-2 text-md"><i
+                                                        class="fa-brands fa-bity me-2"></i>City View</span></li>
+                                            <li class="col-6"><span class="text-muted-2 text-md"><i
+                                                        class="fa-solid fa-ban-smoking me-2"></i>Non-Smoking</span></li>
+                                            <li class="col-6"><span class="text-muted-2 text-md"><i
+                                                        class="fa-solid fa-vector-square me-2"></i>1800sqft | 6 Floor</span>
+                                            </li>
+                                            <li class="col-6"><span class="text-muted-2 text-md"><i
+                                                        class="fa-solid fa-wifi me-2"></i>Free Wi-Fi</span></li>
+                                            <li class="col-6"><span class="text-muted-2 text-md"><i
+                                                        class="fa-solid fa-bath me-2"></i>Private Bathroom</span></li>
+                                            <li class="col-6"><span class="text-muted-2 text-md"><i
+                                                        class="fa-solid fa-snowflake me-2"></i>Air Conditioning</span>
+                                            </li>
+                                            <li class="col-6"><span class="text-muted-2 text-md"><i
+                                                        class="fa-solid fa-cash-register me-2"></i>Refrigerator</span>
+                                            </li>
+                                            <li class="col-6"><span class="text-muted-2 text-md"><i
+                                                        class="fa-solid fa-tty me-2"></i>Telephone</span></li>
+                                            <li class="col-12"><a href="#" class="text-primary fw-medium text-md">Show
+                                                    More
+                                                    Room
+                                                    Amenties</a></li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- / Single Item -->
+                        <div class="col-xl-9 col-lg-8 col-md-8">
 
-                        <!-- Single Item -->
-                        <div class="d-block border br-dashed rounded-2 px-3 py-3">
-                            <div class="d-flex align-items-sm-end justify-content-between flex-sm-row flex-column">
-                                <div class="typsofrooms-wrap">
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="fs-6 fw-semibold mb-1 me-2">Your Choice</h6><a href="#"
-                                                                                                  class="text-muted fs-6"><i
-                                                class="fa-solid fa-circle-question"></i></a>
-                                    </div>
-                                    <div class="typsofrooms-groups d-flex align-items-start">
-                                        <div class="typsofrooms-brk1 mb-4">
-                                            <ul class="row align-items-center g-1 mb-0 p-0">
-                                                <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-mug-saucer me-2"></i>Breackfast Included</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span>
-                                                </li>
-                                            </ul>
+                            <!-- Single Item -->
+                            <div class="d-block border br-dashed rounded-2 px-3 py-3 mb-3">
+                                <div class="d-flex align-items-sm-end justify-content-between flex-sm-row flex-column">
+                                    <div class="typsofrooms-wrap">
+                                        <div class="d-flex align-items-center">
+                                            <h6 class="fs-6 fw-semibold mb-1 me-2">Your Choice</h6><a href="#"
+                                                                                                      class="text-muted fs-6"><i
+                                                    class="fa-solid fa-circle-question"></i></a>
+                                        </div>
+                                        <div class="typsofrooms-groups d-flex align-items-start">
+                                            <div class="typsofrooms-brk1 mb-4">
+                                                <ul class="row align-items-center g-1 mb-0 p-0">
+                                                    <li class="col-12"><span class="text-muted-2 text-md"><i
+                                                                class="fa-solid fa-mug-saucer me-2"></i>Breackfast for US$10 (Optional)</span>
+                                                    </li>
+                                                    <li class="col-12"><span class="text-muted-2 text-md"><i
+                                                                class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span>
+                                                    </li>
+                                                    <li class="col-12"><span class="text-success text-md"><i
+                                                                class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span>
+                                                    </li>
+                                                    <li class="col-12"><span class="text-muted-2 text-md"><i
+                                                                class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span>
+                                                    </li>
+                                                    <li class="col-12"><span class="text-success text-md"><i
+                                                                class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="typsofrooms-action col-auto">
-                                    <div class="prcrounce-groups">
+                                    <div class="typsofrooms-action col-auto">
+                                        <div class="prcrounce-groups">
+                                            <div
+                                                class="d-flex align-items-center justify-content-start justify-content-sm-end">
+                                                <div class="text-dark fw-semibold fs-4">US$ 99</div>
+                                            </div>
+                                            <div
+                                                class="d-flex align-items-start align-items-sm-end justify-content-start justify-content-md-end flex-column mb-2">
+                                                <div class="text-muted-2 text-sm">After tax US$ 102</div>
+                                            </div>
+                                        </div>
                                         <div
-                                            class="d-flex align-items-center justify-content-start justify-content-sm-end">
-                                            <div class="text-dark fw-semibold fs-4">US$ 107</div>
-                                        </div>
-                                        <div
-                                            class="d-flex align-items-start align-items-sm-end justify-content-start justify-content-md-end flex-column mb-2">
-                                            <div class="text-muted-2 text-sm">After tax US$ 110</div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="prcrounce-groups-button d-flex flex-column align-items-start align-items-md-end mt-3">
-                                        <div class="prcrounce-sngbuttons d-flex mb-2">
-                                            <button
-                                                class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book at
-                                                This
-                                                Price
-                                            </button>
-                                        </div>
-                                        <div class="prcrounce-sngbuttons d-flex">
-                                            <button
-                                                class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower
-                                                Price
-                                            </button>
+                                            class="prcrounce-groups-button d-flex flex-column align-items-start align-items-md-end mt-3">
+                                            <div class="prcrounce-sngbuttons d-flex mb-2">
+                                                <button
+                                                    class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book
+                                                    at
+                                                    This
+                                                    Price
+                                                </button>
+                                            </div>
+                                            <div class="prcrounce-sngbuttons d-flex">
+                                                <button
+                                                    class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower
+                                                    Price
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- / Single Item -->
+                            <!-- / Single Item -->
 
+                            <!-- Single Item -->
+                            <div class="d-block border br-dashed rounded-2 px-3 py-3">
+                                <div class="d-flex align-items-sm-end justify-content-between flex-sm-row flex-column">
+                                    <div class="typsofrooms-wrap">
+                                        <div class="d-flex align-items-center">
+                                            <h6 class="fs-6 fw-semibold mb-1 me-2">Your Choice</h6><a href="#"
+                                                                                                      class="text-muted fs-6"><i
+                                                    class="fa-solid fa-circle-question"></i></a>
+                                        </div>
+                                        <div class="typsofrooms-groups d-flex align-items-start">
+                                            <div class="typsofrooms-brk1 mb-4">
+                                                <ul class="row align-items-center g-1 mb-0 p-0">
+                                                    <li class="col-12"><span class="text-success text-md"><i
+                                                                class="fa-solid fa-mug-saucer me-2"></i>Breackfast Included</span>
+                                                    </li>
+                                                    <li class="col-12"><span class="text-muted-2 text-md"><i
+                                                                class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span>
+                                                    </li>
+                                                    <li class="col-12"><span class="text-success text-md"><i
+                                                                class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span>
+                                                    </li>
+                                                    <li class="col-12"><span class="text-muted-2 text-md"><i
+                                                                class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span>
+                                                    </li>
+                                                    <li class="col-12"><span class="text-success text-md"><i
+                                                                class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="typsofrooms-action col-auto">
+                                        <div class="prcrounce-groups">
+                                            <div
+                                                class="d-flex align-items-center justify-content-start justify-content-sm-end">
+                                                <div class="text-dark fw-semibold fs-4">US$ 107</div>
+                                            </div>
+                                            <div
+                                                class="d-flex align-items-start align-items-sm-end justify-content-start justify-content-md-end flex-column mb-2">
+                                                <div class="text-muted-2 text-sm">After tax US$ 110</div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="prcrounce-groups-button d-flex flex-column align-items-start align-items-md-end mt-3">
+                                            <div class="prcrounce-sngbuttons d-flex mb-2">
+                                                <button
+                                                    class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book
+                                                    at
+                                                    This
+                                                    Price
+                                                </button>
+                                            </div>
+                                            <div class="prcrounce-sngbuttons d-flex">
+                                                <button
+                                                    class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower
+                                                    Price
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / Single Item -->
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Single Room Option -->
-        <div class="card mb-4">
-            <div class="card-header">
-                <h6 class="fw-semibold mb-0">Superior Twin Room with City View</h6>
-            </div>
-
-            <div class="card-body">
-                <div class="row align-items-start">
-                    <div class="col-xl-3 col-lg-4 col-md-4">
-                        <div class="roomavls-groups">
-                            <div class="roomavls-thumb mb-2">
-                                <img src="assets/img/hotel/hotel-4.jpg" class="img-fluid rounded-2" alt="">
-                            </div>
-                            <div class="roomavls-caps">
-                                <div class="roomavls-escols d-flex align-items-start mb-2">
-                                    <span class="label bg-light-purple text-purple me-2">Twin Double Bed</span><span
-                                        class="label bg-light-purple text-purple">3 Sleeps</span>
-                                </div>
-                                <div class="roomavls-lists">
-                                    <ul class="row align-items-center gx-2 gy-1 mb-0 p-0">
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-brands fa-bity me-2"></i>City View</span></li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-ban-smoking me-2"></i>Non-Smoking</span></li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-vector-square me-2"></i>1800sqft | 6 Floor</span>
-                                        </li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-wifi me-2"></i>Free Wi-Fi</span></li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-bath me-2"></i>Private Bathroom</span></li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-snowflake me-2"></i>Air Conditioning</span></li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-cash-register me-2"></i>Refrigerator</span></li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-tty me-2"></i>Telephone</span></li>
-                                        <li class="col-12"><a href="#" class="text-primary fw-medium text-md">Show More
-                                                Room
-                                                Amenties</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-9 col-lg-8 col-md-8">
-
-                        <!-- Single Item -->
-                        <div class="d-block border br-dashed rounded-2 px-3 py-3 mb-3">
-                            <div class="d-flex align-items-sm-end justify-content-between flex-sm-row flex-column">
-                                <div class="typsofrooms-wrap">
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="fs-6 fw-semibold mb-1 me-2">Your Choice</h6><a href="#"
-                                                                                                  class="text-muted fs-6"><i
-                                                class="fa-solid fa-circle-question"></i></a>
-                                    </div>
-                                    <div class="typsofrooms-groups d-flex align-items-start">
-                                        <div class="typsofrooms-brk1 mb-4">
-                                            <ul class="row align-items-center g-1 mb-0 p-0">
-                                                <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-solid fa-mug-saucer me-2"></i>Breackfast for US$10 (Optional)</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="typsofrooms-action col-auto">
-                                    <div class="prcrounce-groups">
-                                        <div
-                                            class="d-flex align-items-center justify-content-start justify-content-sm-end">
-                                            <div class="text-dark fw-semibold fs-4">US$ 130</div>
-                                        </div>
-                                        <div
-                                            class="d-flex align-items-start align-items-sm-end justify-content-start justify-content-md-end flex-column mb-2">
-                                            <div class="text-muted-2 text-sm">After tax US$ 142</div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="prcrounce-groups-button d-flex flex-column align-items-start align-items-md-end mt-3">
-                                        <div class="prcrounce-sngbuttons d-flex mb-2">
-                                            <button
-                                                class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book at
-                                                This
-                                                Price
-                                            </button>
-                                        </div>
-                                        <div class="prcrounce-sngbuttons d-flex">
-                                            <button
-                                                class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower
-                                                Price
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- / Single Item -->
-
-                        <!-- Single Item -->
-                        <div class="d-block border br-dashed rounded-2 px-3 py-3">
-                            <div class="d-flex align-items-sm-end justify-content-between flex-sm-row flex-column">
-                                <div class="typsofrooms-wrap">
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="fs-6 fw-semibold mb-1 me-2">Your Choice</h6><a href="#"
-                                                                                                  class="text-muted fs-6"><i
-                                                class="fa-solid fa-circle-question"></i></a>
-                                    </div>
-                                    <div class="typsofrooms-groups d-flex align-items-start">
-                                        <div class="typsofrooms-brk1 mb-4">
-                                            <ul class="row align-items-center g-1 mb-0 p-0">
-                                                <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-mug-saucer me-2"></i>Breackfast Included</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="typsofrooms-action col-auto">
-                                    <div class="prcrounce-groups">
-                                        <div
-                                            class="d-flex align-items-center justify-content-start justify-content-sm-end">
-                                            <div class="text-dark fw-semibold fs-4">US$ 107</div>
-                                        </div>
-                                        <div
-                                            class="d-flex align-items-start align-items-sm-end justify-content-start justify-content-md-end flex-column mb-2">
-                                            <div class="text-muted-2 text-sm">After tax US$ 110</div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="prcrounce-groups-button d-flex flex-column align-items-start align-items-md-end mt-3">
-                                        <div class="prcrounce-sngbuttons d-flex mb-2">
-                                            <button
-                                                class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book at
-                                                This
-                                                Price
-                                            </button>
-                                        </div>
-                                        <div class="prcrounce-sngbuttons d-flex">
-                                            <button
-                                                class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower
-                                                Price
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- / Single Item -->
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Single Room Option -->
-        <div class="card mb-4">
-            <div class="card-header">
-                <h6 class="fw-semibold mb-0">Superior Double King Room</h6>
-            </div>
-
-            <div class="card-body">
-                <div class="row align-items-start">
-                    <div class="col-xl-3 col-lg-4 col-md-4">
-                        <div class="roomavls-groups">
-                            <div class="roomavls-thumb mb-2">
-                                <img src="assets/img/hotel/hotel-7.jpg" class="img-fluid rounded-2" alt="">
-                            </div>
-                            <div class="roomavls-caps">
-                                <div class="roomavls-escols d-flex align-items-start mb-2">
-                                    <span class="label bg-light-purple text-purple me-2">Double King Bed</span><span
-                                        class="label bg-light-purple text-purple">3 Sleeps</span>
-                                </div>
-                                <div class="roomavls-lists">
-                                    <ul class="row align-items-center gx-2 gy-1 mb-0 p-0">
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-brands fa-bity me-2"></i>City View</span></li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-ban-smoking me-2"></i>Non-Smoking</span></li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-vector-square me-2"></i>1800sqft | 6 Floor</span>
-                                        </li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-wifi me-2"></i>Free Wi-Fi</span></li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-bath me-2"></i>Private Bathroom</span></li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-snowflake me-2"></i>Air Conditioning</span></li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-cash-register me-2"></i>Refrigerator</span></li>
-                                        <li class="col-6"><span class="text-muted-2 text-md"><i
-                                                    class="fa-solid fa-tty me-2"></i>Telephone</span></li>
-                                        <li class="col-12"><a href="#" class="text-primary fw-medium text-md">Show More
-                                                Room
-                                                Amenties</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-9 col-lg-8 col-md-8">
-
-                        <!-- Single Item -->
-                        <div class="d-block border br-dashed rounded-2 px-3 py-3 mb-3">
-                            <div class="d-flex align-items-sm-end justify-content-between flex-sm-row flex-column">
-                                <div class="typsofrooms-wrap">
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="fs-6 fw-semibold mb-1 me-2">Your Choice</h6><a href="#"
-                                                                                                  class="text-muted fs-6"><i
-                                                class="fa-solid fa-circle-question"></i></a>
-                                    </div>
-                                    <div class="typsofrooms-groups d-flex align-items-start">
-                                        <div class="typsofrooms-brk1 mb-4">
-                                            <ul class="row align-items-center g-1 mb-0 p-0">
-                                                <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-solid fa-mug-saucer me-2"></i>Breackfast for US$10 (Optional)</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="typsofrooms-action col-auto">
-                                    <div class="prcrounce-groups">
-                                        <div
-                                            class="d-flex align-items-center justify-content-start justify-content-sm-end">
-                                            <div class="text-dark fw-semibold fs-4">US$ 150</div>
-                                        </div>
-                                        <div
-                                            class="d-flex align-items-start align-items-sm-end justify-content-start justify-content-md-end flex-column mb-2">
-                                            <div class="text-muted-2 text-sm">After tax US$ 163</div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="prcrounce-groups-button d-flex flex-column align-items-start align-items-md-end mt-3">
-                                        <div class="prcrounce-sngbuttons d-flex mb-2">
-                                            <button
-                                                class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book at
-                                                This
-                                                Price
-                                            </button>
-                                        </div>
-                                        <div class="prcrounce-sngbuttons d-flex">
-                                            <button
-                                                class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower
-                                                Price
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- / Single Item -->
-
-                        <!-- Single Item -->
-                        <div class="d-block border br-dashed rounded-2 px-3 py-3">
-                            <div class="d-flex align-items-sm-end justify-content-between flex-sm-row flex-column">
-                                <div class="typsofrooms-wrap">
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="fs-6 fw-semibold mb-1 me-2">Your Choice</h6><a href="#"
-                                                                                                  class="text-muted fs-6"><i
-                                                class="fa-solid fa-circle-question"></i></a>
-                                    </div>
-                                    <div class="typsofrooms-groups d-flex align-items-start">
-                                        <div class="typsofrooms-brk1 mb-4">
-                                            <ul class="row align-items-center g-1 mb-0 p-0">
-                                                <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-mug-saucer me-2"></i>Breackfast Included</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-solid fa-ban-smoking me-2"></i>Non-Refundable</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-meteor me-2"></i>Instant Confirmation</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-muted-2 text-md"><i
-                                                            class="fa-brands fa-cc-visa me-2"></i>Prepay Online</span>
-                                                </li>
-                                                <li class="col-12"><span class="text-success text-md"><i
-                                                            class="fa-solid fa-circle-check me-2"></i>Booking of Maximum 5 Rooms</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="typsofrooms-action col-auto">
-                                    <div class="prcrounce-groups">
-                                        <div
-                                            class="d-flex align-items-center justify-content-start justify-content-sm-end">
-                                            <div class="text-dark fw-semibold fs-4">US$ 107</div>
-                                        </div>
-                                        <div
-                                            class="d-flex align-items-start align-items-sm-end justify-content-start justify-content-md-end flex-column mb-2">
-                                            <div class="text-muted-2 text-sm">After tax US$ 110</div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="prcrounce-groups-button d-flex flex-column align-items-start align-items-md-end mt-3">
-                                        <div class="prcrounce-sngbuttons d-flex mb-2">
-                                            <button
-                                                class="btn btn-sm btn-light-primary rounded-1 fw-medium px-4">Book at
-                                                This
-                                                Price
-                                            </button>
-                                        </div>
-                                        <div class="prcrounce-sngbuttons d-flex">
-                                            <button
-                                                class="btn btn-sm btn-primary rounded-1 fw-medium px-4">Access Lower
-                                                Price
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- / Single Item -->
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        @endforeach
     </div>
 
     <!-- Service & Amenties -->
