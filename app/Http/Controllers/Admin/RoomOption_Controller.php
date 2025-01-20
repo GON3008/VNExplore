@@ -65,8 +65,37 @@ class RoomOption_Controller extends Controller
             'ro_price' => ['require', 'max:100', 'regex:/^\d+(\.\d{1,2})?$/', 'numeric'],
             'ro_discount' => ['max:100', 'regex:/^\d+(\.\d{1,2})?$/', 'numeric'],
             'ro_quantity' => ['require', 'integer','min:1'],
-            'ro_max_guests' => ['require', 'integer', 'min:1'],
+            'ro_max_guests' => ['integer', 'min:1'],
         ];
+
+        $request->validate(($rule));
+
+        $room_option = RoomOption::updateOrCreate(
+            ['ro_id' => $ro_id],
+
+            [
+                'ro_price' => $request->ro_price,
+                'ro_discount' => $request->ro_discount,
+                'ro_bed_type' => $request->ro_bed_type,
+                'ro_quantity' => $request->ro_quantity,
+                'ro_description' => $request->ro_description,
+                'ro_status' => $request->ro_status,
+                'ro_max_guests' => $request->ro_max_guests,
+                'ro_extra_bed_price' => $request->ro_extra_bed_price,
+                'ro_is_refundable' => $request->ro_is_refundable,
+                'ro_cancellation_policy' => $request->ro_cancellation_policy,
+                'ro_checkin_time' => $request->ro_checkin_time,
+                'ro_checkout_time' => $request->ro_checkout_time,
+                'ro_is_featured' => $request->ro_is_featured,
+                'ro_views' => $request->ro_views,
+                'ro_area' => $request->ro_area,
+                'ro_hotel_room_id' => $request->ro_hotel_room_id,
+                'ro_hotel_category_id' => $request->ro_hotel_category_id,
+                'ro_created_by' => $request->ro_created_by,
+                ]
+            );
+
+        return response()->json(['success' => 'Room Option saved successfully.']);
     }
 
     /**
@@ -82,7 +111,8 @@ class RoomOption_Controller extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $room_option = RoomOption::find($id);
+        return response()->json($room_option);
     }
 
     /**
@@ -98,6 +128,14 @@ class RoomOption_Controller extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $room_option = RoomOption::find($id);
+
+        if (!$room_option) {
+            return response()->json(['error' => 'Room Option not found.'], 404);
+        }
+
+        $room_option->ro_deleted = 0;
+        $room_option->save();
+        return response()->json(['success' => 'Room Option deleted successfully.']);
     }
 }

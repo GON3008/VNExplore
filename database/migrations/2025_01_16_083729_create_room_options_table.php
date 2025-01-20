@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->text('ro_description')->nullable();
             $table->enum('ro_status', ['available', 'booked', 'maintenance', 'unavailable'])->default('available');
             $table->integer('ro_max_guests')->default(2);
-            $table->decimal('ro_extra_bed_price', 10, 2)->nullable();
+            $table->decimal('ro_extra_bed_price', 10, 2)->nullable(); 
             $table->boolean('ro_is_refundable')->default(true);
             $table->text('ro_cancellation_policy')->nullable();
             $table->time('ro_checkin_time')->default('14:00');
