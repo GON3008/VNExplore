@@ -85,7 +85,7 @@
                     url: "{{ route('admin.rooms.store') }}",
                     data: formData,
                     processData: false,
-                    contentType:  false,
+                    contentType: false,
                     success: function (data) {
                         $('#ajaxModel').modal('hide');
                         var onTable = $('#dataRooms').DataTable();
@@ -94,9 +94,9 @@
                     },
 
                     error: function (xhr) {
-                        if(xhr.responseJSON && xhr.responseJSON.errors) {
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
                             let errors = xhr.responseJSON.errors;
-                            if(errors.name) {
+                            if (errors.name) {
                                 $('#name_error').text(errors.name[0]);
                             }
                             // Add more error checks if necessary

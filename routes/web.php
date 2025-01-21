@@ -21,6 +21,9 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\Admin\HotelCategories_Controller;
 use App\Http\Controllers\Admin\HotelLocation_Controller;
 use App\Http\Controllers\Admin\HotelRoom_Controller;
+use App\Http\Controllers\Admin\RoomOption_Controller;
+use App\Http\Controllers\Admin\HotelPoicies_Controller;
+use App\Http\Controllers\Admin\HotelManager_Controller;
 use App\Mail\TestMail;
 use Illuminate\Support\Facades\Mail;
 
@@ -63,6 +66,14 @@ Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
     Route::resource('tourLocations', TourLocation_Controller::class);
     Route::resource('flightLocations', FlightLocation_Controller::class);
     Route::resource('carLocations', CarLocation_Controller::class);
+    // Add hotel management routes here
+    Route::prefix('hotel-management')->group(function () {
+        Route::get('hotel-rooms', [HotelRoom_Controller::class, 'index'])->name('hotelRooms.index');
+        Route::get('room-options', [RoomOption_Controller::class, 'index'])->name('roomOptions.index');
+        Route::get('hotel-policies', [HotelPoicies_Controller::class, 'index'])->name('hotelPolicies.index');
+    });
+
+    Route::get('hotel_manager', [HotelManager_Controller::class, 'index'])->name('hotel_manager.index');
 });
 
 Route::middleware('auth')->group(function () {

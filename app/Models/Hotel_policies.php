@@ -26,7 +26,7 @@ class Hotel_policies extends Model
         'hp_hotel_room_id',
     ];
 
-    public function hotelRoom_id()
+    public function hp_room_id()
     {
         return $this->belongsTo(HotelRooms::class, 'hp_hotel_room_id');
     }

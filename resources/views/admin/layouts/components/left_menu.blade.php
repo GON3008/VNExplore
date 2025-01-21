@@ -104,9 +104,9 @@
             </li>
 
             <li class="side-nav-item">
-                <a href="#" class="side-nav-link">
+                <a href="{{route('admin.hotel_manager.index')}}" class="side-nav-link">
                     <i class="room-service"></i>
-                    <span>Hotel Services</span>
+                    <span>Hotel Manager</span>
                 </a>
             </li>
 
