@@ -1,7 +1,14 @@
-import './bootstrap';
+// Import Vue
+import { createApp } from 'vue';
 
-import Alpine from 'alpinejs';
+// Import component Vue (nếu có)
+import ReusableModalForm from './components/ReusableModalForm.vue';
 
-window.Alpine = Alpine;
+// Tạo ứng dụng Vue
+const app = createApp({});
 
-Alpine.start();
+// Đăng ký component toàn cục (nếu cần)
+app.component('reusable-modal-form', ReusableModalForm);
+
+// Mount Vue app vào ID gốc (thường là #app)
+app.mount('#app');

@@ -44,7 +44,11 @@
                         {title: 'Checkin', name: 'ro_checkin_time', data: 'ro_checkin_time'},
                         {title: 'Checkout', name: 'ro_checkout_time', data: 'ro_checkout_time'},
                         {title: 'View', name: 'ro_views', data: 'ro_views'},
-                    ]
+                        {title: 'Room name', name: 'ro_room_id.room_name', data: 'ro_room_id.room_name'},
+                        {title: 'Created by', name: 'ro_user_id.name', data: 'ro_user_id.name'},
+                        {title: 'Action', name: 'action', data: 'action', orderable: false, searchable: false},
+                    ],
+                    order: [[0, 'asc']],
                 });
             };
 

@@ -1,11 +1,11 @@
-<script setup>
-
-</script>
-
 <template>
-  $END$
+    <div>
+        <h1>Hello from Vue!</h1>
+    </div>
 </template>
 
-<style scoped>
-
-</style>
+<script>
+export default {
+    name: "ExampleComponent",
+};
+</script>
