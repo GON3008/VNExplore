@@ -69,16 +69,20 @@ class RoomOption_Controller extends Controller
 
         $request->validate($rule);
 
-        try {
-            RoomOption::updateOrCreate(
-                ['ro_id' => $request->ro_id],
-                $request->all()
-            );
-
-            return response()->json(['success' => 'Room Option saved successfully.']);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to save room option.'], 500);
-        }
+        $room_option = RoomOption::updateOrCreate(
+            ['ro_id' => $request->ro_id],
+            [
+                'ro_price' => $request->ro_price,
+                'ro_discount' => $request->ro_discount,
+                'ro_quantity' => $request->ro_quantity,
+                'ro_max_guests' => $request->ro_max_guests,
+                'ro_checkin_time' => $request->ro_checkin_time,
+                'ro_checkout_time' => $request->ro_checkout_time,
+                'ro_bed_type' => $request->ro_bed_type,
+            ]
+        );
+        $room_option->save();
+        return response()->json(['success' => 'Room Option updated successfully.']);
     }
 
     /**

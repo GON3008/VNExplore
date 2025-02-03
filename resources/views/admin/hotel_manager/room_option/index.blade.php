@@ -81,6 +81,14 @@
                 roomOptionTable = initRoomOptionTable();
                 roomOptionLoaded = true;
             }
+
+            $('#createNewRoom').click(function () {
+                $('#saveBtn').val("create-room");
+                $('#room_id').val('');
+                $('#ro_form').trigger("reset");
+                $('#modelHeading').html("Create New Room Option");
+                $('#ajaxModel').modal('show');
+            })
         });
     </script>
 @endpush

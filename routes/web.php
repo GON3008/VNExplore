@@ -18,6 +18,7 @@ use App\Http\Controllers\ToursController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\Admin\HotelCategories_Controller;
 use App\Http\Controllers\Admin\HotelLocation_Controller;
 use App\Http\Controllers\Admin\HotelRoom_Controller;
@@ -66,6 +67,8 @@ Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
     Route::resource('tourLocations', TourLocation_Controller::class);
     Route::resource('flightLocations', FlightLocation_Controller::class);
     Route::resource('carLocations', CarLocation_Controller::class);
+    Route::get('test', [TestController::class, 'index'])->name('test.index');
+
     // Add hotel management routes here
     Route::prefix('hotel-management')->group(function () {
         Route::get('hotel-rooms', [HotelRoom_Controller::class, 'index'])->name('hotelRooms.index');

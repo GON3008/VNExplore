@@ -110,6 +110,13 @@
                 </a>
             </li>
 
+{{--            <li class="side-nav-item">--}}
+{{--                <a href="{{route('admin.test.index')}}" class="side-nav-link">--}}
+{{--                    <i class="room-service"></i>--}}
+{{--                    <span>Test</span>--}}
+{{--                </a>--}}
+{{--            </li>--}}
+
             <li class="side-nav-item">
                 <a href="{{route('admin.locations.index')}}" class="side-nav-link">
                     <i class="uil-map"></i>
