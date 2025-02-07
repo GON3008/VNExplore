@@ -35,16 +35,15 @@ class RoomOption_Controller extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
-        $data = [
-            'hotelRoom' => HotelRooms::all(),
-            'hotelCategory' => HotelCategories::all(),
-            'created_by' => User::all(),
-            'room_bed_type' => ['1 king bed', '1 queen bed', '2 single bed'],
-            'room_status' => ['available', 'booked', 'maintenance', 'unavailable'],
-            'room_view' => ['sea view', 'city view', 'garden view'],
-        ];
+        $hotelRoom = HotelRooms::all();
+        $hotelCategory = HotelCategories::all();
+        $created_by = User::all();
+        $bed_type = ['1 King bed', '1 Queen bed', '2 Single bed'];
+        $ro_status = ['Available', 'Booked', 'Maintenance', 'Unavailable'];
+        $ro_views = ['Sea view', 'City view', 'Garden view'];
 
-        return view('admin.room_option.index', $data);
+        return view('admin.room_option.index', compact('hotelRoom', 'hotelCategory',
+            'created_by', 'bed_type', 'ro_status', 'ro_views'));
     }
 
     /**

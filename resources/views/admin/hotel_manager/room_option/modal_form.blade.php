@@ -28,7 +28,7 @@
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="ro_discount" name="ro_discount"
                                    placeholder="Enter Discount"
-                                   oninput="this.value = this.value.toLowerCase();">
+                                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                             <span class="text-danger" id="room_discount_error"></span>
                         </div>
                     </div>
@@ -38,7 +38,8 @@
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="ro_quantity" name="ro_quantity"
                                    placeholder="Enter Discount"
-                                   oninput="this.value = this.value.toLowerCase();" min="1" max="100">
+                                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                   min="1" max="100">
                             <span class="text-danger" id="room_discount_error"></span>
                         </div>
                     </div>
@@ -48,7 +49,8 @@
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="ro_max_guests" name="ro_max_guests"
                                    placeholder="Enter Discount"
-                                   oninput="this.value = this.value.toLowerCase();" min="2" max="10">
+                                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                   min="2" max="10">
                             <span class="text-danger" id="room_discount_error"></span>
                         </div>
                     </div>
@@ -58,7 +60,8 @@
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="ro_max_guests" name="ro_max_guests"
                                    placeholder="Enter Discount"
-                                   oninput="this.value = this.value.toLowerCase();" min="2" max="10">
+                                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                   min="2" max="10">
                             <span class="text-danger" id="room_discount_error"></span>
                         </div>
                     </div>
@@ -68,7 +71,8 @@
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="ro_extra_bed_price" name="ro_extra_bed_price"
                                    placeholder="Enter Discount"
-                                   oninput="this.value = this.value.toLowerCase();" min="2" max="10">
+                                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                   min="2" max="10">
                             <span class="text-danger" id="room_discount_error"></span>
                         </div>
                     </div>
@@ -78,7 +82,8 @@
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="ro_area" name="ro_area"
                                    placeholder="Enter Discount"
-                                   oninput="this.value = this.value.toLowerCase();" min="2" max="10">
+                                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                   min="2" max="10">
                             <span class="text-danger" id="room_discount_error"></span>
                         </div>
                     </div>
@@ -106,28 +111,84 @@
                         <div class="col-sm-12">
                             <select class="form-control" id="ro_bed_type" name="ro_bed_type" required>
                                 <option value="">Select Bed Type</option>
-                                @foreach($room_bed_type as $data)
-                                    <option value="{{ $data }}"
-                                        {{ isset($room_option) && $room_option->ro_bed_type == $data ? 'selected' : '' }}>
-                                        {{ ucfirst($data) }}
+                                @foreach(['1 King bed', '1 Queen bed', '2 Single bed'] as $bed_type)
+                                    <option
+                                        value="{{ $bed_type }}" {{ isset($room_option) && $room_option->availability_status == $bed_type ? 'selected' : '' }}>
+                                        {{ ucfirst($bed_type) }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
 
-                    {{--                    <div class="form-group">--}}
-                    {{--                        <label for="hotel_category_id" class="col-sm-5 control-label">Hotel Category</label>--}}
-                    {{--                        <div class="col-sm-12">--}}
-                    {{--                            <select class="form-control" id="hotelCategory_id" name="hotel_category_id">--}}
-                    {{--                                <option>Select Hotel Category</option>--}}
-                    {{--                                @foreach($hotelCategory as $category)--}}
-                    {{--                                    <option value="{{$category->id}}">{{$category->hotelCategory_name}}</option>--}}
-                    {{--                                @endforeach--}}
-                    {{--                            </select>--}}
-                    {{--                            <span class="text-danger" id="departure_date_error"></span>--}}
-                    {{--                        </div>--}}
-                    {{--                    </div>--}}
+                    <div class="form-group">
+                        <label for="ro_views" class="col-sm-4 control-label">Room View</label>
+                        <div class="col-sm-12">
+                            <select class="form-control" id="ro_views" name="ro_views" required>
+                                <option value="">Select Views</option>
+                                @foreach(['Sea view', 'City view', 'Garden view'] as $ro_views)
+                                    <option
+                                        value="{{ $ro_views }}" {{ isset($room_option) && $room_option->availability_status == $ro_views ? 'selected' : '' }}>
+                                        {{ ucfirst($ro_views) }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ro_status" class="col-sm-4 control-label">Room Status</label>
+                        <div class="col-sm-12">
+                            <select class="form-control" id="ro_status" name="ro_status" required>
+                                <option value="">Select Status</option>
+                                @foreach(['Available', 'Booked', 'Maintenance', 'Unavailable'] as $ro_status)
+                                    <option
+                                        value="{{ $ro_status }}" {{ isset($room_option) && $room_option->availability_status == $ro_status ? 'selected' : '' }}>
+                                        {{ ucfirst($ro_status) }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ro_hotel_category_id" class="col-sm-5 control-label">Hotel Category</label>
+                        <div class="col-sm-12">
+                            <select class="form-control" id="ro_hotel_category_id" name="ro_hotel_category_id">
+                                <option value="">Select Hotel Category</option>
+                                @foreach($hotelCategory as $category)
+                                    <option value="{{ $category->id }}">{{ $category->hotelCategory_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ro_hotel_room_id" class="col-sm-5 control-label">Hotel Room</label>
+                        <div class="col-sm-12">
+                            <select class="form-control" id="ro_hotel_room_id" name="ro_hotel_room_id">
+                                <option>Select Hotel Room</option>
+                                @foreach($hotelRoom as $room)
+                                    <option value="{{$room->id}}">{{$room->room_name}}</option>
+                                @endforeach
+                            </select>
+                            <span class="text-danger" id="departure_date_error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ro_created_by" class="col-sm-5 control-label">Created By User</label>
+                        <div class="col-sm-12">
+                            <select class="form-control" id="ro_created_by" name="ro_created_by">
+                                @foreach($created_by as $user)
+                                    <option value="{{ $user->id }}" {{ Auth::id() == $user->id ? 'selected' : '' }}>
+                                        {{ $user->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <span class="text-danger" id="departure_date_error"></span>
+                        </div>
+                    </div>
 
                     <div class="col-sm-offset-2 col-sm-10 pt-3">
                         <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes</button>
@@ -137,5 +198,6 @@
         </div>
     </div>
 </div>
+
 
 

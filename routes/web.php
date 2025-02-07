@@ -73,6 +73,7 @@ Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
     Route::prefix('hotel-management')->group(function () {
         Route::get('hotel-rooms', [HotelRoom_Controller::class, 'index'])->name('hotelRooms.index');
         Route::get('room-options', [RoomOption_Controller::class, 'index'])->name('roomOptions.index');
+        Route::post('room-options', [RoomOption_Controller::class, 'store'])->name('roomOptions.store');
         Route::get('hotel-policies', [HotelPoicies_Controller::class, 'index'])->name('hotelPolicies.index');
     });
 

@@ -1,14 +1,22 @@
 <div>
     <div class="py-2">
-        <a href="javascript:void(0)" class="btn btn-success" id="createNewRoomOption">Add Room Option</a>
+        <a href="javascript:void(0)" class="btn btn-success" id="create_ro">Add Room Option</a>
     </div>
-    <table class="table table-bordered data-table" id="roomOptionData"></table>
+    <table class="table table-bordered data-table display nowrap" id="roomOptionData"></table>
     <div class="modal_form">
         @include('admin.hotel_manager.room_option.modal_form')
     </div>
 </div>
-
+<link href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/rowreorder/1.5.0/css/rowReorder.dataTables.css">
+<link href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.dataTables.css">
 @push('scripts')
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/rowreorder/1.5.0/js/dataTables.rowReorder.js"></script>
+    <script src="https://cdn.datatables.net/rowreorder/1.5.0/js/rowReorder.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.dataTables.js"></script>
+    <script src=""></script>
     <script type="text/javascript">
         $(document).ready(function () {
             let roomOptionTable; // Biến lưu DataTable
@@ -49,6 +57,10 @@
                         {title: 'Action', name: 'action', data: 'action', orderable: false, searchable: false},
                     ],
                     order: [[0, 'asc']],
+                    responsive: true,
+                    rowReorder:{
+                        selector: 'td:nth-child(2)'
+                    }
                 });
             };
 
@@ -82,13 +94,43 @@
                 roomOptionLoaded = true;
             }
 
-            $('#createNewRoom').click(function () {
+            $('#create_ro').click(function () {
                 $('#saveBtn').val("create-room");
                 $('#room_id').val('');
                 $('#ro_form').trigger("reset");
                 $('#modelHeading').html("Create New Room Option");
                 $('#ajaxModel').modal('show');
             })
+
+            $('#ro_form').on('submit', function (e) {
+                e.preventDefault();
+                var form_data = new Form_data(this);
+                form_data.append('id', $('#ro_id').val());
+                $('#saveBtn').html('Sending...');
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('admin.roomOptions.store') }}",
+                    data: form_data,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        $('#ajaxModel').modal('hide');
+                        var onTable = $('#roomOptionData').DataTable();
+                        onTable.draw(false);
+                        $('#saveBtn').html('Save changes');
+                    },
+                    error: function (xhr) {
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            let errors = xhr.responseJSON.errors;
+                            if (errors.name) {
+                                $('#name_error').text(errors.name[0]);
+                            }
+                            // Add more error checks if necessary
+                        }
+                        $('#saveBtn').html('Save changes');
+                    }
+                });
+            });
         });
     </script>
 @endpush
