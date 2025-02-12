@@ -11,6 +11,12 @@
 @push('scripts')
     <script type="text/javascript">
         $(document).ready(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            });
+
             let hotelPoliciesTable;
             let hotelPoliciesLoaded = false;
             // Sự kiện khi chuyển đổi tab
@@ -24,14 +30,24 @@
                             serverSide: true,
                             ajax: "{{ route('admin.hotelPolicies.index') }}",
                             columns: [
-                                {title: 'ID', name: 'hp_id', data: 'hp_id'},
+                                {title: 'ID', name: 'id', data: 'id'},
                                 {title: 'Payment Policy', name: 'hp_payment_policy', data: 'hp_payment_policy'},
-                                {title: 'Free cancellation', name: 'hp_free_cancellation_days', data: 'hp_free_cancellation_days'},
+                                {
+                                    title: 'Free cancellation',
+                                    name: 'hp_free_cancellation_days',
+                                    data: 'hp_free_cancellation_days'
+                                },
                                 {title: 'Booking Fee', name: 'hp_booking_fee', data: 'hp_booking_fee'},
                                 {title: 'Checkin Time', name: 'hp_checkin_time', data: 'hp_checkin_time'},
                                 {title: 'Checkout Time', name: 'hp_checkout_time', data: 'hp_checkout_time'},
+                                {title: 'Hotel Room', name: 'hotel_rooms.room_name', data: 'hotel_room.room_name'},
                                 {title: 'Action', name: 'action', data: 'action', orderable: false, searchable: false}
                             ],
+                            order: [[0, 'desc']],
+                            responsive: true,
+                            rowReorder: {
+                                selector: 'td:nth-child(2)'
+                            }
                         });
                         hotelPoliciesLoaded = true;
                     }

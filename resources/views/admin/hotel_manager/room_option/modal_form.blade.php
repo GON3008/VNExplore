@@ -10,7 +10,8 @@
             <div class="modal-body">
                 <form id="ro_form" name="ro_form" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="ro_id" id="room_id">
+{{--                    @method('PUT')--}}
+                    <input type="hidden" name="ro_id" id="ro_id">
 
                     <div class="form-group">
                         <label for="room_price" class="col-sm-2 control-label">Room Price</label>
@@ -56,18 +57,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="room_discount" class="col-sm-3 control-label">Room Guest</label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="ro_max_guests" name="ro_max_guests"
-                                   placeholder="Enter Discount"
-                                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                   min="2" max="10">
-                            <span class="text-danger" id="room_discount_error"></span>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="room_discount" class="col-sm-3 control-label">Room Extra Bed Price</label>
+                        <label for="room_discount" class="col-sm-4 control-label">Room Extra Bed Price</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="ro_extra_bed_price" name="ro_extra_bed_price"
                                    placeholder="Enter Discount"
@@ -88,7 +78,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" id="show_checkin_ro" style="display: none">
                         <label for="room_discount" class="col-sm-3 control-label">Checkin Room</label>
                         <div class="col-sm-12">
                             <input type="datetime-local" class="form-control" id="ro_checkin_time"
@@ -97,7 +87,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" id="show_checkout_ro" style="display: none">
                         <label for="room_discount" class="col-sm-3 control-label">Checkout Room</label>
                         <div class="col-sm-12">
                             <input type="datetime-local" class="form-control" id="ro_checkout_time"

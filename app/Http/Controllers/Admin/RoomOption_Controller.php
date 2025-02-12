@@ -17,17 +17,17 @@ class RoomOption_Controller extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $room_option = RoomOption::with(['ro_room_id', 'ro_category_id', 'ro_user_id'])
+            $room_option = RoomOption::with(['hotel_room:id,room_name', 'hotel_category:id,hotelCategory_name', 'created_by_user:id,name'])
                 ->where('ro_deleted', 1)
                 ->select('room_options.*');
 
             return datatables()
                 ->of($room_option)
                 ->addColumn('action', function ($room_option) {
-                    $button = '<button type="button" name="edit" id="' . $room_option->ro_id . '" class="edit btn btn-primary btn-sm">
+                    $button = '<button type="button" name="edit" id="' . $room_option->id . '" class="ro_edit btn btn-primary btn-sm">
                 <i class="uil-edit"></i></button>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" id="' . $room_option->ro_id . '" class="delete btn btn-danger btn-sm">
+                    $button .= '<button type="button" name="delete" id="' . $room_option->id . '" class="ro_delete btn btn-danger btn-sm">
                 <i class="uil-trash-alt"></i></button>';
                     return $button;
                 })
@@ -59,6 +59,7 @@ class RoomOption_Controller extends Controller
      */
     public function store(Request $request)
     {
+        $ro_id = $request->ro_id;
         $rule = [
             'ro_price' => ['required', 'numeric', 'regex:/^\d+(\.\d{1,2})?$/', 'min:0'],
             'ro_discount' => ['nullable', 'numeric', 'regex:/^\d+(\.\d{1,2})?$/', 'min:0'],
@@ -69,15 +70,22 @@ class RoomOption_Controller extends Controller
         $request->validate($rule);
 
         $room_option = RoomOption::updateOrCreate(
-            ['ro_id' => $request->ro_id],
+            ['id' => $ro_id],
             [
                 'ro_price' => $request->ro_price,
                 'ro_discount' => $request->ro_discount,
                 'ro_quantity' => $request->ro_quantity,
                 'ro_max_guests' => $request->ro_max_guests,
+                'ro_extra_bed_price' => $request->ro_extra_bed_prie,
+                'ro_area' => $request->ro_area,
                 'ro_checkin_time' => $request->ro_checkin_time,
                 'ro_checkout_time' => $request->ro_checkout_time,
                 'ro_bed_type' => $request->ro_bed_type,
+                'ro_status' => $request->ro_status,
+                'ro_views' => $request->ro_views,
+                'ro_hotel_category_id' => $request->ro_hotel_category_id,
+                'ro_hotel_room_id' => $request->ro_hotel_room_id,
+                'ro_created_by' => $request->ro_created_by,
             ]
         );
         $room_option->save();
@@ -97,13 +105,12 @@ class RoomOption_Controller extends Controller
      */
     public function edit(string $id)
     {
-        $room_option = RoomOption::where('ro_id', $id)->first();
-
-        if (!$room_option) {
+        try {
+            $room_option = RoomOption::where('id',$id)->firstOrFail();
+            return response()->json($room_option);
+        } catch (\Exception $e) {
             return response()->json(['error' => 'Room Option not found.'], 404);
         }
-
-        return response()->json($room_option);
     }
 
     /**
@@ -111,7 +118,9 @@ class RoomOption_Controller extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $roomOption = RoomOption::findOrFail($id);
+        $roomOption->update($request->all());
+        return response()->json(['success' => 'Room Option updated successfully']);
     }
 
     /**
@@ -119,7 +128,7 @@ class RoomOption_Controller extends Controller
      */
     public function destroy(string $id)
     {
-        $room_option = RoomOption::where('ro_id', $id)->first();
+        $room_option = RoomOption::where('id', $id)->first();
 
         if (!$room_option) {
             return response()->json(['error' => 'Room Option not found.'], 404);

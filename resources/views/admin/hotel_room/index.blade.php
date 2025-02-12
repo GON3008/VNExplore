@@ -24,13 +24,12 @@
             });
 
             $("#dataRooms").DataTable({
-                responsive: true,
-                processing: true,
-                serverSide: true,
-                scrollX: true,
-                dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>' +
-                    '<"row"<"col-sm-12"tr>>' +
-                    '<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+                // processing: true,
+                // serverSide: true,
+                // scrollX: true,
+                // dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>' +
+                //     '<"row"<"col-sm-12"tr>>' +
+                //     '<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
                 ajax: "{{ route('admin.rooms.index') }}",
                 columns: [
                     {title: 'Room Number', data: 'room_number', name: 'room_number'},
@@ -59,7 +58,12 @@
                     {title: 'Availability Status', data: 'availability_status', name: 'availability_status'},
                     {title: 'Cleaning Status', data: 'cleaning_status', name: 'cleaning_status'},
                     {title: 'Action', data: 'action', name: 'action', orderable: false, searchable: false},
-                ]
+                ],
+                order: [[0, 'desc']],
+                responsive: true,
+                rowReorder:{
+                    selector: 'td:nth-child(2)'
+                }
             });
 
             $('#createNewRoom').click(function () {

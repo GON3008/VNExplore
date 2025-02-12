@@ -9,8 +9,7 @@ class RoomOption extends Model
 {
     use HasFactory;
 
-    protected $fillable =[
-        'ro_id',
+    protected $fillable = [
         'ro_price',
         'ro_discount',
         'ro_bed_type',
@@ -31,19 +30,19 @@ class RoomOption extends Model
         'ro_created_by',
     ];
 
-    public function ro_room_id()
+    public function hotel_room()
     {
         return $this->belongsTo(HotelRooms::class, 'ro_hotel_room_id');
     }
 
-    public function ro_category_id()
+    public function hotel_category()
     {
         return $this->belongsTo(HotelCategories::class, 'ro_hotel_category_id');
     }
 
-    public function ro_user_id()
+    public function created_by_user()
     {
         return $this->belongsTo(User::class, 'ro_created_by');
     }
-
 }
+
