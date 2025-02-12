@@ -33,10 +33,11 @@
                                 {title: 'ID', name: 'id', data: 'id'},
                                 {title: 'Payment Policy', name: 'hp_payment_policy', data: 'hp_payment_policy'},
                                 {
-                                    title: 'Free cancellation',
+                                    title: 'Free cancellation day',
                                     name: 'hp_free_cancellation_days',
                                     data: 'hp_free_cancellation_days'
                                 },
+                                {title: 'Free cancellation', name: ''},
                                 {title: 'Booking Fee', name: 'hp_booking_fee', data: 'hp_booking_fee'},
                                 {title: 'Checkin Time', name: 'hp_checkin_time', data: 'hp_checkin_time'},
                                 {title: 'Checkout Time', name: 'hp_checkout_time', data: 'hp_checkout_time'},
