@@ -32,6 +32,14 @@ class RoomOption_Controller extends Controller
                     return $button;
                 })
                 ->rawColumns(['action'])
+                ->editColumn('ro_is_featured', function ($room_option) {
+                    return $room_option->ro_is_featured ? 'Outstanding'
+                        : 'Often';
+                })
+                ->editColumn('ro_is_refundable', function ($room_option) {
+                    return $room_option->ro_is_refundable ? 'Refund'
+                        : 'Unspeakable';
+                })
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -83,6 +91,8 @@ class RoomOption_Controller extends Controller
                 'ro_bed_type' => $request->ro_bed_type,
                 'ro_status' => $request->ro_status,
                 'ro_views' => $request->ro_views,
+                'ro_is_refundable' => $request->ro_is_refundable,
+                'ro_is_featured' => $request->ro_is_featured,
                 'ro_hotel_category_id' => $request->ro_hotel_category_id,
                 'ro_hotel_room_id' => $request->ro_hotel_room_id,
                 'ro_created_by' => $request->ro_created_by,
@@ -106,7 +116,7 @@ class RoomOption_Controller extends Controller
     public function edit(string $id)
     {
         try {
-            $room_option = RoomOption::where('id',$id)->firstOrFail();
+            $room_option = RoomOption::where('id', $id)->firstOrFail();
             return response()->json($room_option);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Room Option not found.'], 404);

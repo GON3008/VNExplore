@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Hotel_policies extends Model
+class HotelPolicies extends Model
 {
     use HasFactory;
 
     protected $fillable =[
-        'hp_id',
         'hp_payment_policy',
         'hp_cancellation_fee',
         'hp_free_cancellation_days',

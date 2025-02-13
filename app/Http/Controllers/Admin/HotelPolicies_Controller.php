@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Hotel_policies;
+use App\Models\HotelPolicies;
 use App\Models\HotelRooms;
 use Illuminate\Http\Request;
 use function Pest\Laravel\json;
@@ -16,21 +16,37 @@ class HotelPolicies_Controller extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $hotel_policies = Hotel_policies::with('hotel_room:id,room_name')
+            $hotel_policies = HotelPolicies::with('hotel_room:id,room_name')
                 ->where('hp_deleted', 1)
                 ->select('hotel_policies.*');
 
             return datatables()
                 ->of($hotel_policies)
                 ->addColumn('action', function ($hotel_policies) {
-                    $button = '<button type="button" name="edit" id="' . $hotel_policies->hp_id . '" class="edit btn btn-primary btn-sm">
+                    $button = '<button type="button" name="edit" id="' . $hotel_policies->id . '" class="hp_edit btn btn-primary btn-sm">
                 <i class="uil-edit"></i></button>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" id="' . $hotel_policies->hp_id . '" class="delete btn btn-danger btn-sm">
+                    $button .= '<button type="button" name="delete" id="' . $hotel_policies->id . '" class="hp_delete btn btn-danger btn-sm">
                 <i class="uil-trash-alt"></i></button>';
                     return $button;
                 })
                 ->rawColumns(['action'])
+                ->editColumn('hp_is_free_cancellation', function ($hotel_policies) {
+                    return $hotel_policies->hp_is_free_cancellation ? 'Free cancellation'
+                        : 'No free cancellation';
+                })
+                ->editColumn('hp_allows_pets', function ($hotel_policies) {
+                    return $hotel_policies->hp_allows_pets ? 'Yes'
+                        : 'No';
+                })
+                ->editColumn('hp_allows_smoking', function ($hotel_policies) {
+                    return $hotel_policies->hp_allows_smoking ? 'Yes'
+                        : 'No';
+                })
+                ->editColumn('hp_is_child_friendly', function ($hotel_policies) {
+                    return $hotel_policies->hp_is_child_friendly ? 'Yes'
+                        : 'No';
+                })
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -52,19 +68,18 @@ class HotelPolicies_Controller extends Controller
     {
         $hp_id = $request->hp_id;
         $rule = [
-            'hp_cancellation_fee' => ['required', 'numeric', 'regex:/^\d+(\.\d{1,2})?$/', 'min:0'],
-            'hp_fee_cancellation_day' => ['required', 'numeric'],
+//            'hp_fee_cancellation_days' => ['required', 'numeric'],
             'hp_booking_fee' => ['required', 'numeric'],
         ];
         $request->validate($rule);
 
-        $hotel_policies = Hotel_policies::updateOrCreate(
+        $hotel_policies = HotelPolicies::updateOrCreate(
             ['id' => $hp_id],
             [
                 'hp_cancellation_fee' => $request->hp_cancellation_fee,
-                'hp_fee_cancellation_day' => $request->hp_fee_cancellation_day,
+                'hp_free_cancellation_days' => $request->hp_free_cancellation_days,
                 'hp_booking_fee' => $request->hp_booking_fee,
-                'hp_is_fee_cancellation' => $request->hp_is_fee_cancellation,
+                'hp_is_free_cancellation' => $request->hp_is_free_cancellation,
                 'hp_checkin_time' => $request->hp_checkin_time,
                 'hp_checkout_time' => $request->hp_checkout_time,
                 'hp_policy_notes' => $request->hp_policy_notes,
@@ -77,7 +92,7 @@ class HotelPolicies_Controller extends Controller
             ],
         );
         $hotel_policies->save();
-        return response()->json(['success', 'Hotel Policies create successfully']);
+        return response()->json(['success' => 'Hotel Policies create successfully']);
     }
 
     /**
@@ -94,7 +109,7 @@ class HotelPolicies_Controller extends Controller
     public function edit(string $id)
     {
         try {
-            $hotel_policies = Hotel_policies::where('id', $id)->firstOrFail();
+            $hotel_policies = HotelPolicies::where('id', $id)->firstOrFail();
             return response()->json($hotel_policies);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Hotel Policies not found.']);
@@ -106,7 +121,7 @@ class HotelPolicies_Controller extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $hotel_polices = Hotel_policies::findOrFail($id);
+        $hotel_polices = HotelPolicies::findOrFail($id);
         $hotel_polices->update($request->all());
         return response()->json(['success' => 'Hotel Policies update Successfully']);
     }
@@ -116,7 +131,7 @@ class HotelPolicies_Controller extends Controller
      */
     public function destroy(string $id)
     {
-        $hotel_policies = Hotel_policies::where('id', $id)->frist();
+        $hotel_policies = HotelPolicies::where('id', $id)->frist();
         if (!$hotel_policies) {
             return response()->json(['error' => 'Hotel Policies not found'], 404);
         }
