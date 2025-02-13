@@ -72,16 +72,18 @@ Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
     // Add hotel management routes here
     Route::prefix('hotel-management')->group(function () {
         Route::get('hotel-rooms', [HotelRoom_Controller::class, 'index'])->name('hotelRooms.index');
+        //route room options
         Route::get('room-options', [RoomOption_Controller::class, 'index'])->name('roomOptions.index');
         Route::post('room-options', [RoomOption_Controller::class, 'store'])->name('roomOptions.store');
         Route::get('room-options/{id}/edit', [RoomOption_Controller::class, 'edit'])->name('roomOptions.edit');
         Route::put('/room-options/{id}', [RoomOption_Controller::class, 'update'])->name('roomOptions.update');
         Route::delete('/room-options/{id}', [RoomOption_Controller::class, 'destroy'])->name('roomOptions.destroy');
+        //route hotel policies
         Route::get('hotel-policies', [HotelPolicies_Controller::class, 'index'])->name('hotelPolicies.index');
         Route::post('hotel-policies', [HotelPolicies_Controller::class, 'store'])->name('hotelPolicies.store');
-        Route::get('hotel-policies/{id}/edit', [HotelPolicies_Controller::class, 'edit'])->name('hotelPolices.edit');
+        Route::get('hotel-policies/{id}/edit', [HotelPolicies_Controller::class, 'edit'])->name('hotelPolicies.edit');
         Route::put('/hotel-policies/{id}', [HotelPolicies_Controller::class, 'update'])->name('hotelPolicies.update');
-        Route::delete('hotel-policies/{id}', [HotelPolicies_Controller::class, 'delete'])->name('hotelPolicies.delete');
+        Route::delete('hotel-policies/{id}', [HotelPolicies_Controller::class, 'destroy'])->name('hotelPolicies.destroy');
     });
 
     Route::get('hotel_manager', [HotelManager_Controller::class, 'index'])->name('hotel_manager.index');

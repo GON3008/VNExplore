@@ -155,6 +155,8 @@
                         $('#ro_bed_type').val(data.ro_bed_type);
                         $('#ro_views').val(data.ro_views);
                         $('#ro_status').val(data.ro_status);
+                        $('#ro_is_refundable').val(data.ro_is_refundable);
+                        $('#ro_is_featured').val(data.ro_is_featured);
                         $('#ro_hotel_category_id').val(data.ro_hotel_category_id);
                         $('#ro_hotel_room_id').val(data.ro_hotel_room_id);
                         $('#ro_created_by').val(data.ro_created_by);
@@ -169,7 +171,6 @@
                 e.preventDefault();
                 var form_data = new FormData(this);
                 var ro_id = $('#ro_id').val(); // Lấy ID để xác định update hay create
-
                 var url = ro_id ? "{{ route('admin.roomOptions.update', ':id') }}".replace(':id', ro_id) : "{{ route('admin.roomOptions.store') }}";
                 var type = ro_id ? "PUT" : "POST"; // Nếu có ID thì update, không thì create
 

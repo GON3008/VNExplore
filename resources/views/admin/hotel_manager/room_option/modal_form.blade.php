@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <form id="ro_form" name="ro_form" class="form-horizontal" enctype="multipart/form-data">
                     @csrf
-{{--                    @method('PUT')--}}
+                    {{--                    @method('PUT')--}}
                     <input type="hidden" name="ro_id" id="ro_id">
 
                     <div class="form-group">
@@ -141,6 +141,26 @@
                         </div>
                     </div>
 
+                    <div class="form-group" id="show_is_featured">
+                        <label for="ro_is_featured" class="col-sm-2 control-label">Featured</label>
+                        <div class="col-sm-12">
+                            <select class="form-control" id="ro_is_featured" name="ro_is_featured">
+                                <option value="0">Often</option>
+                                <option value="1">Outstanding</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="show_is_refundable">
+                        <label for="ro_is_refundable" class="col-sm-2 control-label">Refundable</label>
+                        <div class="col-sm-12">
+                            <select class="form-control" id="ro_is_refundable" name="ro_is_refundable">
+                                <option value="0">Unspeakable</option>
+                                <option value="1">Refund</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label for="ro_hotel_category_id" class="col-sm-5 control-label">Hotel Category</label>
                         <div class="col-sm-12">
@@ -177,6 +197,14 @@
                                 @endforeach
                             </select>
                             <span class="text-danger" id="departure_date_error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ro_cancellation_policy" class="col-sm-4 control-label">Cancellation Policy</label>
+                        <div class="col-sm-12">
+                            <textarea id="editor" class="form-control editor ckeditor"
+                                      name="ro_cancellation_policy"></textarea>
                         </div>
                     </div>
 
