@@ -42,7 +42,7 @@
                                     name: 'hp_is_free_cancellation',
                                     data: 'hp_is_free_cancellation'
                                 },
-                                {title:'test'};
+                                {title:'test', name:'test.test', data:'test.test'},
                                 {title: 'Checkin Time', name: 'hp_checkin_time', data: 'hp_checkin_time'},
                                 {title: 'Checkout Time', name: 'hp_checkout_time', data: 'hp_checkout_time'},
                                 {title: 'Hotel Room', name: 'hotel_room.room_name', data: 'hotel_room.room_name'},
