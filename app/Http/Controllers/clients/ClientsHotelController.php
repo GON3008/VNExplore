@@ -24,9 +24,15 @@ class ClientsHotelController extends Controller
     public function hotelRoomShow($hotel_category_id)
     {
         $hotelCategory = HotelCategories::findOrFail($hotel_category_id);
-        $hotelRooms = HotelRooms::where('hotel_category_id', $hotel_category_id)->get();
+
+        // Lấy hotelRooms và chỉ lấy roomOptions có ro_deleted = 1
+        $hotelRooms = HotelRooms::with(['roomOptions' => function ($query) {
+            $query->where('ro_deleted', 1);
+        }])->where('hotel_category_id', $hotel_category_id)->get();
 
         return view('clients.hotels.hotel_detail', compact('hotelCategory', 'hotelRooms'));
     }
+
+
 
 }
