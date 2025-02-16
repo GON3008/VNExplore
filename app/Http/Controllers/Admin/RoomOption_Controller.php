@@ -49,9 +49,11 @@ class RoomOption_Controller extends Controller
         $bed_type = ['1 King bed', '1 Queen bed', '2 Single bed'];
         $ro_status = ['Available', 'Booked', 'Maintenance', 'Unavailable'];
         $ro_views = ['Sea view', 'City view', 'Garden view'];
+        $ro_cancellation_type = ["on_refundable" => "Non Refundable",
+            "policy_applies" => "Cancellation Policy Applies", "free_cancellation" => "Free Cancellation until"];
 
         return view('admin.room_option.index', compact('hotelRoom', 'hotelCategory',
-            'created_by', 'bed_type', 'ro_status', 'ro_views'));
+            'created_by', 'bed_type', 'ro_status', 'ro_views', 'ro_cancellation_type'));
     }
 
     /**
@@ -91,6 +93,7 @@ class RoomOption_Controller extends Controller
                 'ro_bed_type' => $request->ro_bed_type,
                 'ro_status' => $request->ro_status,
                 'ro_views' => $request->ro_views,
+                'ro_cancellation_type' => $request->ro_cancellation_type,
                 'ro_is_refundable' => $request->ro_is_refundable,
                 'ro_is_featured' => $request->ro_is_featured,
                 'ro_hotel_category_id' => $request->ro_hotel_category_id,

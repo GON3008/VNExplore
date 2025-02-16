@@ -241,21 +241,26 @@
                                 @foreach($room->roomOptions as $option)
                                     <tr>
                                         <td>
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg" data-id="IcHotelRoomBedType">
-                                                <path
-                                                    d="M2 20H3M5 12C3 13 3 14 3 15V16M5 12H19M5 12V7M19 12C21 13 21 14 21 15V16M19 12V7M22 20H21M3 16H21M3 16V20M21 16V20M3 20H21M5 7L5.31623 6.05132C5.72457 4.82629 6.87099 4 8.16228 4H15.8377C17.129 4 18.2754 4.82629 18.6838 6.05132L19 7M5 7V3M19 7V3"
-                                                    stroke="#687176" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round"></path>
-                                                <path
-                                                    d="M6 9.5V11C6 11.5523 6.44772 12 7 12H11V9.5C11 8.67157 10.3284 8 9.5 8H7.5C6.67157 8 6 8.67157 6 9.5Z"
-                                                    stroke="#687176" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round"></path>
-                                                <path
-                                                    d="M13 9.5V12H17C17.5523 12 18 11.5523 18 11V9.5C18 8.67157 17.3284 8 16.5 8H14.5C13.6716 8 13 8.67157 13 9.5Z"
-                                                    stroke="#687176" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round"></path>
-                                            </svg> {{ $option->ro_bed_type }}
+                                            <div class="fw-bold"
+                                                 style="color: rgba(3, 18, 26, 1.00); font-size: 14px">{{ $option->ro_breakfast_included }}</div>
+                                            <div style="font-size: 13px;color: rgba(104, 113, 118, 1.00);"
+                                                 class="fw-medium">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                     xmlns="http://www.w3.org/2000/svg" data-id="IcHotelRoomBedType">
+                                                    <path
+                                                        d="M2 20H3M5 12C3 13 3 14 3 15V16M5 12H19M5 12V7M19 12C21 13 21 14 21 15V16M19 12V7M22 20H21M3 16H21M3 16V20M21 16V20M3 20H21M5 7L5.31623 6.05132C5.72457 4.82629 6.87099 4 8.16228 4H15.8377C17.129 4 18.2754 4.82629 18.6838 6.05132L19 7M5 7V3M19 7V3"
+                                                        stroke="#687176" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round"></path>
+                                                    <path
+                                                        d="M6 9.5V11C6 11.5523 6.44772 12 7 12H11V9.5C11 8.67157 10.3284 8 9.5 8H7.5C6.67157 8 6 8.67157 6 9.5Z"
+                                                        stroke="#687176" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round"></path>
+                                                    <path
+                                                        d="M13 9.5V12H17C17.5523 12 18 11.5523 18 11V9.5C18 8.67157 17.3284 8 16.5 8H14.5C13.6716 8 13 8.67157 13 9.5Z"
+                                                        stroke="#687176" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round"></path>
+                                                </svg> {{ $option->ro_bed_type }}
+                                            </div>
                                         </td>
                                         <td class="text-center">
                                             @for ($i = 0; $i < $option->ro_max_guests; $i++)

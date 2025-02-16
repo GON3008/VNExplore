@@ -141,6 +141,22 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label for="ro_cancellation_type" class="col-sm-4 control-label">Cancellation Type</label>
+                        <div class="col-sm-12">
+                            <select class="form-control" id="ro_cancellation_type" name="ro_cancellation_type" required>
+                                <option value="">Select Type</option>
+                                @foreach(['on_refundable' => 'Non Refundable',
+            'policy_applies'=> 'Cancellation Policy Applies', 'free_cancellation' => 'Free Cancellation until'] as $ro_cancellation_type)
+                                    <option
+                                        value="{{ $ro_cancellation_type }}" {{ isset($room_option) && $room_option->availability_status == $ro_cancellation_type ? 'selected' : '' }}>
+                                        {{ ucfirst($ro_cancellation_type) }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-group" id="show_is_featured">
                         <label for="ro_is_featured" class="col-sm-2 control-label">Featured</label>
                         <div class="col-sm-12">

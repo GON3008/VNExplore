@@ -155,6 +155,7 @@
                         $('#ro_bed_type').val(data.ro_bed_type);
                         $('#ro_views').val(data.ro_views);
                         $('#ro_status').val(data.ro_status);
+                        $('#ro_cancellation_type').val(data.ro_cancellation_type);
                         $('#ro_is_refundable').val(data.ro_is_refundable);
                         $('#ro_is_featured').val(data.ro_is_featured);
                         $('#ro_hotel_category_id').val(data.ro_hotel_category_id);
