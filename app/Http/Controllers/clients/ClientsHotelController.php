@@ -25,14 +25,14 @@ class ClientsHotelController extends Controller
     {
         $hotelCategory = HotelCategories::findOrFail($hotel_category_id);
 
-        // Lấy hotelRooms và chỉ lấy roomOptions có ro_deleted = 1
-        $hotelRooms = HotelRooms::with(['roomOptions' => function ($query) {
-            $query->where('ro_deleted', 1);
-        }])->where('hotel_category_id', $hotel_category_id)->get();
+        $hotelRooms = HotelRooms::with([
+            'roomOptions' => function ($query) {
+                $query->where('ro_deleted', 1) // Lọc roomOptions có ro_deleted = 1
+                ->with('cancellationPolicies'); // Lấy cancellationPolicies của roomOptions
+            }
+        ])->where('hotel_category_id', $hotel_category_id)->get();
 
         return view('clients.hotels.hotel_detail', compact('hotelCategory', 'hotelRooms'));
     }
-
-
 
 }

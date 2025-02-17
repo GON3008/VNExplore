@@ -5,6 +5,7 @@
     <table class="table table-bordered data-table display nowrap" id="roomOptionData"></table>
     <div class="modal_form">
         @include('admin.hotel_manager.room_option.modal_form')
+        {{--        @include('admin.hotel_manager.cancellation_policies.modal_form')--}}
     </div>
 </div>
 @push('scripts')
@@ -107,6 +108,7 @@
                 var form_data = new FormData(this);
                 form_data.append('id', $('#ro_id').val());
                 $('#saveBtn').html('Sending...');
+
                 $.ajax({
                     type: "POST",
                     url: "{{ route('admin.roomOptions.store') }}",
@@ -118,6 +120,39 @@
                         var onTable = $('#roomOptionData').DataTable();
                         onTable.draw(false);
                         $('#saveBtn').html('Save changes');
+
+                        //Kiểm tra nếu chọn Free Cancellation thì mở modal Cancellation Policies
+                        if ($('#ro_cancellation_type').val() === 'free_cancellation') {
+                            let notyf = new Notyf();
+                            notyf.open({
+                                type: "info",
+                                background: "linear-gradient(135deg, #FF5B5B, #E52020)",
+                                message: "You chose Free Cancellation. Please enter the information in Cancellation Policies.",
+                                duration: 4000,
+                                icon: {
+                                    className: 'notyf-icon',
+                                    tagName: 'span',
+                                    text: '⚠️',
+                                },
+                                dismissible: true,
+                                ripple: true,
+                                position: {
+                                    x: 'right',
+                                    y: 'top',
+                                },
+                                style: {
+                                    borderRadius: '10px',
+                                    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+                                    fontFamily: 'Arial, sans-serif',
+                                    fontSize: '16px',
+                                    color: '#ffffff',
+                                    padding: '12px 20px',
+                                }
+                            });
+
+                            //Đặt ID modal cancellation_policies
+                            // $('#ajaxModel_cp').modal('show');
+                        }
                     },
                     error: function (xhr) {
                         if (xhr.responseJSON && xhr.responseJSON.errors) {
@@ -125,12 +160,12 @@
                             if (errors.name) {
                                 $('#name_error').text(errors.name[0]);
                             }
-                            // Add more error checks if necessary
                         }
                         $('#saveBtn').html('Save changes');
                     }
                 });
             });
+
 
             $('body').on('click', '.ro_edit', function () {
                 var ro_id = $(this).attr('id');

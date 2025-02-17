@@ -17,6 +17,7 @@ class RoomOption extends Model
         'ro_description',
         'ro_status',
         'ro_max_guests',
+        'ro_cancellation_type',
         'ro_extra_bed_price',
         'ro_is_refundable',
         'ro_cancellation_policy',
@@ -43,6 +44,22 @@ class RoomOption extends Model
     public function created_by_user()
     {
         return $this->belongsTo(User::class, 'ro_created_by');
+    }
+
+    public function getRoCancellationTypeAttribute($value)
+    {
+        $cancellationTypes = [
+            'non_refundable' => 'Non Refundable',
+            'policy_applies' => 'Cancellation Policy Applies',
+            'free_cancellation' => 'Free Cancellation until',
+        ];
+
+        return $cancellationTypes[$value] ?? $value;
+    }
+
+    public function cancellationPolicies()
+    {
+        return $this->hasMany(CancellationPolicies::class, 'room_option_id', 'id');
     }
 }
 

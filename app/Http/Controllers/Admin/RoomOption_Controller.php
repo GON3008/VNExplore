@@ -75,6 +75,7 @@ class RoomOption_Controller extends Controller
             'ro_discount' => ['nullable', 'numeric', 'regex:/^\d+(\.\d{1,2})?$/', 'min:0'],
             'ro_quantity' => ['required', 'integer', 'min:1'],
             'ro_max_guests' => ['nullable', 'integer', 'min:1'],
+            'ro_cancellation_type' => ['required'],
         ];
 
         $request->validate($rule);

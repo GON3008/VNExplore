@@ -243,6 +243,7 @@
                                         <td>
                                             <div class="fw-bold"
                                                  style="color: rgba(3, 18, 26, 1.00); font-size: 14px">{{ $option->ro_breakfast_included }}</div>
+
                                             <div style="font-size: 13px;color: rgba(104, 113, 118, 1.00);"
                                                  class="fw-medium">
                                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -261,6 +262,63 @@
                                                         stroke-linejoin="round"></path>
                                                 </svg> {{ $option->ro_bed_type }}
                                             </div>
+
+                                                <div class="fw-medium" style="font-size: 14px">
+                                                    @if($option->ro_cancellation_type == 'Free Cancellation until')
+                                                        <span style="color: green;">
+                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                             xmlns="http://www.w3.org/2000/svg"
+                                                             data-id="IcSystemCheckmark"><path
+                                                                d="M6.5 12L10.5 16L18 8.5" stroke="#00875A"
+                                                                stroke-width="2" stroke-linecap="round"
+                                                                stroke-linejoin="round"></path></svg>
+                                                        {{ $option->ro_cancellation_type }}
+                                                        <svg data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                             title="test" width="12" height="12" viewBox="0 0 24 24"
+                                                             fill="none"
+                                                             xmlns="http://www.w3.org/2000/svg"
+                                                             data-id="IcSystemStatusInfo"><path fill-rule="evenodd"
+                                                                                                clip-rule="evenodd"
+                                                                                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                                                                                stroke="#00875A"
+                                                                                                stroke-width="2"
+                                                                                                stroke-linecap="round"
+                                                                                                stroke-linejoin="round"></path><path
+                                                                d="M12 11.5V16M11.75 7.75H12.25V8.25H11.75V7.75Z"
+                                                                stroke="#00875A" stroke-width="2" stroke-linecap="round"
+                                                                stroke-linejoin="round"></path>
+                                                        </svg>
+                                                    </span>
+                                                        <!-- <span class="text-success">{{ $option->ro_cancellation_type }}</span> -->
+                                                    @elseif($option->ro_cancellation_type == 'Non Refundable' || $option->ro_cancellation_type == 'Cancellation Policy Applies')
+                                                        <span
+                                                            style="color: gray;">
+                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                             xmlns="http://www.w3.org/2000/svg"
+                                                             data-id="IcSystemCheckmark"><path
+                                                                d="M6.5 12L10.5 16L18 8.5" stroke="#687176"
+                                                                stroke-width="2" stroke-linecap="round"
+                                                                stroke-linejoin="round"></path></svg>
+                                                        {{ $option->ro_cancellation_type }}
+                                                        <svg data-bs-toggle="tooltip" data-bs-placement="bottom" title="" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                                                             xmlns="http://www.w3.org/2000/svg"
+                                                             data-id="IcSystemStatusInfo"><path fill-rule="evenodd"
+                                                                                                clip-rule="evenodd"
+                                                                                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                                                                                stroke="#687176"
+                                                                                                stroke-width="2"
+                                                                                                stroke-linecap="round"
+                                                                                                stroke-linejoin="round"></path><path
+                                                                d="M12 11.5V16M11.75 7.75H12.25V8.25H11.75V7.75Z"
+                                                                stroke="#687176" stroke-width="2" stroke-linecap="round"
+                                                                stroke-linejoin="round"></path></svg>
+                                                    </span>
+                                                        <!-- <span class="text-muted">{{ $option->ro_cancellation_type }}</span> -->
+                                                    @else
+                                                        <span>{{ $option->ro_cancellation_type }}</span>
+                                                    @endif
+                                                </div>
+
                                         </td>
                                         <td class="text-center">
                                             @for ($i = 0; $i < $option->ro_max_guests; $i++)

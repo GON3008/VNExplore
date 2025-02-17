@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\HotelRoom_Controller;
 use App\Http\Controllers\Admin\RoomOption_Controller;
 use App\Http\Controllers\Admin\HotelPolicies_Controller;
 use App\Http\Controllers\Admin\HotelManager_Controller;
+use App\Http\Controllers\Admin\CancellationPolicies_Controller;
 use App\Mail\TestMail;
 use Illuminate\Support\Facades\Mail;
 
@@ -84,6 +85,12 @@ Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
         Route::get('hotel-policies/{id}/edit', [HotelPolicies_Controller::class, 'edit'])->name('hotelPolicies.edit');
         Route::put('/hotel-policies/{id}', [HotelPolicies_Controller::class, 'update'])->name('hotelPolicies.update');
         Route::delete('hotel-policies/{id}', [HotelPolicies_Controller::class, 'destroy'])->name('hotelPolicies.destroy');
+        //cancellation type
+        Route::get('cancellation-policies', [CancellationPolicies_Controller::class, 'index'])->name('cancellationPolicies.index');
+        Route::post('cancellation-policies', [CancellationPolicies_Controller::class, 'store'])->name('cancellationPolicies.store');
+        Route::get('cancellation-policies/{id}/edit', [CancellationPolicies_Controller::class, 'edit'])->name('cancellationPolicies.edit');
+        Route::put('/cancellation-policies/{id}', [CancellationPolicies_Controller::class, 'update'])->name('cancellationPolicies.update');
+        Route::delete('cancellation-policies/{id}', [CancellationPolicies_Controller::class, 'destroy'])->name('cancellationPolicies.destroy');
     });
 
     Route::get('hotel_manager', [HotelManager_Controller::class, 'index'])->name('hotel_manager.index');
