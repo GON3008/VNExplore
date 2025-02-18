@@ -71,15 +71,27 @@
                         <label for="room_option_id" class="col-sm-5 control-label">Room Option</label>
                         <div class="col-sm-12">
                             <select class="form-control" id="room_option_id" name="room_option_id">
+                                @php
+                                    $hasData = false;
+                                @endphp
+
                                 @foreach($room_option_id as $ro_id)
-                                    @if ($ro_id->ro_deleted == 1 && $ro_id->ro_cancellation_type == 'free_cancellation')
+                                    @if ($ro_id->ro_deleted == 1 && $ro_id->ro_cancellation_type == 'Free Cancellation until')
                                         <option value="{{ $ro_id->id }}">ID: {{ $ro_id->id }}</option>
+                                        @php
+                                            $hasData = true;
+                                        @endphp
                                     @endif
                                 @endforeach
+
+                                @if (!$hasData)
+                                    <option disabled>No room options available</option>
+                                @endif
                             </select>
                             <span class="text-danger" id="departure_date_error"></span>
                         </div>
                     </div>
+
 
                     <div class="form-group">
                         <label for="modification_policy" class="col-sm-4 control-label">Modification Policy</label>

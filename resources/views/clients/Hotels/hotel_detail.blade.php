@@ -263,6 +263,7 @@
                                                 </svg> {{ $option->ro_bed_type }}
                                             </div>
 
+                                            @foreach($option->cancellationPolicies as $policy)
                                                 <div class="fw-medium" style="font-size: 14px">
                                                     @if($option->ro_cancellation_type == 'Free Cancellation until')
                                                         <span style="color: green;">
@@ -272,7 +273,7 @@
                                                                 d="M6.5 12L10.5 16L18 8.5" stroke="#00875A"
                                                                 stroke-width="2" stroke-linecap="round"
                                                                 stroke-linejoin="round"></path></svg>
-                                                        {{ $option->ro_cancellation_type }}
+                                                        {{ $option->ro_cancelzlation_type }}
                                                         <svg data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                              title="test" width="12" height="12" viewBox="0 0 24 24"
                                                              fill="none"
@@ -300,7 +301,9 @@
                                                                 stroke-width="2" stroke-linecap="round"
                                                                 stroke-linejoin="round"></path></svg>
                                                         {{ $option->ro_cancellation_type }}
-                                                        <svg data-bs-toggle="tooltip" data-bs-placement="bottom" title="" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                                                        <svg data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                             title="" width="12" height="12" viewBox="0 0 24 24"
+                                                             fill="none"
                                                              xmlns="http://www.w3.org/2000/svg"
                                                              data-id="IcSystemStatusInfo"><path fill-rule="evenodd"
                                                                                                 clip-rule="evenodd"
@@ -318,6 +321,7 @@
                                                         <span>{{ $option->ro_cancellation_type }}</span>
                                                     @endif
                                                 </div>
+                                            @endforeach
 
                                         </td>
                                         <td class="text-center">
