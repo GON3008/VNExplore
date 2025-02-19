@@ -175,6 +175,8 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
+@yield('scripts')
+
 <!-- ============================================================== -->
 <!-- This page plugins -->
 <!-- ============================================================== -->
