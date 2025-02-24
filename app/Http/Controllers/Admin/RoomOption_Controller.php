@@ -102,6 +102,7 @@ class RoomOption_Controller extends Controller
                 'ro_created_by' => $request->ro_created_by,
             ]
         );
+        app(RoomAvailabilityController::class)->createAvailability($room_option->id, $room_option->ro_quantity);
         $room_option->save();
         return response()->json(['success' => 'Room Option updated successfully.']);
     }

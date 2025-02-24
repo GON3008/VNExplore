@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CarLocation_Controller;
@@ -26,10 +27,14 @@ use App\Http\Controllers\Admin\RoomOption_Controller;
 use App\Http\Controllers\Admin\HotelPolicies_Controller;
 use App\Http\Controllers\Admin\HotelManager_Controller;
 use App\Http\Controllers\Admin\CancellationPolicies_Controller;
+use App\Http\Controllers\Admin\RoomAvailabilityController;
+use App\Http\Controllers\Admin\RoomBookings_Controller;
+use App\Http\Controllers\Admin\RoomDetails_Controller;
+use App\Http\Controllers\Admin\Payments_Controller;
 use App\Mail\TestMail;
 use Illuminate\Support\Facades\Mail;
 
-use App\Http\Controllers\clients\ClientsHotelController;
+use App\Http\Controllers\clients\HotelController;
 use Illuminate\Support\Facades\Route;
 
 //TEST MAIL
@@ -39,8 +44,8 @@ use Illuminate\Support\Facades\Route;
 //});
 //Route client
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/hotels', [ClientsHotelController::class, 'index'])->name('hotels');
-Route::get('/hotels/{hotel_category_id}', [ClientsHotelController::class, 'hotelRoomShow'])->name('hotels.show')->middleware('throttle:60,1');
+Route::get('/hotels', [HotelController::class, 'index'])->name('hotels');
+Route::get('/hotels/{hotel_category_id}', [HotelController::class, 'hotelRoomShow'])->name('hotels.show')->middleware('throttle:60,1');
 
 
 //Route admin
@@ -91,6 +96,14 @@ Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
         Route::get('cancellation-policies/{id}/edit', [CancellationPolicies_Controller::class, 'edit'])->name('cancellationPolicies.edit');
         Route::put('/cancellation-policies/{id}', [CancellationPolicies_Controller::class, 'update'])->name('cancellationPolicies.update');
         Route::delete('cancellation-policies/{id}', [CancellationPolicies_Controller::class, 'destroy'])->name('cancellationPolicies.destroy');
+        //room availability
+        Route::get('room-availability', [RoomAvailabilityController::class, 'index'])->name('roomAvailability.index');
+        Route::post('room-availability', [RoomAvailabilityController::class, 'store'])->name('roomAvailability.store');
+        Route::get('room-availability/{id}/edit', [RoomAvailabilityController::class, 'edit'])->name('roomAvailability.edit');
+        Route::put('/room-availability/{id}', [RoomAvailabilityController::class, 'update'])->name('roomAvailability.update');
+        Route::delete('/room-availability/{id}', [RoomAvailabilityController::class, 'destroy'])->name('roomAvailability.destroy');
+        Route::get('room-option/{id}', [RoomAvailabilityController::class, 'getRoomOption'])
+            ->name('roomOption.getRoomOption');
     });
 
     Route::get('hotel_manager', [HotelManager_Controller::class, 'index'])->name('hotel_manager.index');
@@ -128,7 +141,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 // Route Google login
-Route::controller(GoogleController::class)->group(function(){
+Route::controller(GoogleController::class)->group(function () {
     Route::get('auth/google', 'redirectToGoogle')->name('auth.google');
     Route::get('auth/google/callback', 'handleGoogleCallback');
 });

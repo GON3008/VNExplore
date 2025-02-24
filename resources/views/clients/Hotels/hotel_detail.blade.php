@@ -241,7 +241,8 @@
                                 @foreach($room->roomOptions as $option)
                                     <tr>
                                         <td>
-                                            <div class="fw-normal" style="font-size: 13px;color: rgba(104, 113, 118, 1.00);">
+                                            <div class="fw-normal"
+                                                 style="font-size: 13px;color: rgba(104, 113, 118, 1.00);">
                                                 {{ $room->room_name }}
                                             </div>
                                             <div class="fw-bold"
@@ -277,7 +278,8 @@
                                                                     stroke-width="2" stroke-linecap="round"
                                                                     stroke-linejoin="round"></path></svg>
                                                             {{ $option->ro_cancellation_type }} {{ $policy->free_cancellation_until }}
-                                                            <svg class="tooltip-trigger" width="12" height="12" viewBox="0 0 24 24"
+                                                            <svg class="tooltip-trigger" width="12" height="12"
+                                                                 viewBox="0 0 24 24"
                                                                  fill="none"
                                                                  xmlns="http://www.w3.org/2000/svg"
                                                                  data-id="IcSystemStatusInfo"><path fill-rule="evenodd"
@@ -329,13 +331,37 @@
 
                                         </td>
                                         <td class="text-center">
-                                            @for ($i = 0; $i < $option->ro_max_guests; $i++)
-                                                <i class="fa-solid fa-user" style="color: gray;"></i>
-                                            @endfor
+                                            @if ($option->ro_max_guests <= 3)
+                                                @for ($i = 0; $i < $option->ro_max_guests; $i++)
+                                                    <i class="fa-solid fa-user" style="color: gray;"></i>
+                                                @endfor
+                                            @else
+                                                <i class="fa-solid fa-user" style="color: gray;"></i> ×
+                                                <span class="fw-medium">{{ $option->ro_max_guests }}</span>
+                                            @endif
                                         </td>
-                                        <td>{{ $option->ro_price }}</td>
+                                        <td align="right">
+                                            <div class="fw-normal"
+                                                 style="font-size: 14px; color: rgba(104, 113, 118, 1.00);text-decoration: line-through;">
+                                                {{ $option->ro_discount }}
+                                            </div>
+                                            <div class="fw-bold fs-6" style="color: rgb(255, 94, 31)">
+                                                {{ $option->ro_price }}
+                                            </div>
+                                            <div class="fw-medium"
+                                                 style="font-size: 13px;color: rgba(104, 113, 118, 1.00);">
+                                                Include taxes & fees
+                                            </div>
+                                        </td>
                                         <td class="text-center">
-                                            <button class="btn btn-primary">Choose</button>
+                                            <button class="btn fw-medium" style="background-color: #3FA2F6; color: #f0f0f0">Choose</button>
+                                            @foreach($option->availability as $ra)
+                                                @if ($ra->available_rooms <= 5)
+                                                    <div class="text-danger mt-1 fw-bold">
+                                                        {{ $ra->available_rooms }} room(s) left!
+                                                    </div>
+                                                @endif
+                                            @endforeach
                                         </td>
                                     </tr>
                                 @endforeach

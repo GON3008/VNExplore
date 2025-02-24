@@ -9,7 +9,7 @@ use App\Models\Voucher;
 use App\Models\HotelLocation;
 use Illuminate\Http\Request;
 
-class ClientsHotelController extends Controller
+class HotelController extends Controller
 {
     public function index(){
         $data = HotelCategories::query()
@@ -28,7 +28,7 @@ class ClientsHotelController extends Controller
         $hotelRooms = HotelRooms::with([
             'roomOptions' => function ($query) {
                 $query->where('ro_deleted', 1) // Lọc roomOptions có ro_deleted = 1
-                ->with('cancellationPolicies'); // Lấy cancellationPolicies của roomOptions
+                ->with('cancellationPolicies','availability'); // Lấy cancellationPolicies của roomOptions
             }
         ])->where('hotel_category_id', $hotel_category_id)->get();
 

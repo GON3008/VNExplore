@@ -61,5 +61,10 @@ class RoomOption extends Model
     {
         return $this->hasMany(CancellationPolicies::class, 'room_option_id', 'id');
     }
+
+    public function availability()
+    {
+        return $this->hasMany(RoomAvailability::class, 'room_option_id', 'id');
+    }
 }
 
