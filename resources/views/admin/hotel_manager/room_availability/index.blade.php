@@ -131,12 +131,12 @@
                         $('#saveBtn').val("edit-hp");
                         $('#ajaxModel_ra').modal('show');
                         $('#ra_id').val(data.id);
+                        $('#ro_id').val(data.room_option_id);
                         $('#available_rooms').val(data.available_rooms);
                         $('#booked_rooms').val(data.booked_rooms);
                         $('#maintenance_rooms').val(data.maintenance_rooms);
                         $('#unavailable_rooms').val(data.unavailable_rooms);
                         $('#date').val(data.date);
-                        $('#room_option_id').val(data.room_option_id);
                     },
                     error: function (xhr) {
                         alert('Error: ' + xhr.responseJSON.error);
@@ -144,58 +144,58 @@
                 });
             });
 
-            {{--$('body').on('submit', function (e) {--}}
-            {{--    e.preventDefault();--}}
-            {{--    var form_data = new FormData(this);--}}
-            {{--    var ra_id = $('#hp_id').val(); // Lấy ID để xác định update hay create--}}
-            {{--    var url = ra_id ? "{{ route('admin.roomAvailability.update', ':id') }}".replace(':id', ra_id) : "{{ route('admin.roomAvailability.store') }}"ra--}}
-            {{--    $('#saveBtn').html('Saving...');--}}
+            $('body').on('submit', function (e) {
+                e.preventDefault();
+                var form_data = new FormData(this);
+                var ra_id = $('#hp_id').val(); // Lấy ID để xác định update hay create
+                var url = ra_id ? "{{ route('admin.roomAvailability.update', ':id') }}".replace(':id', ra_id) : "{{ route('admin.roomAvailability.store') }}"
+                $('#saveBtn').html('Saving...');
 
-            {{--    $.ajax({--}}
-            {{--        type: type,--}}
-            {{--        url: url,--}}
-            {{--        data: form_data,--}}
-            {{--        processData: false,--}}
-            {{--        contentType: false,--}}
-            {{--        success: function (data) {--}}
-            {{--            $('#ajaxModel_ra').modal('hide');--}}
-            {{--            var onTable = $('#roomAvailabilityData').DataTable();--}}
-            {{--            onTable.ajax.reload(null, false); // Cập nhật lại DataTable--}}
-            {{--            $('#saveBtn').html('Save changes');--}}
-            {{--        },--}}
-            {{--        error: function (xhr) {--}}
-            {{--            if (xhr.responseJSON && xhr.responseJSON.errors) {--}}
-            {{--                let errors = xhr.responseJSON.errors;--}}
-            {{--                if (errors.name) {--}}
-            {{--                    $('#name_error').text(errors.name[0]);--}}
-            {{--                }--}}
-            {{--            }--}}
-            {{--            $('#saveBtn').html('Save changes');--}}
-            {{--        }--}}
-            {{--    });--}}
-            {{--});--}}
+                $.ajax({
+                    type: type,
+                    url: url,
+                    data: form_data,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        $('#ajaxModel_ra').modal('hide');
+                        var onTable = $('#roomAvailabilityData').DataTable();
+                        onTable.ajax.reload(null, false); // Cập nhật lại DataTable
+                        $('#saveBtn').html('Save changes');
+                    },
+                    error: function (xhr) {
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            let errors = xhr.responseJSON.errors;
+                            if (errors.name) {
+                                $('#name_error').text(errors.name[0]);
+                            }
+                        }
+                        $('#saveBtn').html('Save changes');
+                    }
+                });
+            });
 
-            {{--$('body').on('click', '.hp_delete', function (){--}}
-            {{--    var hp_id = $(this).attr('id');--}}
-            {{--    var url = "{{ route('admin.roomAvailability.destroy', ':id') }}".replace(':id', hp_id);--}}
-            {{--    if (confirm('Are you sure want to delete !')) {--}}
-            {{--        $.ajax({--}}
-            {{--            type: 'DELETE',--}}
-            {{--            url: url,--}}
-            {{--            data: {--}}
-            {{--                _token: '{{ csrf_token() }}',--}}
-            {{--                _method: 'DELETE',--}}
-            {{--            },--}}
-            {{--            success: function (data) {--}}
-            {{--                var onTable = $('#roomAvailabilityData').DataTable();--}}
-            {{--                onTable.draw(false);--}}
-            {{--            },--}}
-            {{--            error: function (data) {--}}
-            {{--                console.log('Error:', data);--}}
-            {{--            }--}}
-            {{--        });--}}
-            {{--    }--}}
-            {{--});--}}
+            $('body').on('click', '.ra_delete', function (){
+                var ra_id = $(this).attr('id');
+                var url = "{{ route('admin.roomAvailability.destroy', ':id') }}".replace(':id', ra_id);
+                if (confirm('Are you sure want to delete !')) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: url,
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            _method: 'DELETE',
+                        },
+                        success: function (data) {
+                            var onTable = $('#roomAvailabilityData').DataTable();
+                            onTable.draw(false);
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                }
+            });
         });
     </script>
 @endpush

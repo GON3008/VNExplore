@@ -25,11 +25,11 @@ use App\Http\Controllers\Admin\HotelLocation_Controller;
 use App\Http\Controllers\Admin\HotelRoom_Controller;
 use App\Http\Controllers\Admin\RoomOption_Controller;
 use App\Http\Controllers\Admin\HotelPolicies_Controller;
-use App\Http\Controllers\Admin\HotelManager_Controller;
+use App\Http\Controllers\Admin\HotelManagerController;
 use App\Http\Controllers\Admin\CancellationPolicies_Controller;
 use App\Http\Controllers\Admin\RoomAvailabilityController;
-use App\Http\Controllers\Admin\RoomBookings_Controller;
-use App\Http\Controllers\Admin\RoomDetails_Controller;
+use App\Http\Controllers\Admin\RoomBookingController;
+use App\Http\Controllers\Admin\RoomDetailsController;
 use App\Http\Controllers\Admin\Payments_Controller;
 use App\Mail\TestMail;
 use Illuminate\Support\Facades\Mail;
@@ -104,9 +104,21 @@ Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
         Route::delete('/room-availability/{id}', [RoomAvailabilityController::class, 'destroy'])->name('roomAvailability.destroy');
         Route::get('room-option/{id}', [RoomAvailabilityController::class, 'getRoomOption'])
             ->name('roomOption.getRoomOption');
+        //room booking
+        Route::get('room-booking', [RoomBookingController::class, 'index'])->name('roomBooking.index');
+        Route::post('room-booking', [RoomBookingController::class, 'store'])->name('roomBooking.store');
+        Route::get('room-booking/{id}/edit', [RoomBookingController::class, 'edit'])->name('roomBooking.edit');
+        Route::put('room-booking/{id}', [RoomBookingController::class, 'update'])->name('roomBooking.update');
+        Route::delete('room-booking{id}', [RoomBookingController::class, 'destroy'])->name('roomBooking.destroy');
+        //room detail
+        Route::get('room-detail', [RoomDetailsController::class, 'index'])->name('roomDetail.index');
+        Route::post('room-detail', [RoomDetailsController::class, 'store'])->name('roomDetail.store');
+        Route::get('room-detail/{id}/edit', [RoomDetailsController::class, 'edit'])->name('roomDetail.edit');
+        Route::put('room-detail/{id}', [RoomDetailsController::class, 'update'])->name('roomDetail.update');
+        Route::delete('room-detail/{id}', [RoomDetailsController::class, 'destroy'])->name('roomDetail.destroy');
     });
 
-    Route::get('hotel_manager', [HotelManager_Controller::class, 'index'])->name('hotel_manager.index');
+    Route::get('hotel_manager', [HotelManagerController::class, 'index'])->name('hotel_manager.index');
 });
 
 Route::middleware('auth')->group(function () {

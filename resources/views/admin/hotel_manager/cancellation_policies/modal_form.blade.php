@@ -75,7 +75,7 @@
                                     $hasData = false;
                                 @endphp
 
-                                @foreach($room_option_id as $ro_id)
+                                @foreach($roomOptionsForPolicies as $ro_id)
                                     @if ($ro_id->ro_deleted == 1 && $ro_id->ro_cancellation_type == 'Free Cancellation until')
                                         <option value="{{ $ro_id->id }}">ID: {{ $ro_id->id }}</option>
                                         @php

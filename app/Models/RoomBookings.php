@@ -17,7 +17,7 @@ class RoomBookings extends Model
         'status',
     ];
 
-    public function room_option()
+    public function room_option_id()
     {
         return $this->belongsTo(RoomOption::class, 'room_option_id');
     }

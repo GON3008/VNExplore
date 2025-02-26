@@ -105,7 +105,7 @@ class RoomAvailabilityController extends Controller
         if(!$room_availability){
             return response()->json(['error' => 'Room Availability not found'], 404);
         }
-        $room_availability->deleted();
+        $room_availability->delete();
         return response()->json(['success' => 'Room Availability deleted successfully']);
     }
 
