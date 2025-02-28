@@ -20,8 +20,8 @@
                 </button>
             </li>
             <li class="nav-item">
-                <button class="nav-link" id="room-detail-tab" data-bs-toggle="tab" data-bs-target="#room-detail"
-                        type="button" role="tab">Room Detail
+                <button class="nav-link" id="room-details-tab" data-bs-toggle="tab" data-bs-target="#room-details"
+                        type="button" role="tab">Room Details
                 </button>
             </li>
             <li class="nav-item">
@@ -46,8 +46,8 @@
             <div class="tab-pane fade" id="room-booking" role="tabpanel" aria-labelledby="room-booking-tab">
                 @include('admin.hotel_manager.room_booking.index')
             </div>
-            <div class="tab-pane fade" id="room-detail" role="tabpanel" aria-labelledby="room-detail-tab">
-                @include('admin.hotel_manager.room_detail.index')
+            <div class="tab-pane fade" id="room-details" role="tabpanel" aria-labelledby="room-details-tab">
+                @include('admin.hotel_manager.room_details.index')
             </div>
             <div class="tab-pane fade" id="hotel-policies" role="tabpanel" aria-labelledby="hotel-policies-tab">
                 @include('admin.hotel_manager.hotel_policies.index')

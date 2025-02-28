@@ -111,11 +111,11 @@ Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {
         Route::put('room-booking/{id}', [RoomBookingController::class, 'update'])->name('roomBooking.update');
         Route::delete('room-booking{id}', [RoomBookingController::class, 'destroy'])->name('roomBooking.destroy');
         //room detail
-        Route::get('room-detail', [RoomDetailsController::class, 'index'])->name('roomDetail.index');
-        Route::post('room-detail', [RoomDetailsController::class, 'store'])->name('roomDetail.store');
-        Route::get('room-detail/{id}/edit', [RoomDetailsController::class, 'edit'])->name('roomDetail.edit');
-        Route::put('room-detail/{id}', [RoomDetailsController::class, 'update'])->name('roomDetail.update');
-        Route::delete('room-detail/{id}', [RoomDetailsController::class, 'destroy'])->name('roomDetail.destroy');
+        Route::get('room-details', [RoomDetailsController::class, 'index'])->name('roomDetails.index');
+        Route::post('room-details', [RoomDetailsController::class, 'store'])->name('roomDetails.store');
+        Route::get('room-details/{id}/edit', [RoomDetailsController::class, 'edit'])->name('roomDetails.edit');
+        Route::put('room-details/{id}', [RoomDetailsController::class, 'update'])->name('roomDetails.update');
+        Route::delete('room-details/{id}', [RoomDetailsController::class, 'destroy'])->name('roomDetails.destroy');
     });
 
     Route::get('hotel_manager', [HotelManagerController::class, 'index'])->name('hotel_manager.index');

@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <label for="date" class="col-sm-3 control-label">Date</label>
                         <div class="col-sm-12">
-                            <input type="date" class="form-control" id="date"
+                            <input type="date" class="form-control" id="ro_date"
                                    name="date">
                             <span class="text-danger" id="room_discount_error"></span>
                         </div>
@@ -24,23 +24,26 @@
                     <div class="form-group" id="show_is_status">
                         <label for="rb_status" class="col-sm-2 control-label">Status</label>
                         <div class="col-sm-12">
-                            <select class="form-control" id="rb_status" name="rb_status">
-                                <option value="0">Booked</option>
-                                <option value="1">Check-in</option>
-                                <option value="2">Check-out</option>
+                            <select class="form-control" id="rb_status" name="status">
+                                @foreach(['Booked','Check-in','Check-out'] as $rb_status)
+                                    <option
+                                        value="{{ $rb_status }}" {{ isset($room_booking) && $room_booking->availability_status == $rb_status ? 'selected' : '' }}>
+                                        {{ ucfirst($rb_status) }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="room_option_id" class="col-sm-5 control-label">Room Option</label>
+                        <label for="rb_option" class="col-sm-5 control-label">Room Option</label>
                         <div class="col-sm-12">
-                            <select class="form-control" id="room_option_id" name="room_option_id">
+                            <select class="form-control" id="rb_option" name="room_option_id">
                                 @php
                                     $hasData = false;
                                 @endphp
                                 <option>Select Room Option Id</option>
-                                @foreach($roomOptionForBook as $option)
+                                @foreach($roomOption as $option)
                                     @if ($option->ro_deleted == 1)
                                         <option value="{{$option->id}}">ID: {{$option->id}}</option>
                                         @php
@@ -57,15 +60,15 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="room_option_id" class="col-sm-5 control-label">Room Detail</label>
+                        <label for="room_option_id" class="col-sm-5 control-label">Room Number</label>
                         <div class="col-sm-12">
                             <select class="form-control" id="room_detail_id" name="room_detail_id">
                                 @php
                                     $hasData = false;
                                 @endphp
                                 <option>Select Room Detail</option>
-                                @foreach($roomDetails as $detail)
-                                    <option value="{{$detail->id}}">ID: {{$detail->room_number}}</option>
+                                @foreach($roomDetailsForBook as $detail)
+                                    <option value="{{$detail->id}}">{{$detail->room_number}}</option>
                                     @php
                                         $hasData = true;
                                     @endphp

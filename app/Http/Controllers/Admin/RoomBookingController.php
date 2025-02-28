@@ -15,8 +15,7 @@ class RoomBookingController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $room_booking = RoomBookings::with(['room_option:id',
-                'room_detail:id,room_number', 'created_by:id,email'])
+            $room_booking = RoomBookings::with(['room_option_id:id', 'room_detail:id,room_number', 'created_by:id,email'])
                 ->select('room_bookings.*');
 
             return datatables()
@@ -33,7 +32,7 @@ class RoomBookingController extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
-        $rb_status = ['Available','Booked','Maintenance','Unavailable'];
+        $rb_status = ['Booked','Check-in','Check-out'];
         return view('admin.room_booking.index', compact('rb_status'));
     }
 
