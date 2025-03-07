@@ -63,24 +63,72 @@
         </div>
     </div>
 
-    @if (\Request::routeIs('hotels.show'))
+    {{--    @if (\Request::routeIs('hotels.show'))--}}
+    {{--        <div class="py-4 bg-primary position-relative">--}}
+    {{--            <div class="container">--}}
+    {{--                @include('clients.layouts.hotels.search_form_detail')--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    @endif--}}
+    {{--    <!-- ============================ Hero Banner End ================================== -->--}}
+
+
+    {{--    <!-- ============================ Searches List Start ================================== -->--}}
+    {{--    @if (basename(request()->path()) == 'hotels')--}}
+    {{--        <section class="gray-simple">--}}
+    {{--            <div class="container">--}}
+    {{--                <div class="row justify-content-between gy-4 gx-xl-4 gx-lg-3 gx-md-3 gx-4">--}}
+    {{--                    <!-- Sidebar -->--}}
+    {{--                    --}}{{--               @include('clients.layouts.hotels.sidebar')--}}
+    {{--                    <!-- All List -->--}}
+    {{--                    <div class="col-xl-9 col-lg-8 col-md-12 container">--}}
+    {{--                        @include('clients.layouts.hotels.list_voucher')--}}
+    {{--                        @yield('hotel_content')--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+    {{--        </section>--}}
+    {{--    @endif--}}
+
+    {{--    @if (\Request::routeIs('hotels.show'))--}}
+    {{--        <section class="pt-3 gray-simple">--}}
+    {{--            <div class="container">--}}
+    {{--                <div class="row">--}}
+    {{--                    @yield('room_show')--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+    {{--        </section>--}}
+    {{--    @endif--}}
+
+    {{--    @if (basename(request()->path()) == 'hotels')--}}
+    {{--        <section class="gray-simple" style="background: #ffffff !important;">--}}
+    {{--            <div class="container">--}}
+    {{--                <div class="row justify-content-between gy-4 gx-xl-4 gx-lg-3 gx-md-3 gx-4">--}}
+    {{--                    <div class="col-xl-9 col-lg-8 col-md-12 container">--}}
+    {{--                        @include('clients.layouts.hotels.section')--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+    {{--        </section>--}}
+    {{--    @endif--}}
+
+    @php
+        $isHotelPage = basename(request()->path()) == 'hotels';
+        $isHotelShow = \Request::routeIs('hotels.show');
+    @endphp
+
+    @if ($isHotelShow)
         <div class="py-4 bg-primary position-relative">
             <div class="container">
                 @include('clients.layouts.hotels.search_form_detail')
             </div>
         </div>
     @endif
-    <!-- ============================ Hero Banner End ================================== -->
 
-
-    <!-- ============================ Searches List Start ================================== -->
-    @if (basename(request()->path()) == 'hotels')
+    @if ($isHotelPage)
         <section class="gray-simple">
             <div class="container">
                 <div class="row justify-content-between gy-4 gx-xl-4 gx-lg-3 gx-md-3 gx-4">
-                    <!-- Sidebar -->
-                    {{--               @include('clients.layouts.hotels.sidebar')--}}
-                    <!-- All List -->
                     <div class="col-xl-9 col-lg-8 col-md-12 container">
                         @include('clients.layouts.hotels.list_voucher')
                         @yield('hotel_content')
@@ -90,7 +138,7 @@
         </section>
     @endif
 
-    @if (\Request::routeIs('hotels.show'))
+    @if ($isHotelShow)
         <section class="pt-3 gray-simple">
             <div class="container">
                 <div class="row">
@@ -100,7 +148,15 @@
         </section>
     @endif
 
-    @if (basename(request()->path()) == 'hotels')
+    <section class="pt-3 gray-simple">
+        <div class="container">
+            <div class="row">
+                @yield('contents')
+            </div>
+        </div>
+    </section>
+
+    @if ($isHotelPage)
         <section class="gray-simple" style="background: #ffffff !important;">
             <div class="container">
                 <div class="row justify-content-between gy-4 gx-xl-4 gx-lg-3 gx-md-3 gx-4">
@@ -111,6 +167,7 @@
             </div>
         </section>
     @endif
+
 
     <!-- ============================ Searches List End ================================== -->
 

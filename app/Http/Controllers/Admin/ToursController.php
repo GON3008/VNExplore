@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Galleries_tour;
 use App\Models\TourCategories;
 use App\Models\Tours;
-use App\Models\ListCategories;
-use Illuminate\Http\Request;
 use Datatables;
+use Illuminate\Http\Request;
+
 class ToursController extends Controller
 {
 

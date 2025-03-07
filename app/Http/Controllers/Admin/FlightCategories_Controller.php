@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\FlightLocation;
-use Illuminate\Http\Request;
 use App\Models\FlightCategories;
+use App\Models\FlightLocation;
 use Datatables;
-use function Pest\Laravel\json;
+use Illuminate\Http\Request;
 
 class FlightCategories_Controller extends Controller
 {

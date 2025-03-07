@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\HotelPolicies;
-use App\Models\HotelRooms;
 use Illuminate\Http\Request;
-use function Pest\Laravel\json;
 
 class HotelPolicies_Controller extends Controller
 {

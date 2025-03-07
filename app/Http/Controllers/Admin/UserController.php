@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use Datatables;
+use Illuminate\Http\Request;
+
 class UserController extends Controller
 {
     const PATH_UPLOAD = 'users';

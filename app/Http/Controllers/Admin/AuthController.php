@@ -1,17 +1,15 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\PasswordReset;
+use App\Models\PendingUsers;
+use App\Models\User;
+use App\Services\PHPMailerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use App\Models\User;
-use App\Models\PendingUsers;
-use App\Models\PasswordReset;
-use App\Services\PHPMailerService;
 use Illuminate\Support\Str;
-use function Laravel\Prompts\alert;
 
 class AuthController extends Controller
 {

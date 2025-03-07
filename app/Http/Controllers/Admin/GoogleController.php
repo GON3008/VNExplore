@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use  Laravel\Socialite\Facades\Socialite;
-use Exception;
 use App\Models\User;
+use Exception;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
+
 class GoogleController extends Controller
 {
     public function redirectToGoogle()

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\HotelCategories;
 use App\Models\HotelLocation;
 use App\Models\HotelRooms;
-use App\Models\RoomType;
 use App\Models\HotelServices;
+use App\Models\RoomType;
 use Illuminate\Http\Request;
 
 class HotelRoom_Controller extends Controller

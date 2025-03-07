@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\Admin\Controller;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Exception;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
+
 class GoogleController extends Controller
 {
     public function redirectToGoogle()

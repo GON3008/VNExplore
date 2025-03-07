@@ -62,8 +62,9 @@
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-8">
                             <div class="form-group mb-0">
-                                <button type="button" class="btn btn-primary full-width fw-medium"><i
-                                        class="fa-solid fa-magnifying-glass me-2"></i>Search</button>
+                                <button type="button" class="btn btn-primary full-width fw-medium" id="search-room-btn">
+                                    <i class="fa-solid fa-magnifying-glass me-2"></i>Search
+                                </button>
                             </div>
                         </div>
                     </div>

@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\HotelLocation;
-use Illuminate\Http\Request;
-use App\Models\ListCategories;
 use App\Models\HotelCategories;
 use Datatables;
+use Illuminate\Http\Request;
 
 class HotelCategories_Controller extends Controller
 {

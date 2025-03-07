@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\HotelLocation;
 use App\Models\HotelServices;
 use App\Models\ListCategories;
-use Illuminate\Http\Request;
-use Termwind\Components\Li;
 
 class CategoriesController extends Controller
 {

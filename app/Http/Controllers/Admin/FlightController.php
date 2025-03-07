@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Models\Flight;
 use App\Models\FlightCategories;
 use App\Models\FlightLocation;
-use Illuminate\Http\Request;
-use App\Models\Flight;
 use Datatables;
+use Illuminate\Http\Request;
 
 class FlightController extends Controller
 {

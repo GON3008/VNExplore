@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\CancellationPolicies;
 use App\Models\HotelCategories;
 use App\Models\HotelRooms;
 use App\Models\RoomAvailability;
 use App\Models\RoomBookings;
 use App\Models\RoomDetails;
-use App\Models\User;
 use App\Models\RoomOption;
+use App\Models\User;
 
 class HotelManagerController extends Controller
 {

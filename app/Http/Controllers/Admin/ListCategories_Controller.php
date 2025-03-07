@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Models\ListCategories;
 use Datatables;
+use Illuminate\Http\Request;
+
 class ListCategories_Controller extends Controller
 {
     /**

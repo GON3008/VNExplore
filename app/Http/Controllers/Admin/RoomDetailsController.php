@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\RoomBookings;
 use App\Models\RoomDetails;
 use Illuminate\Http\Request;
-use Twilio\TwiML\Video\Room;
 
 class RoomDetailsController extends Controller
 {

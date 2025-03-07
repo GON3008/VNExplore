@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\TourLocation;
-use Illuminate\Http\Request;
 use Datatables;
+use Illuminate\Http\Request;
 
 class TourLocation_Controller extends Controller
 {

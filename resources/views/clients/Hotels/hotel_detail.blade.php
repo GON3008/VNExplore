@@ -343,10 +343,10 @@
                                         <td align="right">
                                             <div class="fw-normal"
                                                  style="font-size: 14px; color: rgba(104, 113, 118, 1.00);text-decoration: line-through;">
-                                                {{ $option->ro_discount }}
+                                                {{ $option->ro_price }}
                                             </div>
                                             <div class="fw-bold fs-6" style="color: rgb(255, 94, 31)">
-                                                {{ $option->ro_price }}
+                                                {{ $option->ro_discount }}
                                             </div>
                                             <div class="fw-medium"
                                                  style="font-size: 13px;color: rgba(104, 113, 118, 1.00);">
@@ -354,7 +354,14 @@
                                             </div>
                                         </td>
                                         <td class="text-center">
-                                            <button class="btn fw-medium" style="background-color: #3FA2F6; color: #f0f0f0">Choose</button>
+                                            <form action="{{ route('booking.page1') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="ro_id" value="{{ $option->id }}">
+                                                <button type="submit" class="btn fw-medium"
+                                                        style="background-color: #3FA2F6; color: #f0f0f0">
+                                                    Choose
+                                                </button>
+                                            </form>
                                             @foreach($option->availability as $ra)
                                                 @if ($ra->available_rooms <= 5)
                                                     <div class="text-danger mt-1 fw-bold">

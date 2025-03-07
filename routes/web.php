@@ -1,39 +1,35 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CarController;
-use App\Http\Controllers\CarLocation_Controller;
-use App\Http\Controllers\ListCategories_Controller;
-use App\Http\Controllers\clients\HomeController;
-use App\Http\Controllers\FlightCategories_Controller;
-use App\Http\Controllers\FlightController;
-use App\Http\Controllers\FlightLocation_Controller;
-use App\Http\Controllers\GalleriesController;
-use App\Http\Controllers\GoogleController;
-use App\Http\Controllers\LocationController;
-use App\Http\Controllers\MessagesController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TourCategories_Controller;
-use App\Http\Controllers\TourLocation_Controller;
-use App\Http\Controllers\ToursController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\VoucherController;
-use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\TestController;
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CancellationPolicies_Controller;
+use App\Http\Controllers\Admin\CarController;
+use App\Http\Controllers\Admin\CarLocation_Controller;
+use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\FlightCategories_Controller;
+use App\Http\Controllers\Admin\FlightController;
+use App\Http\Controllers\Admin\FlightLocation_Controller;
+use App\Http\Controllers\Admin\GalleriesController;
+use App\Http\Controllers\Admin\GoogleController;
 use App\Http\Controllers\Admin\HotelCategories_Controller;
 use App\Http\Controllers\Admin\HotelLocation_Controller;
-use App\Http\Controllers\Admin\HotelRoom_Controller;
-use App\Http\Controllers\Admin\RoomOption_Controller;
-use App\Http\Controllers\Admin\HotelPolicies_Controller;
 use App\Http\Controllers\Admin\HotelManagerController;
-use App\Http\Controllers\Admin\CancellationPolicies_Controller;
+use App\Http\Controllers\Admin\HotelPolicies_Controller;
+use App\Http\Controllers\Admin\HotelRoom_Controller;
+use App\Http\Controllers\Admin\ListCategories_Controller;
+use App\Http\Controllers\Admin\LocationController;
+use App\Http\Controllers\Admin\MessagesController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RoomAvailabilityController;
 use App\Http\Controllers\Admin\RoomBookingController;
 use App\Http\Controllers\Admin\RoomDetailsController;
-use App\Http\Controllers\Admin\Payments_Controller;
-use App\Mail\TestMail;
-use Illuminate\Support\Facades\Mail;
-
+use App\Http\Controllers\Admin\RoomOption_Controller;
+use App\Http\Controllers\Admin\TestController;
+use App\Http\Controllers\Admin\TourCategories_Controller;
+use App\Http\Controllers\Admin\TourLocation_Controller;
+use App\Http\Controllers\Admin\ToursController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\VoucherController;
+use App\Http\Controllers\clients\HomeController;
 use App\Http\Controllers\clients\HotelController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,8 +40,12 @@ use Illuminate\Support\Facades\Route;
 //});
 //Route client
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/hotels', [HotelController::class, 'index'])->name('hotels');
-Route::get('/hotels/{hotel_category_id}', [HotelController::class, 'hotelRoomShow'])->name('hotels.show')->middleware('throttle:60,1');
+Route::get('/hotels', [HotelController::class, 'index'])->name('hotels')->middleware('throttle:60,1');
+Route::get('/hotels/{hotel_category_id}', [HotelController::class, 'RoomDetailsShow'])->name('hotels.show')->middleware('throttle:60,1');
+Route::post('/booking-step-1', [HotelController::class, 'RoomBooking'])->name('booking.page1');
+Route::get('/booking-step-2', [HotelController::class, 'BookingStep2'])->name('booking.page2');
+Route::get('/booking-step-3', [HotelController::class, 'BookingStep3'])->name('booking.page3');
+
 
 
 //Route admin

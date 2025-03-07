@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Models\Country;
 use App\Models\City;
+use App\Models\Country;
 use App\Models\District;
 use App\Models\Ward;
 use DataTables;
+use Illuminate\Http\Request;
 
 class LocationsController extends Controller
 {

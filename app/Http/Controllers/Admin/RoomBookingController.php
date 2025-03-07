@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\RoomAvailability;
 use App\Models\RoomBookings;
 use Illuminate\Http\Request;
 
