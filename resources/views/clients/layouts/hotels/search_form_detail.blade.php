@@ -43,7 +43,8 @@
                                                     class="fa-solid fa-plus"></i></span>
                                         </div>
                                         <div>
-															<span class="guests-input__ctrl minus" id="children-subs-btn"><i
+															<span class="guests-input__ctrl minus"
+                                                                  id="children-subs-btn"><i
                                                                     class="fa-solid fa-minus"></i></span>
                                             <span class="guests-input__value"><span id="guests-count-children">0</span>Children</span>
                                             <span class="guests-input__ctrl plus" id="children-add-btn"><i
@@ -62,7 +63,8 @@
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-8">
                             <div class="form-group mb-0">
-                                <button type="button" class="btn btn-primary full-width fw-medium" id="search-room-btn">
+                                <button type="button" style="background-color: rgba(1, 148, 243, 1.00);"
+                                        class="btn full-width text-white fw-medium" id="search-room-btn">
                                     <i class="fa-solid fa-magnifying-glass me-2"></i>Search
                                 </button>
                             </div>

@@ -34,7 +34,7 @@ class AuthController extends Controller
         }
 
         $otp = rand(100000, 999999); // Tạo OTP
-        $otpExpiresAt = now()->addMinutes(15); // OTP expires after 15 minutes
+        $otpExpiresAt = now()->addMinutes(5); // OTP expires after 5 minutes
 
         PendingUsers::insert([
             'name' => $request->name,

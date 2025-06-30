@@ -1,13 +1,30 @@
 @extends('clients.layouts.hotels.hotel_layout')
 
 @section('room_show')
+    <!-- Form tìm kiếm room_option -->
+    <form method="GET" action="{{ route('hotels.show', $hotelCategory->id) }}">
+        <label for="checkin_date">Check-in:</label>
+        <input type="date" name="checkin_date" value="{{ $checkinDate ?? '' }}" required>
+
+        <label for="checkout_date">Check-out:</label>
+        <input type="date" name="checkout_date" value="{{ $checkoutDate ?? '' }}" required>
+
+        <button type="submit">Search</button>
+    </form>
+
+
+
     <!-- Breadcrumb -->
     <div class="col-xl-12 col-lg-12 col-md-12">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#" class="text-primary">Home</a></li>
-                <li class="breadcrumb-item"><a href="#" class="text-primary">Hotel in Denver, USA</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{$hotelCategory->hotelCategory_name}}</li>
+                <li class="breadcrumb-item"><a href="#" class="fw-medium"
+                                               style="color: rgba(104, 113, 118, 1.00); font-size: 12px">Home</a></li>
+                <li class="breadcrumb-item"><a href="#" class="fw-medium"
+                                               style="color: rgba(104, 113, 118, 1.00); font-size: 12px">Hotel in
+                        Denver, USA</a></li>
+                <li class="breadcrumb-item active fw-bold" aria-current="page"
+                    style="color: rgba(104, 113, 118, 1.00);">{{$hotelCategory->hotelCategory_name}}</li>
             </ol>
         </nav>
     </div>
@@ -18,6 +35,7 @@
 
             <div class="crd-heaader d-md-flex align-items-center justify-content-between">
                 <div class="crd-heaader-first">
+
                     <div class="d-inline-flex align-items-center mb-1">
                         <span class="label bg-light-success text-success">Health Protected</span>
                         <div class="d-inline-block ms-2">
@@ -50,7 +68,9 @@
                             </div>
                         </div>
                         <div class="drix-last">
-                            <button type="button" class="btn btn-primary fw-semibold">Select Rooms</button>
+                            <button type="button" class="btn fw-semibold text-white"
+                                    style="background-color: rgba(1, 148, 243, 1.00)">Select Rooms
+                            </button>
                         </div>
                     </div>
                 </div>

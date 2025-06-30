@@ -31,6 +31,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VoucherController;
 use App\Http\Controllers\clients\HomeController;
 use App\Http\Controllers\clients\HotelController;
+use App\Http\Controllers\clients\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 //TEST MAIL
@@ -38,15 +39,19 @@ use Illuminate\Support\Facades\Route;
 //    Mail::to('test@gmail.com')->send(new TestMail());
 //    return 'Test email sent successfully!';
 //});
+
+
 //Route client
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/hotels', [HotelController::class, 'index'])->name('hotels')->middleware('throttle:60,1');
 Route::get('/hotels/{hotel_category_id}', [HotelController::class, 'RoomDetailsShow'])->name('hotels.show')->middleware('throttle:60,1');
+Route::post('/book-room', [HotelController::class, 'bookRoom'])->name('room.book');
 Route::post('/booking-step-1', [HotelController::class, 'RoomBooking'])->name('booking.page1');
 Route::get('/booking-step-2', [HotelController::class, 'BookingStep2'])->name('booking.page2');
 Route::get('/booking-step-3', [HotelController::class, 'BookingStep3'])->name('booking.page3');
-
-
+//payment
+Route::get('/payment/vnpay', [PaymentController::class, 'createVnpayPayment'])->name('payment.vnpay');
+Route::get('/payment/vnpay-callback', [PaymentController::class, 'vnpayCallback'])->name('payment.vnpay.callback');
 
 //Route admin
 Route::prefix('admin')->as('admin.')->middleware('admin')->group(function () {

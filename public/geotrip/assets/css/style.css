@@ -3671,8 +3671,8 @@ table.table tr th {
 
 /*----------- Common Elentns: FLATPICKER CUSTOM STYLES -------------*/
 .flatpickr-day.today {
-  border-color: var(--bs-primary);
-  color: var(--bs-primary);
+  border-color: #3FA2F6;
+  color: #3FA2F6;
 }
 
 .flatpickr-day.today:hover,

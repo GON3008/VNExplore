@@ -52,5 +52,4 @@ class HotelRooms extends Model
         return $this->hasMany(RoomOption::class, 'ro_hotel_room_id', 'id');
     }
 
-
 }

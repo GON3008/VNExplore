@@ -48,6 +48,11 @@ class RoomOption extends Model
         return $this->belongsTo(User::class, 'ro_created_by');
     }
 
+    public function room_booking()
+    {
+        return $this->hasMany(RoomBookings::class, 'room_option_id', 'id');
+    }
+
     public function getRoCancellationTypeAttribute($value)
     {
         $cancellationTypes = [
@@ -138,40 +143,43 @@ class RoomOption extends Model
         return number_format($total, 0, ',', '.') . ' VND';
     }
 
-    public function scopeAvailableRooms($query, $checkin, $checkout, $guests)
+//    public function getAvailableRoom($checkinDate, $checkoutDate, $guests)
+//    {
+//        return $this->whereNotIn('id', function ($subQuery) use ($checkinDate, $checkoutDate) {
+//            $subQuery->select('room_option_id')
+//                ->from('room_bookings')
+//                ->whereIn('status', ['Booked', 'Checked-in'])
+//                ->where(function ($q) use ($checkinDate, $checkoutDate) {
+//                    $q->whereBetween('checkin_date', [$checkinDate, $checkoutDate])
+//                        ->orWhereBetween('checkout_date', [$checkinDate, $checkoutDate])
+//                        ->orWhereRaw('? BETWEEN checkin_date AND checkout_date', [$checkinDate])
+//                        ->orWhereRaw('? BETWEEN checkin_date AND checkout_date', [$checkoutDate]);
+//                });
+//        })
+//            ->where('ro_max_guests', '>=', $guests)
+//            ->where('ro_deleted', 1)
+//            ->with(['hotel_room', 'hotel_category'])
+//            ->get();
+//    }
+
+    public static function getAvailableRoom($checkinDate, $checkoutDate, $guests)
     {
-        return $query->whereNotIn('id', function ($subQuery) use ($checkin, $checkout) {
+        return self::whereNotIn('id', function ($subQuery) use ($checkinDate, $checkoutDate) {
             $subQuery->select('room_option_id')
                 ->from('room_bookings')
                 ->whereIn('status', ['Booked', 'Checked-in'])
-                ->where(function ($q) use ($checkin, $checkout) {
-                    $q->whereBetween('checkin_date', [$checkin, $checkout])
-                        ->orWhereBetween('checkout_date', [$checkin, $checkout])
-                        ->orWhereRaw('? BETWEEN checkin_date AND checkout_date', [$checkin])
-                        ->orWhereRaw('? BETWEEN checkin_date AND checkout_date', [$checkout]);
+                ->where(function ($q) use ($checkinDate, $checkoutDate) {
+                    $q->whereBetween('checkin_date', [$checkinDate, $checkoutDate])
+                        ->orWhereBetween('checkout_date', [$checkinDate, $checkoutDate])
+                        ->orWhereRaw('? BETWEEN checkin_date AND checkout_date', [$checkinDate])
+                        ->orWhereRaw('? BETWEEN checkin_date AND checkout_date', [$checkoutDate]);
                 });
         })
-            ->where(function ($q) {
-                $q->whereNull('ro_checkin_time')->whereNull('ro_checkout_time')
-                    ->orWhere('ro_checkin_time', '>=', now());
-            })
-            ->where('ro_max_guests', '>=', $guests);
+//            ->where('ro_max_guests', '>=', $guests)
+            ->where('ro_deleted', 1)
+            ->with(['hotel_room', 'hotel_category']);
     }
 
-//    public static function getAvailableRooms($checkin, $checkout)
-//    {
-//        return DB::select("
-//            SELECT ro.*, hr.*
-//            FROM room_options ro
-//            JOIN hotel_rooms hr ON ro.hotel_room_id = hr.id
-//            WHERE ro.id NOT IN (
-//                SELECT rb.room_option_id
-//                FROM room_bookings rb
-//                WHERE rb.status IN ('Booked', 'Checked-in')
-//                AND (rb.checkin_date <= ? AND rb.checkout_date >= ?)
-//            )
-//        ", [$checkout, $checkin]);
-//    }
 
 }
 

@@ -8,6 +8,7 @@
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
 
     <link href="{{asset('geotrip/assets/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('geotrip/assets/css/style.css')}}" rel="stylesheet">
     <link href="{{asset('geotrip/assets/css/animation.css')}}" rel="stylesheet">
     <link href="{{asset('geotrip/assets/css/dropzone.min.css')}}" rel="stylesheet">
     <link href="{{asset('geotrip/assets/css/flatpickr.min.css')}}" rel="stylesheet">
@@ -25,7 +26,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
 
     <!-- Custom CSS -->
-    <link href="{{asset('geotrip/assets/css/style.css')}}" rel="stylesheet">
 </head>
 
 <body>
@@ -53,7 +53,7 @@
     <!-- ============================================================== -->
 
     <!-- ============================ Hero Banner  Start================================== -->
-    <div class="py-4">
+    <div class="pt-1">
         <div class="container">
 
             <!-- Search Form -->
@@ -118,7 +118,7 @@
     @endphp
 
     @if ($isHotelShow)
-        <div class="py-4 bg-primary position-relative">
+        <div class="py-4 position-relative" style="background-color: rgba(2, 100, 200, 1.00);">
             <div class="container">
                 @include('clients.layouts.hotels.search_form_detail')
             </div>
