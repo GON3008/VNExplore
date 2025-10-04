@@ -237,16 +237,16 @@ class AuthController extends Controller
         return redirect()->intended(url()->previous());
     }
 
-    public function forgot_password(Request $request)
-    {
-        $validator = Validator::make($request->all(),[
-            'email' => 'string|email|'
-        ]);
-
-        if ($validator->fails()){
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-    }
+//    public function forgot_password(Request $request)
+//    {
+//        $validator = Validator::make($request->all(),[
+//            'email' => 'string|email|'
+//        ]);
+//
+//        if ($validator->fails()) {
+//            return redirect()->back()
+//                ->withErrors($validator)
+//                ->withInput();
+//        }
+//    }
 }

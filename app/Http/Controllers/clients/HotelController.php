@@ -197,7 +197,8 @@ class HotelController extends Controller
             ->whereNotIn('room_options.id', function ($query) use ($checkinDate, $checkoutDate) {
                 $query->select('room_option_id')
                     ->from('room_bookings')
-                    ->whereIn('status', ['Booked', 'Checked-in'])
+//                    ->whereIn('status', ['Booked', 'Checked-in'])
+                    ->whereIn('status',['Check-out'])
                     ->where(function ($q) use ($checkinDate, $checkoutDate) {
                         $q->where('checkin_date', '<=', $checkoutDate)
                             ->where('checkout_date', '>=', $checkinDate);
